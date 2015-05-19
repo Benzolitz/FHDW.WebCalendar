@@ -3,6 +3,8 @@
 	<name>FHDW.WebCalendar.WebUI</name>
 	<comment></comment>
 	<projects>
+		<project>FHDW.WebCalendar.BLL</project>
+		<project>FHDW.WebCalendar.DomainModel</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

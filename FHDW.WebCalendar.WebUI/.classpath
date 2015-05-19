@@ -13,5 +13,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/FHDW.WebCalendar.BLL"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/FHDW.WebCalendar.DomainModel"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -3,6 +3,7 @@
 	<name>FHDW.WebCalendar.IRepository</name>
 	<comment></comment>
 	<projects>
+		<project>FHDW.WebCalendar.DomainModel</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
