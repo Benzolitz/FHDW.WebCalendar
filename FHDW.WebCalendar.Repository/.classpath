@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/FHDW.WebCalendar.DomainModel"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/FHDW.WebCalendar.IRepository"/>
+	<classpathentry kind="lib" path="mysql-connector-java-5.1.35-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
