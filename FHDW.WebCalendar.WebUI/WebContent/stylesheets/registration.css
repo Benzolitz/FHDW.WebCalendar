@@ -20,28 +20,35 @@ hr {
 	font-weight: bold;
 }
 
-#divContent > div {
+#divContent {
+	margin-top: 5px;
+}
+
+#divContent > form > .divCenter {
 	width: 300px;
 	margin: auto;
 }
 
 .claUserdata, .claButtons {
-	width: 275px;
+	width: 298px;
 	height: 27px;
 	margin-top: 5px;
 	font-size: 20px;
 }
 
-#divContent > div > .claRequiredStar {
-	vertical-align: text-top;
-	font-size: 10px;
-}
-
 .claButtons {
 	width: 145px;
-	hright: 30px;
-	border: none;
+	height: 30px;
+	border: none; 
 	color: #FFF;
+}
+
+#btnReset {
+	float: right;
+}
+
+#btnSubmib {
+	float: left;
 }
 
 .claDisabledButton {
@@ -52,19 +59,10 @@ hr {
 	background-color: #4489EA;
 }
 
-.claNonRequired {
-	margin-left: 14px;
-}
-
-#divContent > #divHint {
+#divContent > form > #divHint {
 	margin-top: 50px;
 	font-size: 10px;
 	color: #F00;
 	font-size: 10px;
 	text-align: center;
-}
-
-#divHint>span {
-	font-size: 7px;
-	vertical-align: top;
 }

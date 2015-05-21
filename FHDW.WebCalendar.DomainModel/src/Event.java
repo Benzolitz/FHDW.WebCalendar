@@ -1,83 +1,102 @@
-import java.time.LocalTime;
+import java.util.Date;
+import java.util.List;
 
 public class Event
 {
-	private LocalTime EventStart;
-	private LocalTime EventEnd;
-	private String Location;
-	private User Creator;
-	private LocalTime CreationTime;
-	private String Category;
-	private String Message;
+	private Date startTime;
+	private Date endTime;
+	private String location;
+	private User creator;
+	private Date creationTime;
+	private List<String> category;
+	private String message;
+	private List<String> requiredUser;
+	private List<String> optionalUser;
 
-	public void SetEventStart(LocalTime eventStart)
+	public void SetStartTime(Date p_starTime)
 	{
-		EventStart = eventStart;
+		startTime = p_starTime;
 	}
 
-	public LocalTime GetEventStart()
+	public Date GetStartTime()
 	{
-		return EventStart;
+		return startTime;
 	}
 
-	public void SetEventEnd(LocalTime eventEnd)
+	public void SetEndTime(Date p_endTime)
 	{
-		EventEnd = eventEnd;
+		endTime = p_endTime;
 	}
 
-	public LocalTime GetEventEnd()
+	public Date GetEndTime()
 	{
-		return EventEnd;
+		return endTime;
 	}
 
-	public void SetLocation(String location)
+	public void SetLocation(String p_location)
 	{
-		Location = location;
+		location = p_location;
 	}
 
 	public String GetLocation()
 	{
-		return Location;
+		return location;
 	}
 
-	public void SetCreator(User creator)
+	public void SetCreator(User p_creator)
 	{
-		Creator = creator;
+		creator = p_creator;
 	}
 
 	public User GetCreator()
 	{
-		return Creator;
+		return creator;
 	}
 
-	public void SetCreationTime(LocalTime creationTime)
+	public void SetCreationTime(Date p_creationTime)
 	{
-		CreationTime = creationTime;
+		creationTime = p_creationTime;
 	}
 
-	public LocalTime GetCreationTime()
+	public Date GetCreationTime()
 	{
-		return CreationTime;
+		return creationTime;
 	}
 
-	public void SetCategory(String category)
+	public void SetCategory(List<String> p_category)
 	{
-		Category = category;
+		category = p_category;
 	}
 
-	public String GetCategory()
+	public List<String> GetCategory()
 	{
-		return Category;
+		return category;
 	}
 
-	public void SetMessage(String message)
+	public void SetMessage(String p_message)
 	{
-		Message = message;
+		message = p_message;
 	}
 
 	public String GetMessage()
 	{
-		return Message;
+		return message;
+	}
+
+	public List<String> GetRequiredUser() {
+		return requiredUser;
+	}
+
+	public void SetRequiredUser(List<String> p_requiredUser) {
+		requiredUser = p_requiredUser;
+	}
+
+	public List<String> GetOptionalUser() {
+		return optionalUser;
+	}
+
+	public void SetOptionalUser(List<String> p_optionalUser) {
+		optionalUser = p_optionalUser;
 	}
 
 }

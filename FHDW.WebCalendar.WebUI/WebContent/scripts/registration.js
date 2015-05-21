@@ -9,39 +9,36 @@ $(document).ready(function() {
 });
 
 var DisableSubmitButton = function() {
+	$("#btnSubmit").attr("disabled");
 	$("#btnSubmit").removeClass("claEnabledButton");
 	$("#btnSubmit").addClass("claDisabledButton");
-}
-
+};
 var EnableSubmitButton = function() {
+	$("#btnSubmit").removeAttr("disabled");
 	$("#btnSubmit").removeClass("claDisabledButton");
 	$("#btnSubmit").addClass("claEnabledButton");
-}
-
+};
 var ResetTextBoxBorders = function() {
 	$(".claRequiredField").each(function() {
 		$(this).css("border", "1px solid #ABADB3");
 	});
-}
 
+	DisableSubmitButton();
+};
 var SetHintForEmptyField = function() {
 	if ($(this).val() === "") {
 		$(this).css("border", "1px solid #F00")
 	} else {
 		$(this).css("border", "1px solid #ABADB3")
 	}
-}
-
+};
 var test = function() {
 	if (RequiredInformationGiven()) {
-		$("#btnSubmit").removeAttr("disabled");
 		EnableSubmitButton();
 	} else {
-		$("#btnSubmit").attr("disabled");
 		DisableSubmitButton();
 	}
-}
-
+};
 var RequiredInformationGiven = function() {
 	var RequiredFieldsSet = true;
 
@@ -52,4 +49,5 @@ var RequiredInformationGiven = function() {
 	});
 
 	return RequiredFieldsSet;
-}
+};
+

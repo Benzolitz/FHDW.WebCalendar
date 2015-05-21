@@ -5,9 +5,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Loginbereich</title>
+
 <link rel="stylesheet" type="text/css" href="stylesheets/all.css" />
-<link rel="stylesheet" type="text/css"
-	href="stylesheets/registration.css" />
+	<link rel="stylesheet" type="text/css" href="stylesheets/registration.css"/>
+
+
+	<script src="scripts/jquery-1.11.2.min.js"></script>
+	<script src="scripts/registration.js"></script>
+
 </head>
 <body>
 
@@ -17,20 +22,47 @@
 		<div id="divContent">
 			<form name="frmLogin" action="#">
 				<div class="divCenter">
-					<input id="txtUsername" name="txtUsername" type="text"
-						placeholder="Benutzername" />
+					<input id="txtUsername" name="txtUsername" class="claUserdata claRequiredField" type="text"
+						   placeholder="Benutzername*"/>
 				</div>
 				<div class="divCenter">
-					<input id="txtPassword" name="txtPassword" type="password"
-						placeholder="Passwort" />
+					<input id="txtPassword" name="txtPassword" class="claUserdata claRequiredField" type="password"
+						   placeholder="Passwort*"/>
 				</div>
 				<div class="divCenter">
-					<input id="btnSubmit" type="Submit" value="Login" />
+					<input id="txtPasswordCheck" name="txtPasswordCheck" class="claUserdata claRequiredField"
+						   type="password" placeholder="Passwort wiederholen*"/>
 				</div>
-				<div id="divLinks">
-					<a href="registration.jsp">Registrierung</a> <br /> <a
-						href="passwordReset.jsp">Passwort vergessen?</a>
+				<div class="divCenter">
+					<input id="txtUsermail" name="txtUsermail" class="claUserdata claRequiredField" type="text"
+						   placeholder="E-Mailadresse*"/>
 				</div>
+				<div class="divCenter">
+					<input id="txtUserFirstname" name="txtUserFirstname" class="claUserdata" type="text"
+						   placeholder="Vorname"/>
+				</div>
+				<div class="divCenter">
+					<input id="txtUserLastname" name="txtUserLastname" class="claUserdata" type="text"
+						   placeholder="Nachname"/>
+				</div>
+				<div class="divCenter">
+					<input id="txtUserphone" name="txtUserphone" class="claUserdata" type="text" placeholder="Telefon"/>
+				</div>
+				<div class="divCenter">
+					<input id="txtUserSecurityQuestion" name="txtUserSecurityQuestion"
+						   class="claUserdata claRequiredField" type="text" placeholder="Sicherheitsfrage*"/>
+				</div>
+				<div class="divCenter">
+					<input id="txtUserSecurityAnswer" name="txtUserSecurityAnswer" class="claUserdata claRequiredField"
+						   type="text" placeholder="Sicherheitsantwort*"/>
+				</div>
+				<div class="divCenter">
+					<input id="btnSubmit" name="btnSubmit" class="claButtons claEnabledButton" type="Submit"
+						   value="Registrieren"/>
+					<input id="btnReset" name="btnReset" class="claButtons claEnabledButton" type="Reset"
+						   value="Zurücksetzen"/>
+				</div>
+				<div id="divHint">Mit * gekennzeichnete Felder, müssen ausgefüllt werden!</div>
 			</form>
 		</div>
 	</div>
