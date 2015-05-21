@@ -6,6 +6,8 @@ $(document).ready(function() {
 	$(".claRequiredField").focusout(SetHintForEmptyField);
 
 	$("#btnReset").click(ResetTextBoxBorders);
+
+
 });
 
 var DisableSubmitButton = function() {
