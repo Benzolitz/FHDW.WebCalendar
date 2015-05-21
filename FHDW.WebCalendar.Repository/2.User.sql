@@ -8,7 +8,7 @@ CREATE TABLE User
 	LastName varchar(255) NOT NULL,
 	PhoneNumber varchar(255) DEFAULT NULL,
 	SecurityQuestionID int(11) NOT NULL,
-	SequrityAnswer varchar(255) NOT NULL,
+	SecurityAnswer varchar(255) NOT NULL,
 	PRIMARY KEY (ID),
 	CONSTRAINT User_SecurityQuestion_FK FOREIGN KEY (SecurityQuestionID) REFERENCES SecurityQuestion (ID)
 );
