@@ -1,5 +1,6 @@
 public class User
 {
+	private int id;
     private String username;
     private String email;
     private String password;
@@ -8,6 +9,16 @@ public class User
     private String PhoneNumber;
 	private String SecurityQuestion;
 	private String SecurityAnswer;
+	
+	public void SetId(int p_id)
+	{
+		id = p_id;
+	}
+	
+	public int GetId()
+	{
+        return id;
+    }
 
     public void SetUsername(String p_username) {
         username = p_username;

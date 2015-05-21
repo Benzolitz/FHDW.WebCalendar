@@ -2,6 +2,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Event {
+	private int id;
     private Date startTime;
     private Date endTime;
     private String location;
@@ -12,6 +13,16 @@ public class Event {
     private List<String> requiredUser;
     private List<String> optionalUser;
 
+	public void SetId(int p_id)
+	{
+		id = p_id;
+	}
+	
+	public int GetId()
+	{
+        return id;
+    }
+    
     public void SetStartTime(Date p_starTime) {
         startTime = p_starTime;
     }

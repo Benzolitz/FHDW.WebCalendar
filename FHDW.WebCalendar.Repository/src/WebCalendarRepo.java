@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 
 public class WebCalendarRepo implements IWebCalendarRepo
@@ -15,6 +16,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	Connection conn = null;
 	Statement stmt = null;
 	ResultSet rs = null;
+	java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	public WebCalendarRepo()
 	{
@@ -33,30 +35,32 @@ public class WebCalendarRepo implements IWebCalendarRepo
 			conn = DriverManager.getConnection(connectionUrl, connectionUser, connectionPassword);
 			stmt=conn.createStatement();
 			
-			stmt.execute("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = \""+database+"\";");
+			stmt.execute("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = \"" + database + "\";");
 			
 			if (!stmt.getResultSet().first())
 			{
-				System.out.println("The Database " + database+ " was not found. It will be created.");
-				int myResult = stmt.executeUpdate("CREATE DATABASE "+database+";");
+				System.out.println("The Database " + database + " was not found. It will be created.");
+				int myResult = stmt.executeUpdate("CREATE DATABASE " + database + ";");
 				System.out.println("Create-Statement was send. Returncode: " + String.valueOf(myResult));
-				conn.setCatalog(database);
 				stmt.close();
+				conn.setCatalog(database);
 				stmt=conn.createStatement();
 				
 				InitDatabaseTablesWithTestData(stmt);
 			}
-			
-			//int myResult = stmt.executeUpdate("DROP DATABASE "+database+";");
-			//System.out.println("Drop-Statement was send. Returncode: " + String.valueOf(myResult));
-			
+			else
+			{
+				stmt.close();
+				conn.setCatalog(database);
+				stmt=conn.createStatement();
+			}
 		} catch (Exception e)
 		{
 			System.out.println(e.getMessage());
 		} finally {
-			try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-			try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-			try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+			//try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+			//try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+			//try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
 		}
 	}
 	
@@ -106,7 +110,25 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	{
 		SaveEventResponse Response = new SaveEventResponse();
 		
-		Response.MessageFailure("Not implemented.");
+		try
+		{		
+			stmt.executeUpdate(String.format("INSERT INTO Event (StartTime, EndTime, Location, CreatorID, CreationTime, Message, CalendarID)"
+					+ "VALUES ('%s', '%s', '%s', %d, '%s', '%s', %d);",
+					sdf.format(event.GetStartTime()),
+					sdf.format(event.GetEndTime()),
+					event.GetLocation(),
+					event.GetCreator().GetId(),
+					sdf.format(new Date()),
+					event.GetMessage(),
+					1
+					));
+			Response.MessageSuccess("Inserted new Event.");
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+			Response.MessageFailure("Not implemented.");
+			System.out.println(e.getMessage());
+		}
 		
 		return Response;
 	}
