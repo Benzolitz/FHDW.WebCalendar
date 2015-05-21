@@ -5,4 +5,4 @@ $(document).ready(function() {
 			height : $(document).height() - 50 + "px"
 		});
 	}
-})
+});

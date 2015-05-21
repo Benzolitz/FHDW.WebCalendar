@@ -27,7 +27,7 @@
 			for(int i = 0; i < 7; i++)
 			{
 				out.print("<div class='calenderDay'>");
-				out.print("<div class='calenderDayHead'>" + date.toGMTString() + "</div>");
+				out.print("<div class='calenderDayHead'>" + date.toString() + "</div>");
 				out.print("<div class='calenderDayBody'>");
 				
 				for(int j = 0; j < 24; j++)
