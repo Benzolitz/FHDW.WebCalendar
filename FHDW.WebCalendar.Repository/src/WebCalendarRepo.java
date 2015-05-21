@@ -1,8 +1,13 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class WebCalendarRepo implements IWebCalendarRepo
@@ -35,19 +40,65 @@ public class WebCalendarRepo implements IWebCalendarRepo
 				System.out.println("The Database " + database+ " was not found. It will be created.");
 				int myResult = stmt.executeUpdate("CREATE DATABASE "+database+";");
 				System.out.println("Create-Statement was send. Returncode: " + String.valueOf(myResult));
+				conn.setCatalog(database);
+				stmt.close();
+				stmt=conn.createStatement();
+				
+				InitDatabaseTablesWithTestData(stmt);
 			}
 			
-			int myResult = stmt.executeUpdate("DROP DATABASE "+database+";");
-			System.out.println("Drop-Statement was send. Returncode: " + String.valueOf(myResult));
+			//int myResult = stmt.executeUpdate("DROP DATABASE "+database+";");
+			//System.out.println("Drop-Statement was send. Returncode: " + String.valueOf(myResult));
 			
 		} catch (Exception e)
 		{
-			// TODO: handle exception
+			System.out.println(e.getMessage());
 		} finally {
 			try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
 			try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
 			try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
 		}
+	}
+	
+	private void InitDatabaseTablesWithTestData(Statement p_stmt) throws Exception
+	{
+		Collection<String> filePaths = new ArrayList<String>()
+				{{ 
+					add("src/../1.SecurityQuestion.sql");
+					add("src/../2.User.sql");
+					add("src/../3.Calendar.sql");
+					add("src/../4.Event.sql");
+					add("src/../5.Category.sql");
+					add("src/../6.EventUser.sql");
+					add("src/../1.SecurityQuestionTestData.sql");
+					add("src/../2.UserTestData.sql");
+					add("src/../3.CalendarTestData.sql");
+					add("src/../4.EventTestData.sql");
+					add("src/../5.CategoryTestData.sql");
+					add("src/../6.EventUserTestData.sql");
+				}};
+		BufferedReader in;
+		String str;
+		try
+		{
+			System.out.println("Importing...");
+			for (String filePath : filePaths)
+			{
+				in = new BufferedReader(new FileReader(filePath));
+				System.out.println("\t"+filePath);
+				StringBuffer sb = new StringBuffer();
+				while ((str = in.readLine()) != null)
+				{
+					sb.append(str + "\n ");
+				}
+				in.close();
+				p_stmt.executeUpdate(sb.toString());
+			}
+		} catch (Exception e)
+		{
+			throw new Exception(e);
+		}
+		
 	}
 	
 	@Override
