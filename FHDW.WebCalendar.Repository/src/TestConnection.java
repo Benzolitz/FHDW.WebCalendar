@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Date;
 
+import jdk.nashorn.internal.runtime.RewriteException;
+
 import com.mysql.fabric.xmlrpc.base.Array;
 
 
@@ -19,6 +21,8 @@ public class TestConnection
 		//TestValidateLoginWithEmail(testRepo);							//Working
 		//TestValidateLoginWithWrongUsername(testRepo);					//Working
 		//TestValidateLoginWithWrongPassword(testRepo);					//Working
+		
+		//TestRegistrateNewUser(testRepo);								//Working
 		
 		//TestSaveEvent(testRepo);
 		
@@ -105,6 +109,24 @@ public class TestConnection
 		System.out.println(response.GetMessage());
 	}
 	
+	private static void TestRegistrateNewUser(WebCalendarRepo testRepo)
+	{
+		RegistrateNewUserResponse response;
+		RegistrateNewUserRequest request = new RegistrateNewUserRequest();
+		request.SetUsername("NewUser");
+		request.SetEMail("NewUser@Mail.de");
+		request.SetFirstName("Max");
+		request.SetLastName("Mustermann");
+		request.SetPassword("maxpass");
+		request.SetPhoneNumber("+49 1234/56789");
+		request.SetSecurityQuestion(1);
+		request.SetSecurityAnswer("Geheime Antwort");
+		
+		response = testRepo.RegistrateNewUser(request);
+		System.out.println("TestRegistrateNewUser was successfully: " + String.valueOf(response.IsSuccess()));
+		System.out.println(response.GetMessage());
+	}
+		
 	private static void TestSaveEvent(WebCalendarRepo testRepo)
 	{
 		User testUser = new User();
@@ -122,4 +144,6 @@ public class TestConnection
 		testRepo.SaveEvent(testEvent);
 	}
 
+	
+	
 }

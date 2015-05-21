@@ -19,6 +19,13 @@ public interface IWebCalendarRepo
 	ValidateLoginResponse ValidateLogin(ValidateLoginRequest p_request);
 	
 	/**
+	 * Registriert einen neuen Benutzer. 
+	 * @param p_request
+	 * @return
+	 */
+	RegistrateNewUserResponse RegistrateNewUser(RegistrateNewUserRequest p_request);
+	
+	/**
 	 * Speichert einen neuen oder geänderten Termin.
 	 * @param event	Terminobjekt, welches gespeichert werden soll
 	 */
@@ -30,9 +37,4 @@ public interface IWebCalendarRepo
 	 */
 	DeleteEventResponse DeleteEvent(Event event);
 	
-	/**
-	 * Speichert einen neuen Benutzer.
-	 * @param user	Benutzerobjekt, welches gespeichert werden soll
-	 */
-	RegistrateUserResponse RegistrateUser(User user);
 }

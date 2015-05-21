@@ -176,6 +176,50 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 	
 	@Override
+	public RegistrateNewUserResponse RegistrateNewUser(RegistrateNewUserRequest p_request)
+	{
+		RegistrateNewUserResponse Response = new RegistrateNewUserResponse();
+		String statement;
+		int rs;
+		
+		CheckUsernameOrEmailResponse CheckUsernameOrEmailrp;
+		CheckUsernameOrEmailRequest CheckUsernameOrEmailrq = new CheckUsernameOrEmailRequest();
+		
+		try
+		{
+			CheckUsernameOrEmailrq.SetUsernameOrEmail(p_request.GetUsername());
+			CheckUsernameOrEmailrp = CheckUsernameOrEmail(CheckUsernameOrEmailrq);
+			if(CheckUsernameOrEmailrp.IsSuccess())
+			{
+				throw new Exception("Username already exists.");
+			}
+			CheckUsernameOrEmailrq.SetUsernameOrEmail(p_request.GetEMail());
+			CheckUsernameOrEmailrp = CheckUsernameOrEmail(CheckUsernameOrEmailrq);
+			if(CheckUsernameOrEmailrp.IsSuccess())
+			{
+				throw new Exception("Email already used.");
+			}
+			
+			statement = String.format("INSERT INTO User (Username, EMail, pass, FirstName, LastName, SecurityQuestionID, SecurityAnswer) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%s');", p_request.GetUsername(), p_request.GetEMail(), p_request.GetPassword(), p_request.GetFirstName(), p_request.GetLastName(), p_request.GetSecurityQuestion(), p_request.GetSecurityAnswer());
+			rs = stmt.executeUpdate(statement);
+			
+			if (rs > 0)
+			{
+				Response.MessageSuccess("New User with Username " + p_request.GetUsername() + " has been registrated.");
+			}else
+			{
+				Response.MessageFailure("An unknown error occured.");
+			}
+			
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+		
+		return Response;
+	}
+	
+	@Override
 	public SaveEventResponse SaveEvent(Event event)
 	{
 		SaveEventResponse Response = new SaveEventResponse();
@@ -213,15 +257,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return Response;
 	}
 
-	@Override
-	public RegistrateUserResponse RegistrateUser(User user)
-	{
-		RegistrateUserResponse Response = new RegistrateUserResponse();
-		
-		Response.MessageFailure("Not implemented.");
-		
-		return Response;
-	}
+
 
 	
 }
