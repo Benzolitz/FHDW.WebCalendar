@@ -28,6 +28,11 @@ public class TestConnection
 		//TestGetSecurityQuestionWithEmail(testRepo);					//Working
 		//TestGetSecurityQuestionWithWrongUsername(testRepo);			//Working
 		
+		//TestValidateSecurityAnswerCorrectAnswer(testRepo);			//Working
+		//TestValidateSecurityAnswerWrongAnswer(testRepo);				//Working
+		
+		//TestResetPassword(testRepo);									//Working
+		
 		//TestSaveEvent(testRepo);
 		
 	}
@@ -150,7 +155,7 @@ public class TestConnection
 		
 		response = testRepo.GetSecurityQuestion(request);
 		System.out.println("TestGetSecurityQuestionWithEmail was successfully: " + String.valueOf(response.IsSuccess()));
-		System.out.println(response.GetMessage());
+		System.out.println(response.GetMessage() + " " + response.GetSecurityQuestion());
 	}
 	
 	private static void TestGetSecurityQuestionWithWrongUsername(WebCalendarRepo testRepo)
@@ -161,6 +166,42 @@ public class TestConnection
 		
 		response = testRepo.GetSecurityQuestion(request);
 		System.out.println("TestGetSecurityQuestionWithWrongUsername was successfully: " + String.valueOf(!response.IsSuccess()));
+		System.out.println(response.GetMessage() + " " + response.GetSecurityQuestion());
+	}
+	
+	private static void TestValidateSecurityAnswerCorrectAnswer(WebCalendarRepo testRepo)
+	{
+		ValidateSecurityAnswerResponse response;
+		ValidateSecurityAnswerRequest request = new ValidateSecurityAnswerRequest();
+		request.SetUsernameOrEmail("User1");
+		request.SetAnswer("Hund");
+		
+		response = testRepo.ValidateSecurityAnswer(request);
+		System.out.println("TestValidateSecurityAnswerCorrectAnswer was successfully: " + String.valueOf(response.IsSuccess()));
+		System.out.println(response.GetMessage());
+	}
+	
+	private static void TestValidateSecurityAnswerWrongAnswer(WebCalendarRepo testRepo)
+	{
+		ValidateSecurityAnswerResponse response;
+		ValidateSecurityAnswerRequest request = new ValidateSecurityAnswerRequest();
+		request.SetUsernameOrEmail("User1");
+		request.SetAnswer("Katze");
+		
+		response = testRepo.ValidateSecurityAnswer(request);
+		System.out.println("TestValidateSecurityAnswerWrongAnswer was successfully: " + String.valueOf(!response.IsSuccess()));
+		System.out.println(response.GetMessage());
+	}
+	
+	private static void TestResetPassword(WebCalendarRepo testRepo)
+	{
+		ResetPasswordResponse response;
+		ResetPasswordRequest request = new ResetPasswordRequest();
+		request.SetUsernameOrEmail("User1");
+		request.SetPassword("newPass1");
+		
+		response = testRepo.ResetPassword(request);
+		System.out.println("TestValidateSecurityAnswerWrongAnswer was successfully: " + String.valueOf(response.IsSuccess()));
 		System.out.println(response.GetMessage());
 	}
 	
@@ -181,6 +222,6 @@ public class TestConnection
 		testRepo.SaveEvent(testEvent);
 	}
 
-	
+
 	
 }

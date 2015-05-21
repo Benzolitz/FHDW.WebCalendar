@@ -250,13 +250,57 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		return Response;
 	}
-
+	
+	@Override
+	public ValidateSecurityAnswerResponse ValidateSecurityAnswer(ValidateSecurityAnswerRequest p_request)
+	{
+		ValidateSecurityAnswerResponse Response = new ValidateSecurityAnswerResponse();
+		String statement;
+		ResultSet rs;
+		
+		try
+		{
+			statement = String.format("SELECT 1 FROM User WHERE (Username = '%s' OR EMail = '%s') AND SecurityAnswer = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail(), p_request.GetAnswer());
+			rs = stmt.executeQuery(statement);
+			
+			if(rs.first())
+			{
+				Response.MessageSuccess("Answer was correct.");
+			}else
+			{
+				throw new Exception("Answer was incorrect.");
+			}
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+		
+		return Response;
+	}
+	
 	@Override
 	public ResetPasswordResponse ResetPassword(ResetPasswordRequest p_request)
 	{
 		ResetPasswordResponse Response = new ResetPasswordResponse();
+		String statement;
+		int rs;
 		
-		Response.MessageFailure("Not implemented.");
+		try
+		{
+			statement = String.format("UPDATE User SET pass = '%s' WHERE Username = '%s' OR EMail = '%s';", p_request.GetPassword(), p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail());
+			rs = stmt.executeUpdate(statement);
+			
+			if (rs > 0)
+			{
+				Response.MessageSuccess("Password has been successfully changed.");
+			}else
+			{
+				Response.MessageFailure("An unknown error occured.");
+			}
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
 		
 		return Response;
 	}
@@ -298,6 +342,8 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		return Response;
 	}
+
+	
 
 	
 

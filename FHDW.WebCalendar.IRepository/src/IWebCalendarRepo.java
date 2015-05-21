@@ -33,6 +33,13 @@ public interface IWebCalendarRepo
 	GetSecurityQuestionResponse GetSecurityQuestion (GetSecurityQuestionRequest p_request);
 	
 	/**
+	 * Überprüft, ob die angegebene Antwort mit der Antwort bei der Registrierung übereinstimmt.
+	 * @param p_request
+	 * @return
+	 */
+	ValidateSecurityAnswerResponse ValidateSecurityAnswer(ValidateSecurityAnswerRequest p_request);
+	
+	/**
 	 * Setzt das Password eines Benutzers zurück.
 	 * @param p_request
 	 * @return

@@ -1,8 +1,8 @@
 
-public class ResetPasswordRequest extends IRequest
+public class ValidateSecurityAnswerRequest extends IRequest
 {
 	private String usernameOrEmail;
-	private String password;
+	private String answer;
 	
 	public void SetUsernameOrEmail(String p_usernameOrEmail)
 	{
@@ -14,13 +14,13 @@ public class ResetPasswordRequest extends IRequest
 		return usernameOrEmail;
 	}
 	
-	public void SetPassword(String p_password)
+	public void SetAnswer(String p_answer)
 	{
-		password = p_password;
+		answer = p_answer;
 	}
 	
-	public String GetPassword()
+	public String GetAnswer()
 	{
-		return password;
+		return answer;
 	}
 }
