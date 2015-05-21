@@ -30,13 +30,13 @@ hr {
 	height: 180px;
 }
 
-#divContent > form > .divCenter, #divContent > form > #divHint {
+#divContent > form > .divCenter {
 	width: 300px;
 	margin: auto;
 }
 
 #txtUsername, #txtPassword {
-	width: 298px;
+	width: 300px;
 	height: 27px;
 	
 	font-size: 20px;
@@ -66,12 +66,8 @@ hr {
 #divLinks {
 	wdith: 100%;
 	
-	margin-top: 40px;
+	margin-top: 50px;
 	
 	text-align: right;	
 	font-size: 12px;
-}
-
-#divHint {
-	color: #F00;
 }

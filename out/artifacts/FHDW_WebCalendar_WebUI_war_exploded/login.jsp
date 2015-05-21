@@ -14,24 +14,18 @@
 		<div id="divHeadline">Anmeldung</div>
 		<hr />
 		<div id="divContent">
-			<form name="frmLogin" method="post" action="Login">
+			<form name="frmLogin" method="post" action="Controller/Login">
 				<div class="divCenter">
-					<input id="txtUsername" name="username" type="text"
+					<input id="txtUsername" name="txtUsername" type="text"
 						placeholder="Benutzername" />
 				</div>
 				<div class="divCenter">
-					<input id="txtPassword" name="password" type="password"
+					<input id="txtPassword" name="txtPassword" type="password"
 						placeholder="Passwort" />
 				</div>
 				<div class="divCenter">
 					<input id="btnSubmit" type="Submit" value="Login" />
 				</div>
-				<div id="divHint"><%
-					if(request.getParameter("failure") != null && request.getParameter("failure").equals("true"))
-					{
-						out.println(request.getParameter("error"));
-					}
-				%></div>
 				<div id="divLinks">
 					<a href="registration.jsp">Registrierung</a> <br /> <a
 						href="passwordReset.jsp">Passwort vergessen?</a>

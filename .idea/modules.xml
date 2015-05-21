@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/FHDW.WebCalendar.BLL.iml" filepath="$PROJECT_DIR$/FHDW.WebCalendar.BLL.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FHDW.WebCalendar.DomainModel.iml" filepath="$PROJECT_DIR$/FHDW.WebCalendar.DomainModel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FHDW.WebCalendar.IRepository.iml" filepath="$PROJECT_DIR$/FHDW.WebCalendar.IRepository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FHDW.WebCalendar.Repository.iml" filepath="$PROJECT_DIR$/FHDW.WebCalendar.Repository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FHDW.WebCalendar.WebUI.iml" filepath="$PROJECT_DIR$/FHDW.WebCalendar.WebUI.iml" />
+    </modules>
+  </component>
+</project>

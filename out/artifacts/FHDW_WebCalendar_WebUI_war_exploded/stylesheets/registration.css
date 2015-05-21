@@ -1,0 +1,59 @@
+hr {
+	margin-top: 5px;
+}
+
+#divRegistration {
+	width: 400px;
+	height: 450px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 100px;
+	padding: 10px;
+	box-shadow: 0 0 20px #888888;
+}
+
+#divHeadline {
+	width: 100%;
+	height: 30px;
+	text-align: center;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+#divContent {
+	margin-top: 5px;
+}
+
+#divContent > form > .divCenter {
+	width: 300px;
+	margin: auto;
+}
+
+.claUserdata, .claButtons {
+	width: 298px;
+	height: 27px;
+	margin-top: 5px;
+	font-size: 20px;
+}
+
+.claButtons {
+	width: 145px;
+	height: 30px;
+	border: none; 
+	color: #FFF;
+}
+
+#btnReset {
+	float: right;
+}
+
+.claEnabledButton {
+	background-color: #4489EA;
+}
+
+#divContent > form > #divHint {
+	margin-top: 50px;
+	font-size: 10px;
+	color: #F00;
+	text-align: center;
+}
