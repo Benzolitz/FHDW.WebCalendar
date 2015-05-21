@@ -26,6 +26,20 @@ public interface IWebCalendarRepo
 	RegistrateNewUserResponse RegistrateNewUser(RegistrateNewUserRequest p_request);
 	
 	/**
+	 * Liefert die Sicherheitsfrage zu einem Benutzerkonto.
+	 * @param p_request
+	 * @return
+	 */
+	GetSecurityQuestionResponse GetSecurityQuestion (GetSecurityQuestionRequest p_request);
+	
+	/**
+	 * Setzt das Password eines Benutzers zurück.
+	 * @param p_request
+	 * @return
+	 */
+	ResetPasswordResponse ResetPassword(ResetPasswordRequest p_request); 
+	
+	/**
 	 * Speichert einen neuen oder geänderten Termin.
 	 * @param event	Terminobjekt, welches gespeichert werden soll
 	 */

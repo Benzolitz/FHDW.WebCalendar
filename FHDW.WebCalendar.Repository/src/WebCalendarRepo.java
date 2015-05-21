@@ -220,6 +220,48 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 	
 	@Override
+	public GetSecurityQuestionResponse GetSecurityQuestion(GetSecurityQuestionRequest p_request)
+	{
+		GetSecurityQuestionResponse Response = new GetSecurityQuestionResponse();
+		String statement;
+		ResultSet rs;
+		
+		CheckUsernameOrEmailResponse CheckUsernameOrEmailrp;
+		CheckUsernameOrEmailRequest CheckUsernameOrEmailrq = new CheckUsernameOrEmailRequest();
+		CheckUsernameOrEmailrq.SetUsernameOrEmail(p_request.GetUsernameOrEmail());
+		
+		try
+		{
+			CheckUsernameOrEmailrp = CheckUsernameOrEmail(CheckUsernameOrEmailrq);
+			if(!CheckUsernameOrEmailrp.IsSuccess())
+			{
+				throw new Exception(CheckUsernameOrEmailrp.GetMessage());
+			}
+			
+			statement = String.format("SELECT SecurityQuestion.Question FROM User JOIN SecurityQuestion ON User.SecurityQuestionID = SecurityQuestion.ID where Username = '%s' or EMail = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail());
+			rs = stmt.executeQuery(statement);
+			rs.next();
+			Response.SetSecurityQuestion(rs.getString("Question"));
+			Response.MessageSuccess("Question was found.");
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+		
+		return Response;
+	}
+
+	@Override
+	public ResetPasswordResponse ResetPassword(ResetPasswordRequest p_request)
+	{
+		ResetPasswordResponse Response = new ResetPasswordResponse();
+		
+		Response.MessageFailure("Not implemented.");
+		
+		return Response;
+	}
+	
+	@Override
 	public SaveEventResponse SaveEvent(Event event)
 	{
 		SaveEventResponse Response = new SaveEventResponse();
@@ -256,6 +298,8 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		return Response;
 	}
+
+	
 
 
 
