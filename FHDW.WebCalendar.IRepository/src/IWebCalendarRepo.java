@@ -5,6 +5,20 @@
 public interface IWebCalendarRepo
 {
 	/**
+	 * Prüft, ob es einen Benutzer mit dem übergebenen Benutzernamen bzw. Email gibt.
+	 * @param p_request
+	 * @return Response-Objekt, in dem Informationen über die Abfrage stehen
+	 */
+	CheckUsernameOrEmailResponse CheckUsernameOrEmail(CheckUsernameOrEmailRequest p_request); 
+	
+	/**
+	 * Prüft, ob der Login für den Benutzer richtig ist.
+	 * @param p_request
+	 * @return
+	 */
+	ValidateLoginResponse ValidateLogin(ValidateLoginRequest p_request);
+	
+	/**
 	 * Speichert einen neuen oder geänderten Termin.
 	 * @param event	Terminobjekt, welches gespeichert werden soll
 	 */
@@ -21,10 +35,4 @@ public interface IWebCalendarRepo
 	 * @param user	Benutzerobjekt, welches gespeichert werden soll
 	 */
 	RegistrateUserResponse RegistrateUser(User user);
-	
-	/**
-	 * Prüft, ob der Benutzer existiert.
-	 * @param user
-	 */
-	CheckUserResponse CheckUser(User user);
 }

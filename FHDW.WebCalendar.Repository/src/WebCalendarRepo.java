@@ -106,6 +106,76 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 	
 	@Override
+	public CheckUsernameOrEmailResponse CheckUsernameOrEmail(CheckUsernameOrEmailRequest p_request)
+	{
+		CheckUsernameOrEmailResponse Response = new CheckUsernameOrEmailResponse();
+		String statement;
+		ResultSet rs;
+		
+		try
+		{
+			if (p_request.GetUsernameOrEmail().contains("@"))
+			{
+				statement = String.format("SELECT 1 FROM user where EMail = '%s'", p_request.GetUsernameOrEmail());
+			} else
+			{
+				statement = String.format("SELECT 1 FROM user where Username = '%s'", p_request.GetUsernameOrEmail());
+			}
+			rs = stmt.executeQuery(statement);
+			
+			if(rs.first())
+			{
+				Response.MessageSuccess("Username or Email exists.");
+			}else
+			{
+				throw new Exception("Username or Email does not exist.");
+			}
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+		
+		return Response;
+	}
+	
+	@Override
+	public ValidateLoginResponse ValidateLogin(ValidateLoginRequest p_request)
+	{
+		ValidateLoginResponse Response = new ValidateLoginResponse();
+		String statement;
+		ResultSet rs;
+		
+		CheckUsernameOrEmailResponse CheckUsernameOrEmailrp;
+		CheckUsernameOrEmailRequest CheckUsernameOrEmailrq = new CheckUsernameOrEmailRequest();
+		CheckUsernameOrEmailrq.SetUsernameOrEmail(p_request.GetUsernameOrEmail());
+		
+		try
+		{
+			CheckUsernameOrEmailrp = CheckUsernameOrEmail(CheckUsernameOrEmailrq);
+			if(!CheckUsernameOrEmailrp.IsSuccess())
+			{
+				throw new Exception(CheckUsernameOrEmailrp.GetMessage());
+			}
+			
+			statement = String.format("SELECT 1 FROM user where (Username = '%s' or EMail = '%s') and pass = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail(), p_request.GetPassword());
+			rs = stmt.executeQuery(statement);
+
+			if(rs.first())
+			{
+				Response.MessageSuccess("Login is successful.");
+			}else
+			{
+				throw new Exception("Login failed. Wrong Password.");
+			}
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+		
+		return Response;
+	}
+	
+	@Override
 	public SaveEventResponse SaveEvent(Event event)
 	{
 		SaveEventResponse Response = new SaveEventResponse();
@@ -153,15 +223,5 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return Response;
 	}
 
-	@Override
-	public CheckUserResponse CheckUser(User user)
-	{
-		CheckUserResponse Response = new CheckUserResponse();
-		
-		Response.MessageFailure("Not implemented.");
-		
-		return Response;
-	}
-
-
+	
 }

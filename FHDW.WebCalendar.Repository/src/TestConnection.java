@@ -11,6 +11,102 @@ public class TestConnection
 		
 		WebCalendarRepo testRepo = new WebCalendarRepo();
 		
+		//TestCheckUsernameOrEmailWithUsername(testRepo);				//Working
+		//TestCheckUsernameOrEmailWithEmail(testRepo);					//Working
+		//TestCheckUsernameOrEmailWithWrongUsername(testRepo);			//Working
+		
+		//TestValidateLoginWithUsername(testRepo);						//Working
+		//TestValidateLoginWithEmail(testRepo);							//Working
+		//TestValidateLoginWithWrongUsername(testRepo);					//Working
+		//TestValidateLoginWithWrongPassword(testRepo);					//Working
+		
+		//TestSaveEvent(testRepo);
+		
+	}
+	
+	private static void TestCheckUsernameOrEmailWithUsername(WebCalendarRepo testRepo)
+	{
+		CheckUsernameOrEmailResponse response;
+		CheckUsernameOrEmailRequest request = new CheckUsernameOrEmailRequest();
+		request.SetUsernameOrEmail("User1");
+		
+		response = testRepo.CheckUsernameOrEmail(request);
+		System.out.println("TestCheckUsernameOrEmailWithUsername was successfully: " + String.valueOf(response.IsSuccess()));
+		System.out.println(response.GetMessage());
+	}
+	
+	private static void TestCheckUsernameOrEmailWithEmail(WebCalendarRepo testRepo)
+	{
+		CheckUsernameOrEmailResponse response;
+		CheckUsernameOrEmailRequest request = new CheckUsernameOrEmailRequest();
+		request.SetUsernameOrEmail("Email1@Mail.de");
+		
+		response = testRepo.CheckUsernameOrEmail(request);
+		System.out.println("TestCheckUsernameOrEmailWithEmail was successfully: " + String.valueOf(response.IsSuccess()));
+		System.out.println(response.GetMessage());
+	}
+	
+	private static void TestCheckUsernameOrEmailWithWrongUsername(WebCalendarRepo testRepo)
+	{
+		CheckUsernameOrEmailResponse response;
+		CheckUsernameOrEmailRequest request = new CheckUsernameOrEmailRequest();
+		request.SetUsernameOrEmail("UserWhichDoesntExist");
+		
+		response = testRepo.CheckUsernameOrEmail(request);
+		System.out.println("TestCheckUsernameOrEmailWithUsername was successfully: " + String.valueOf(!response.IsSuccess()));
+		System.out.println(response.GetMessage());
+	}
+	
+	private static void TestValidateLoginWithUsername(WebCalendarRepo testRepo)
+	{
+		ValidateLoginResponse response;
+		ValidateLoginRequest request = new ValidateLoginRequest();
+		request.SetUsernameOrEmail("User1");
+		request.SetPassword("pass1");
+		
+		response = testRepo.ValidateLogin(request);
+		System.out.println("TestValidateLoginWithUsername was successfully: " + String.valueOf(response.IsSuccess()));
+		System.out.println(response.GetMessage());
+	}
+	
+	private static void TestValidateLoginWithEmail(WebCalendarRepo testRepo)
+	{
+		ValidateLoginResponse response;
+		ValidateLoginRequest request = new ValidateLoginRequest();
+		request.SetUsernameOrEmail("Email1@Mail.de");
+		request.SetPassword("pass1");
+		
+		response = testRepo.ValidateLogin(request);
+		System.out.println("TestValidateLoginWithEmail was successfully: " + String.valueOf(response.IsSuccess()));
+		System.out.println(response.GetMessage());
+	}
+	
+	private static void TestValidateLoginWithWrongUsername(WebCalendarRepo testRepo)
+	{
+		ValidateLoginResponse response;
+		ValidateLoginRequest request = new ValidateLoginRequest();
+		request.SetUsernameOrEmail("UserWhichDoesntExist");
+		request.SetPassword("pass1");
+		
+		response = testRepo.ValidateLogin(request);
+		System.out.println("TestValidateLoginWithWrongUsername was successfully: " + String.valueOf(!response.IsSuccess()));
+		System.out.println(response.GetMessage());
+	}
+	
+	private static void TestValidateLoginWithWrongPassword(WebCalendarRepo testRepo)
+	{
+		ValidateLoginResponse response;
+		ValidateLoginRequest request = new ValidateLoginRequest();
+		request.SetUsernameOrEmail("User1");
+		request.SetPassword("WrongPass");
+		
+		response = testRepo.ValidateLogin(request);
+		System.out.println("TestValidateLoginWithWrongPassword was successfully: " + String.valueOf(!response.IsSuccess()));
+		System.out.println(response.GetMessage());
+	}
+	
+	private static void TestSaveEvent(WebCalendarRepo testRepo)
+	{
 		User testUser = new User();
 		testUser.SetId(1);
 		
