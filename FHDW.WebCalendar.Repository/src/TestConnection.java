@@ -22,7 +22,7 @@ public class TestConnection
 		//TestValidateLoginWithWrongUsername(testRepo);					//Working
 		//TestValidateLoginWithWrongPassword(testRepo);					//Working
 		
-		//TestRegistrateNewUser(testRepo);								//Working
+		TestRegistrateNewUser(testRepo);								//Working
 		
 		//TestGetSecurityQuestionWithUsername(testRepo);				//Working
 		//TestGetSecurityQuestionWithEmail(testRepo);					//Working

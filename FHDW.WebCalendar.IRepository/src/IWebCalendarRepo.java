@@ -19,7 +19,7 @@ public interface IWebCalendarRepo
 	ValidateLoginResponse ValidateLogin(ValidateLoginRequest p_request);
 	
 	/**
-	 * Registriert einen neuen Benutzer. 
+	 * Registriert einen neuen Benutzer. Erstellt zugleich einen leeren Kalender für diesen Benutzer.
 	 * @param p_request
 	 * @return
 	 */

@@ -39,9 +39,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
 			
 			if (!stmt.getResultSet().first())
 			{
-				System.out.println("The Database " + database + " was not found. It will be created.");
-				int myResult = stmt.executeUpdate("CREATE DATABASE " + database + ";");
-				System.out.println("Create-Statement was send. Returncode: " + String.valueOf(myResult));
+				System.out.println(String.format("The Database %s was not found. It will be created.", database));
+				int myResult = stmt.executeUpdate(String.format("CREATE DATABASE %s;", database));
+				System.out.println(String.format("Create-Statement was send. Returncode: %s", String.valueOf(myResult)));
 				stmt.close();
 				conn.setCatalog(database);
 				stmt=conn.createStatement();
@@ -116,10 +116,10 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		{
 			if (p_request.GetUsernameOrEmail().contains("@"))
 			{
-				sql = String.format("SELECT 1 FROM user where EMail = '%s'", p_request.GetUsernameOrEmail());
+				sql = String.format("SELECT 1 FROM user WHERE EMail = '%s';", p_request.GetUsernameOrEmail());
 			} else
 			{
-				sql = String.format("SELECT 1 FROM user where Username = '%s'", p_request.GetUsernameOrEmail());
+				sql = String.format("SELECT 1 FROM user WHERE Username = '%s';", p_request.GetUsernameOrEmail());
 			}
 			rs = stmt.executeQuery(sql);
 			
@@ -157,7 +157,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 				throw new Exception(CheckUsernameOrEmailrp.GetMessage());
 			}
 			
-			sql = String.format("SELECT 1 FROM user where (Username = '%s' or EMail = '%s') and pass = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail(), p_request.GetPassword());
+			sql = String.format("SELECT 1 FROM user WHERE (Username = '%s' OR EMail = '%s') AND pass = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail(), p_request.GetPassword());
 			rs = stmt.executeQuery(sql);
 
 			if(rs.first())
@@ -175,7 +175,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return Response;
 	}
 	
-	//TODO: Neuen Kalendar anlegen
 	@Override
 	public RegistrateNewUserResponse RegistrateNewUser(RegistrateNewUserRequest p_request)
 	{
@@ -198,20 +197,22 @@ public class WebCalendarRepo implements IWebCalendarRepo
 			CheckUsernameOrEmailrp = CheckUsernameOrEmail(CheckUsernameOrEmailrq);
 			if(CheckUsernameOrEmailrp.IsSuccess())
 			{
-				throw new Exception("Email already used.");
+				throw new Exception("Email already in use.");
 			}
 			
 			sql = String.format("INSERT INTO User (Username, EMail, pass, FirstName, LastName, SecurityQuestionID, SecurityAnswer) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%s');", p_request.GetUsername(), p_request.GetEMail(), p_request.GetPassword(), p_request.GetFirstName(), p_request.GetLastName(), p_request.GetSecurityQuestion(), p_request.GetSecurityAnswer());
 			rs = stmt.executeUpdate(sql);
 			
-			if (rs > 0)
-			{
-				Response.MessageSuccess("New User with Username " + p_request.GetUsername() + " has been registrated.");
-			}else
-			{
+			if (!(rs > 0))
 				throw new Exception("An unknown error occured.");
-			}
 			
+			sql = String.format("INSERT INTO Calendar (Name, CreatorID) VALUES ('Mein Kalendar', LAST_INSERT_ID());");
+			rs = stmt.executeUpdate(sql);
+			
+			if (!(rs > 0))
+				throw new Exception("An unknown error occured.");
+			
+			Response.MessageSuccess("New User with Username " + p_request.GetUsername() + " has been registrated. New Calendar was created for this User.");
 		} catch (Exception e)
 		{
 			Response.MessageFailure(e.getMessage());
