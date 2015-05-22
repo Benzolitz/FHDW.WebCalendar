@@ -9,7 +9,6 @@
 <link rel="stylesheet" type="text/css" href="stylesheets/login.css" />
 </head>
 <body>
-
 	<div id="divLogin">
 		<div id="divHeadline">Anmeldung</div>
 		<hr />

@@ -10,20 +10,25 @@
 <link rel="stylesheet" type="text/css" href="stylesheets/passwordReset.css" />
 </head>
 <body>
-	<div id="resetBox">
-		<form name="FrmReset" method="post" action="#">
-			<div id="divHeadline"></div>
-			<div>
-				<input id="txtUsername" name="txtUsername" type="text" />
-			</div>
-			
-			<div style="clear:both; margin-bottom: 7px;">- oder -</div>
-			
-			<div>
-				<input id="txtUsermail" name="txtUsermail" type="password" />
-			</div>
-			<input type="Submit" value="Passwort zur&uuml;cksetzen" name="BtnReset" style="clear: both; float: right; width: 210px;" />
-		</form>
+	<div id="divPasswordReset">
+		<div id="divHeadline">Passwort zurücksetzen</div>
+		<hr />
+		<div id="divContent">
+			<form name="frmLogin" method="post" action="PasswordReset">
+				<div class="divCenter">
+					<input id="txtUsername" name="username" type="text" placeholder="Benutzername" />
+				</div>
+				<div id="divOr">
+				- oder - 
+				</div>
+				<div class="divCenter">
+					<input id="txtUsermail" name="usermail" type="text" placeholder="E-Mailadresse" />
+				</div>
+				<div class="divCenter">
+					<input id="btnSubmit" type="Submit" value="Neues Passwort" />
+				</div>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

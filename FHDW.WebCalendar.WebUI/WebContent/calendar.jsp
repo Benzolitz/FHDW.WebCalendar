@@ -22,41 +22,7 @@
 	<div id="info"></div>
 
 	<div id="calender">
-		<%
-			Date date = new Date();
-			for(int i = 0; i < 7; i++)
-			{
-				out.print("<div class='calenderDay'>");
-				out.print("<div class='calenderDayHead'>" + date.toString() + "</div>");
-				out.print("<div class='calenderDayBody'>");
-				
-				for(int j = 0; j < 24; j++)
-				{
-					out.print("<div class='calenderDayBodyHour'>");
-					
-					out.print("<div class='calenderDayBodyHourHalf'>");
-					out.print("</div>"); // .calenderDayBodyHourHalf
-					
-					if(j != 23)
-					{ 
-						
-						out.print("<div class='calenderDayBodyHourHalf'>");
-						out.print("</div>"); // .calenderDayBodyHourHalf						
-					}
-					else
-					{
-						
-						out.print("<div class='calenderDayBodyHourHalfLast'>");
-						out.print("</div>"); // .calenderDayBodyHourHalfLast							
-					}
-					
-					out.print("</div>"); // .calenderDayBodyHour
-				}
-				
-				out.print("</div>"); // .calenderDayBody
-				out.print("</div>"); // .calenderDay
-			}
-		%>
+	
 	</div>
 
 </body>

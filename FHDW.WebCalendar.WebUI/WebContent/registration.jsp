@@ -20,7 +20,7 @@
 		<div id="divHeadline">Registrierung</div>
 		<hr />
 		<div id="divContent">
-			<form name="frmLogin" action="#">
+			<form name="frmLogin" method="post" action="Registration">
 				<div class="divCenter">
 					<input id="txtUsername" name="txtUsername" class="claUserdata claRequiredField" type="text"
 						   placeholder="Benutzername*"/>
