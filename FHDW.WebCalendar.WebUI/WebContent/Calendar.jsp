@@ -7,8 +7,7 @@
 	{
 		for(Cookie cookie : cookies)
 		{
-			if(cookie.getName().equals("username"))
-				userName = cookie.getValue();
+			if(cookie.getName().equals("username")) userName = cookie.getValue();
 		}
 	}
 	if(userName == null) response.sendRedirect("Login.jsp");
@@ -21,7 +20,8 @@
 
 
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/all.css" />
-<link rel="stylesheet" type="text/css" href="stylesheets/custom/calendar.css" />
+<link rel="stylesheet" type="text/css"
+	href="stylesheets/custom/calendar.css" />
 
 
 <script src="scripts/framework/jquery-1.11.2.min.js"></script>

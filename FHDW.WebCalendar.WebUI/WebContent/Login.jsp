@@ -3,15 +3,14 @@
 <%
 	String userName = null;
 	Cookie[] cookies = request.getCookies();
-	if(cookies != null)
+	if (cookies != null)
 	{
-		for(Cookie cookie : cookies)
+		for (Cookie cookie : cookies)
 		{
-			if(cookie.getName().equals("username"))
-				userName = cookie.getValue();
+			if (cookie.getName().equals("username")) userName = cookie.getValue();
 		}
 	}
-	if(userName != null) response.sendRedirect("Calendar.jsp");
+	if (userName != null) response.sendRedirect("Calendar.jsp");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,7 +19,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Loginbereich</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/all.css" />
-<link rel="stylesheet" type="text/css" href="stylesheets/custom/login.css" />
+<link rel="stylesheet" type="text/css"
+	href="stylesheets/custom/login.css" />
 </head>
 <body>
 	<div id="divLogin">
@@ -41,10 +41,10 @@
 				</div>
 				<div id="divHint">
 					<%
-						if(request.getParameter("failure") != null
-								&& request.getParameter("failure").equals("true"))
+						String message = request.getParameter("message");
+						if (message != null)
 						{
-							out.println(request.getParameter("error"));
+							out.println(message);
 						}
 					%>
 				</div>
