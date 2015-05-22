@@ -33,7 +33,11 @@ public class TestConnection
 		
 		//TestResetPassword(testRepo);									//Working
 		
-		TestGetEventsForUser(testRepo);
+		//TestGetEventsForUser(testRepo);								//Working
+		
+		//TestGetEventDetailed(testRepo);								//Working
+		
+		//TestGetAllUserCalendar(testRepo);								//Working
 		
 		//TestSaveEvent(testRepo);
 		
@@ -203,7 +207,7 @@ public class TestConnection
 		request.SetPassword("newPass1");
 		
 		response = testRepo.ResetPassword(request);
-		System.out.println("TestValidateSecurityAnswerWrongAnswer was successfully: " + String.valueOf(response.IsSuccess()));
+		System.out.println("TestResetPassword was successfully: " + String.valueOf(response.IsSuccess()));
 		System.out.println(response.GetMessage());
 	}
 	
@@ -214,11 +218,46 @@ public class TestConnection
 		request.SetUsernameOrEmail("User1");
 		
 		response = testRepo.GetEventsForUser(request);
-		System.out.println("TestValidateSecurityAnswerWrongAnswer was successfully: " + String.valueOf(response.IsSuccess()));
+		System.out.println("TestGetEventsForUser was successfully: " + String.valueOf(response.IsSuccess()));
 		System.out.println(response.GetMessage());
 		if(response.IsSuccess())
 			for (EventCalendarView event : response.GetEvents())
 				System.out.println(event.GetTitle());
+	}
+	
+	private static void TestGetEventDetailed(WebCalendarRepo testRepo)
+	{
+		GetEventDetailedResponse response;
+		GetEventDetailedRequest request = new GetEventDetailedRequest();
+		request.SetEventId(1);
+		
+		response = testRepo.GetEventDetailed(request);
+		System.out.println("TestGetEventDetailed was successfully: " + String.valueOf(response.IsSuccess()));
+		System.out.println(response.GetMessage());
+		if(response.IsSuccess())
+		{
+			System.out.println("Title:" + response.GetEvent().GetTitle());
+			for (String s : response.GetEvent().GetRequiredUser())
+				System.out.println("Required User:" + s);
+		}
+	}
+	
+	private static void TestGetAllUserCalendar(WebCalendarRepo testRepo)
+	{
+		GetAllUserCalendarResponse response;
+		GetAllUserCalendarRequest request = new GetAllUserCalendarRequest();
+		request.SetUserId(1);
+		
+		response = testRepo.GetAllUserCalendar(request);
+		System.out.println("GetAllUserCalendar was successfully: " + String.valueOf(response.IsSuccess()));
+		System.out.println(response.GetMessage());
+		if(response.IsSuccess())
+		{
+			for (Calendar calendar : response.getCalendars())
+			{
+				System.out.println(calendar.GetName());
+			}
+		}
 	}
 	
 	private static void TestSaveEvent(WebCalendarRepo testRepo)

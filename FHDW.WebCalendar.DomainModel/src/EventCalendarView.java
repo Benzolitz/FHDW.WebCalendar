@@ -1,3 +1,4 @@
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class EventCalendarView
 	private Date startTime;
 	private Date endTime;
 	private String location;
-	private List<String> category;
+	private Collection<String> category;
 	private boolean required;
 	private int calendarId;
 	
@@ -63,12 +64,12 @@ public class EventCalendarView
 		return location;
 	}
 	
-	public void SetCategory(List<String> p_category)
+	public void SetCategory(Collection<String> p_category)
 	{
 		category = p_category;
 	}
 	
-	public List<String> GetCategory()
+	public Collection<String> GetCategory()
 	{
 		return category;
 	}

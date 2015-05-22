@@ -1,3 +1,4 @@
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -10,10 +11,10 @@ public class Event
 	private String location;
 	private User creator;
 	private Date creationTime;
-	private List<String> category;
+	private Collection<String> category;
 	private String message;
-	private List<String> requiredUser;
-	private List<String> optionalUser;
+	private Collection<String> requiredUser;
+	private Collection<String> optionalUser;
 	private int calendarId;
 	
 	public void SetId(int p_id)
@@ -86,12 +87,12 @@ public class Event
 		return creationTime;
 	}
 	
-	public void SetCategory(List<String> p_category)
+	public void SetCategory(Collection<String> p_category)
 	{
 		category = p_category;
 	}
 	
-	public List<String> GetCategory()
+	public Collection<String> GetCategory()
 	{
 		return category;
 	}
@@ -106,22 +107,22 @@ public class Event
 		return message;
 	}
 	
-	public List<String> GetRequiredUser()
+	public Collection<String> GetRequiredUser()
 	{
 		return requiredUser;
 	}
 	
-	public void SetRequiredUser(List<String> p_requiredUser)
+	public void SetRequiredUser(Collection<String> p_requiredUser)
 	{
 		requiredUser = p_requiredUser;
 	}
 	
-	public List<String> GetOptionalUser()
+	public Collection<String> GetOptionalUser()
 	{
 		return optionalUser;
 	}
 	
-	public void SetOptionalUser(List<String> p_optionalUser)
+	public void SetOptionalUser(Collection<String> p_optionalUser)
 	{
 		optionalUser = p_optionalUser;
 	}
