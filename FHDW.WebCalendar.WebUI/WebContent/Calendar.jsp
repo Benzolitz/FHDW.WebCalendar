@@ -11,7 +11,7 @@
 				userName = cookie.getValue();
 		}
 	}
-	if(userName == null) response.sendRedirect("login.jsp");
+	if(userName == null) response.sendRedirect("Login.jsp");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -20,12 +20,12 @@
 <title>Kalender</title>
 
 
-<link rel="stylesheet" type="text/css" href="stylesheets/all.css" />
-<link rel="stylesheet" type="text/css" href="stylesheets/calender.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/custom/all.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/custom/calendar.css" />
 
 
-<script src="scripts/jquery-1.11.2.min.js"></script>
-<script src="scripts/calender.js"></script>
+<script src="scripts/framework/jquery-1.11.2.min.js"></script>
+<script src="scripts/custom/calendar.js"></script>
 
 </head>
 <body>

@@ -21,11 +21,11 @@ public class LoginController extends javax.servlet.http.HttpServlet
 			Cookie cookie = new Cookie("username", username);
 			cookie.setMaxAge(3600);
             response.addCookie(cookie);
-            response.sendRedirect("calendar.jsp");
+            response.sendRedirect("Calendar.jsp");
 		}
 		else
 		{
-            response.sendRedirect("login.jsp?failure=true&error=Der Benutzername, oder das Passwort sind falsch!");
+            response.sendRedirect("Login.jsp?failure=true&error=Der Benutzername, oder das Passwort sind falsch!");
 		}
 	}
 }

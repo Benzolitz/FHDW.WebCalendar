@@ -11,7 +11,7 @@
 				userName = cookie.getValue();
 		}
 	}
-	if(userName != null) response.sendRedirect("calendar.jsp");
+	if(userName != null) response.sendRedirect("Calendar.jsp");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,15 +19,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Loginbereich</title>
-<link rel="stylesheet" type="text/css" href="stylesheets/all.css" />
-<link rel="stylesheet" type="text/css" href="stylesheets/login.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/custom/all.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/custom/login.css" />
 </head>
 <body>
 	<div id="divLogin">
 		<div id="divHeadline">Anmeldung</div>
 		<hr />
 		<div id="divContent">
-			<form name="frmLogin" method="post" action="Login">
+			<form name="frmLogin" method="post" action="LoginController">
 				<div class="divCenter">
 					<input id="txtUsername" name="username" type="text"
 						placeholder="Benutzername" />
@@ -49,8 +49,8 @@
 					%>
 				</div>
 				<div id="divLinks">
-					<a href="registration.jsp">Registrierung</a> <br /> <a
-						href="passwordReset.jsp">Passwort vergessen?</a>
+					<a href="Register.jsp">Registrierung</a> <br /> <a
+						href="Reset.jsp">Passwort vergessen?</a>
 				</div>
 			</form>
 		</div>

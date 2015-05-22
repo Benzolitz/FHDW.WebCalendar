@@ -1,23 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%
+	String userName = null;
+	Cookie[] cookies = request.getCookies();
+	if(cookies != null)
+	{
+		for(Cookie cookie : cookies)
+		{
+			if(cookie.getName().equals("username"))
+				userName = cookie.getValue();
+		}
+	}
+	if(userName == null) response.sendRedirect("Login.jsp");
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title></title>
 
-<link rel="stylesheet" type="text/css" href="stylesheets/all.css" />
-<link rel="stylesheet" type="text/css" href="stylesheets/appointment.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/custom/all.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/custom/appointment.css" />
 
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
+<link rel="stylesheet" href="stylesheets/framework/font-awesome.min.css">
 
 </head>
 <body>
 	<div id="appointment">
 		<h2>Terminverwaltung</h2>
 		<hr />
-		<form name="appointmentForm" action="#" method="post">
+		<form name="appointmentForm" action="EventController" method="post">
 			<div id="fields" style="width: 80%; height: 50%; float: left; margin-top: 5px;">
 				<span class="fa fa-bookmark" style="margin-right: 5px; margin-left: 7px;"></span> <input type="text" name="appointmentTitel" placeholder="Terminname" /> 
 				<span class="fa fa-folder-open"></span> <input type="text" name="appointmentCategorie" placeholder="Kategorie" /><br /> 

@@ -35,7 +35,7 @@ public class CalendarController extends HttpServlet
 			loginCookie.setMaxAge(0);
 			response.addCookie(loginCookie);
 		}
-		response.sendRedirect("login.jsp");
+		response.sendRedirect("Login.jsp");
 	}
 	
 	protected void doGet(javax.servlet.http.HttpServletRequest request,
@@ -54,7 +54,7 @@ public class CalendarController extends HttpServlet
 				WeekFields weekFields = WeekFields.of(Locale.getDefault());
 				weekNumber = date.get(weekFields.weekOfWeekBasedYear());
 			}
-			output = "FUCK a JAVA";
+			output = "FUCK JAVA";
 		}
 		catch(Exception e)
 		{
