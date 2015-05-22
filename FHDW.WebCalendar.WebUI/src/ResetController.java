@@ -1,4 +1,4 @@
-package Controller;
+
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class PasswordReset
  */
 @WebServlet("/PasswordReset")
-public class PasswordReset extends HttpServlet
+public class ResetController extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 	

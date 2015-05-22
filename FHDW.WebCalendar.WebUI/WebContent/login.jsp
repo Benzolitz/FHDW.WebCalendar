@@ -1,5 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%
+	String userName = null;
+	Cookie[] cookies = request.getCookies();
+	if(cookies != null)
+	{
+		for(Cookie cookie : cookies)
+		{
+			if(cookie.getName().equals("username"))
+				userName = cookie.getValue();
+		}
+	}
+	if(userName != null) response.sendRedirect("calendar.jsp");
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,12 +39,15 @@
 				<div class="divCenter">
 					<input id="btnSubmit" type="Submit" value="Login" />
 				</div>
-				<div id="divHint"><%
-					if(request.getParameter("failure") != null && request.getParameter("failure").equals("true"))
-					{
-						out.println(request.getParameter("error"));
-					}
-				%></div>
+				<div id="divHint">
+					<%
+						if(request.getParameter("failure") != null
+								&& request.getParameter("failure").equals("true"))
+						{
+							out.println(request.getParameter("error"));
+						}
+					%>
+				</div>
 				<div id="divLinks">
 					<a href="registration.jsp">Registrierung</a> <br /> <a
 						href="passwordReset.jsp">Passwort vergessen?</a>

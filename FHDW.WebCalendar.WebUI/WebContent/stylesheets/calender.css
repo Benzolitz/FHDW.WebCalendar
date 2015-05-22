@@ -16,13 +16,20 @@
 }
 
 #calender {
-	background-color: #999;
-	
 	position: fixed;
 	top: 50px;
 	left: 200px;
+	
+	overflow: scroll;
 }
 
-body {
-	background-color: #F92;
+th {
+    border: 2px solid #000;
+    width: 14%;
+}
+
+td {
+	height: 12px;
+	border: 1px solid #888;
+	font-size: 1px;	
 }
