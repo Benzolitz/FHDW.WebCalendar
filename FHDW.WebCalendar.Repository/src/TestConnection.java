@@ -33,6 +33,8 @@ public class TestConnection
 		
 		//TestResetPassword(testRepo);									//Working
 		
+		TestGetEventsForUser(testRepo);
+		
 		//TestSaveEvent(testRepo);
 		
 	}
@@ -203,6 +205,20 @@ public class TestConnection
 		response = testRepo.ResetPassword(request);
 		System.out.println("TestValidateSecurityAnswerWrongAnswer was successfully: " + String.valueOf(response.IsSuccess()));
 		System.out.println(response.GetMessage());
+	}
+	
+	private static void TestGetEventsForUser(WebCalendarRepo testRepo)
+	{
+		GetEventsForUserResponse response;
+		GetEventsForUserRequest request = new GetEventsForUserRequest();
+		request.SetUsernameOrEmail("User1");
+		
+		response = testRepo.GetEventsForUser(request);
+		System.out.println("TestValidateSecurityAnswerWrongAnswer was successfully: " + String.valueOf(response.IsSuccess()));
+		System.out.println(response.GetMessage());
+		if(response.IsSuccess())
+			for (EventCalendarView event : response.GetEvents())
+				System.out.println(event.GetTitle());
 	}
 	
 	private static void TestSaveEvent(WebCalendarRepo testRepo)

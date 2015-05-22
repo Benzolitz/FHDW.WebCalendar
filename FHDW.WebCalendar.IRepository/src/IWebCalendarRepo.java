@@ -44,7 +44,14 @@ public interface IWebCalendarRepo
 	 * @param p_request
 	 * @return
 	 */
-	ResetPasswordResponse ResetPassword(ResetPasswordRequest p_request); 
+	ResetPasswordResponse ResetPassword(ResetPasswordRequest p_request);
+	
+	/**
+	 * Gibt alle Termine inklusive Kategorien zu einem bestimmten Benutzer zurück.
+	 * @param p_request
+	 * @return
+	 */
+	GetEventsForUserResponse GetEventsForUser(GetEventsForUserRequest p_request); 
 	
 	/**
 	 * Speichert einen neuen oder geänderten Termin.

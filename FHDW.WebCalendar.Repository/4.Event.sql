@@ -3,6 +3,7 @@ CREATE TABLE Event
 	ID int(11) NOT NULL AUTO_INCREMENT,
 	StartTime DATETIME NOT NULL,
 	EndTime DATETIME NOT NULL,
+	Title varchar(255) NOT NULL,
 	Location varchar(255) NOT NULL,
 	CreatorID int(11) NOT NULL,
 	CreationTime DATETIME NOT NULL,

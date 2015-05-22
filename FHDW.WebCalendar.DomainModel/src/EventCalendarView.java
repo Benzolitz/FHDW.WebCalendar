@@ -1,19 +1,16 @@
 import java.util.Date;
 import java.util.List;
 
-public class Event
+
+public class EventCalendarView
 {
 	private int id;
 	private String title;
 	private Date startTime;
 	private Date endTime;
 	private String location;
-	private User creator;
-	private Date creationTime;
 	private List<String> category;
-	private String message;
-	private List<String> requiredUser;
-	private List<String> optionalUser;
+	private boolean required;
 	private int calendarId;
 	
 	public void SetId(int p_id)
@@ -66,26 +63,6 @@ public class Event
 		return location;
 	}
 	
-	public void SetCreator(User p_creator)
-	{
-		creator = p_creator;
-	}
-	
-	public User GetCreator()
-	{
-		return creator;
-	}
-	
-	public void SetCreationTime(Date p_creationTime)
-	{
-		creationTime = p_creationTime;
-	}
-	
-	public Date GetCreationTime()
-	{
-		return creationTime;
-	}
-	
 	public void SetCategory(List<String> p_category)
 	{
 		category = p_category;
@@ -95,37 +72,7 @@ public class Event
 	{
 		return category;
 	}
-	
-	public void SetMessage(String p_message)
-	{
-		message = p_message;
-	}
-	
-	public String GetMessage()
-	{
-		return message;
-	}
-	
-	public List<String> GetRequiredUser()
-	{
-		return requiredUser;
-	}
-	
-	public void SetRequiredUser(List<String> p_requiredUser)
-	{
-		requiredUser = p_requiredUser;
-	}
-	
-	public List<String> GetOptionalUser()
-	{
-		return optionalUser;
-	}
-	
-	public void SetOptionalUser(List<String> p_optionalUser)
-	{
-		optionalUser = p_optionalUser;
-	}
-	
+				
 	public void SetCalendarId(int p_calendarId)
 	{
 		calendarId = p_calendarId;
@@ -135,5 +82,14 @@ public class Event
 	{
 		return calendarId;
 	}
+
+	public void SetRequired(boolean p_required)
+	{
+		required = p_required;
+	}
 	
+	public boolean GetRequired()
+	{
+		return required;
+	}
 }

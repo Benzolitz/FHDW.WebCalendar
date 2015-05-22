@@ -306,6 +306,50 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 	
 	@Override
+	public GetEventsForUserResponse GetEventsForUser(GetEventsForUserRequest p_request)
+	{
+		GetEventsForUserResponse Response = new GetEventsForUserResponse();
+		Collection<EventCalendarView> events = new ArrayList<EventCalendarView>();
+		EventCalendarView event;
+		Collection<String> categories;
+		String statement;
+		ResultSet rs;
+		
+		try
+		{
+			statement = String.format("SELECT Event.ID, Event.StartTime, Event.EndTime, Event.Title, Event.Location, Event.CalendarID, EventUser.Required FROM Event JOIN EventUser ON Event.ID = EventUser.EventID JOIN User ON EventUser.UserID = User.ID WHERE User.Username = '%s' OR User.EMail = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail());
+			rs = stmt.executeQuery(statement);
+			while (rs.next())
+			{
+				event = new EventCalendarView();
+				event.SetId(rs.getInt(1));
+				event.SetStartTime(rs.getDate(2));
+				event.SetEndTime(rs.getDate(3));
+				event.SetTitle(rs.getString(4));
+				event.SetLocation(rs.getString(5));
+				event.SetCalendarId(rs.getInt(6));
+				event.SetRequired(rs.getBoolean(7));
+				events.add(event);
+			}
+			for (EventCalendarView e : events)
+			{
+				categories = new ArrayList<String>();
+				statement = String.format("SELECT Category.Name FROM Category JOIN Event ON Category.EventID = Event.ID WHERE Event.ID = %d;", e.GetId());
+				rs = stmt.executeQuery(statement);
+				while (rs.next())
+					categories.add(rs.getString(1));
+			}
+			Response.SetEvents(events);
+			Response.MessageSuccess(String.valueOf(events.size()) + " has been returned;");
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+		
+		return Response;
+	}
+	
+	@Override
 	public SaveEventResponse SaveEvent(Event event)
 	{
 		SaveEventResponse Response = new SaveEventResponse();
@@ -343,11 +387,5 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return Response;
 	}
 
-	
-
-	
-
-
-
-	
+		
 }
