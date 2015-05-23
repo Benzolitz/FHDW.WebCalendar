@@ -47,6 +47,13 @@ public interface IWebCalendarRepo
 	ResetPasswordResponse ResetPassword(ResetPasswordRequest p_request);
 	
 	/**
+	 * Erstellt für einen bestimmten Benutzer einen neuen Kalendar.
+	 * @param p_request
+	 * @return
+	 */
+	CreateNewCalendarResponse CreateNewCalendar(CreateNewCalendarRequest p_request);
+	
+	/**
 	 * Gibt alle Kalender von einem Benutzer zurück.
 	 * @param p_request
 	 * @return

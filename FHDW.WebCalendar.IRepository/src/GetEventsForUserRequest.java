@@ -1,15 +1,26 @@
 
 public class GetEventsForUserRequest extends IRequest
 {
-	private String usernameOrEmail;
+	private int userId;
+	private int calendarId;
 	
-	public void SetUsernameOrEmail(String p_usernameOrEmail)
+	public void SetUserId(int p_userId)
 	{
-		usernameOrEmail = p_usernameOrEmail;
+		userId = p_userId;
 	}
 	
-	public String GetUsernameOrEmail()
+	public int GetUserId()
 	{
-		return usernameOrEmail;
+		return userId;
+	}
+	
+	public void SetCalendarId(int p_calendarId)
+	{
+		calendarId = p_calendarId;
+	}
+	
+	public int GetCalendarId()
+	{
+		return calendarId;
 	}
 }
