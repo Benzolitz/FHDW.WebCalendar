@@ -1,4 +1,5 @@
-public class ValidateLoginResponse extends IResponse
+
+public class GetAllUserCalendarRequest extends IRequest
 {
 	private int userId;
 	

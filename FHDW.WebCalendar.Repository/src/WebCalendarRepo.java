@@ -39,9 +39,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
 			
 			if (!stmt.getResultSet().first())
 			{
-				System.out.println("The Database " + database + " was not found. It will be created.");
-				int myResult = stmt.executeUpdate("CREATE DATABASE " + database + ";");
-				System.out.println("Create-Statement was send. Returncode: " + String.valueOf(myResult));
+				System.out.println(String.format("The Database %s was not found. It will be created.", database));
+				int myResult = stmt.executeUpdate(String.format("CREATE DATABASE %s;", database));
+				System.out.println(String.format("Create-Statement was send. Returncode: %s", String.valueOf(myResult)));
 				stmt.close();
 				conn.setCatalog(database);
 				stmt=conn.createStatement();
@@ -109,19 +109,19 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	public CheckUsernameOrEmailResponse CheckUsernameOrEmail(CheckUsernameOrEmailRequest p_request)
 	{
 		CheckUsernameOrEmailResponse Response = new CheckUsernameOrEmailResponse();
-		String statement;
+		String sql;
 		ResultSet rs;
 		
 		try
 		{
 			if (p_request.GetUsernameOrEmail().contains("@"))
 			{
-				statement = String.format("SELECT 1 FROM user where EMail = '%s'", p_request.GetUsernameOrEmail());
+				sql = String.format("SELECT 1 FROM user WHERE EMail = '%s';", p_request.GetUsernameOrEmail());
 			} else
 			{
-				statement = String.format("SELECT 1 FROM user where Username = '%s'", p_request.GetUsernameOrEmail());
+				sql = String.format("SELECT 1 FROM user WHERE Username = '%s';", p_request.GetUsernameOrEmail());
 			}
-			rs = stmt.executeQuery(statement);
+			rs = stmt.executeQuery(sql);
 			
 			if(rs.first())
 			{
@@ -142,7 +142,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	public ValidateLoginResponse ValidateLogin(ValidateLoginRequest p_request)
 	{
 		ValidateLoginResponse Response = new ValidateLoginResponse();
-		String statement;
+		String sql;
 		ResultSet rs;
 		
 		CheckUsernameOrEmailResponse CheckUsernameOrEmailrp;
@@ -157,11 +157,12 @@ public class WebCalendarRepo implements IWebCalendarRepo
 				throw new Exception(CheckUsernameOrEmailrp.GetMessage());
 			}
 			
-			statement = String.format("SELECT 1 FROM user where (Username = '%s' or EMail = '%s') and pass = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail(), p_request.GetPassword());
-			rs = stmt.executeQuery(statement);
+			sql = String.format("SELECT ID FROM user WHERE (Username = '%s' OR EMail = '%s') AND pass = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail(), p_request.GetPassword());
+			rs = stmt.executeQuery(sql);
 
-			if(rs.first())
+			if(rs.next())
 			{
+				Response.SetUserId(rs.getInt(1));
 				Response.MessageSuccess("Login is successful.");
 			}else
 			{
@@ -179,8 +180,10 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	public RegistrateNewUserResponse RegistrateNewUser(RegistrateNewUserRequest p_request)
 	{
 		RegistrateNewUserResponse Response = new RegistrateNewUserResponse();
-		String statement;
+		String sql;
+		int userId;
 		int rs;
+		ResultSet rs2;
 		
 		CheckUsernameOrEmailResponse CheckUsernameOrEmailrp;
 		CheckUsernameOrEmailRequest CheckUsernameOrEmailrq = new CheckUsernameOrEmailRequest();
@@ -197,20 +200,28 @@ public class WebCalendarRepo implements IWebCalendarRepo
 			CheckUsernameOrEmailrp = CheckUsernameOrEmail(CheckUsernameOrEmailrq);
 			if(CheckUsernameOrEmailrp.IsSuccess())
 			{
-				throw new Exception("Email already used.");
+				throw new Exception("Email already in use.");
 			}
 			
-			statement = String.format("INSERT INTO User (Username, EMail, pass, FirstName, LastName, SecurityQuestionID, SecurityAnswer) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%s');", p_request.GetUsername(), p_request.GetEMail(), p_request.GetPassword(), p_request.GetFirstName(), p_request.GetLastName(), p_request.GetSecurityQuestion(), p_request.GetSecurityAnswer());
-			rs = stmt.executeUpdate(statement);
+			sql = String.format("INSERT INTO User (Username, EMail, pass, FirstName, LastName, SecurityQuestionID, SecurityAnswer) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%s');", p_request.GetUsername(), p_request.GetEMail(), p_request.GetPassword(), p_request.GetFirstName(), p_request.GetLastName(), p_request.GetSecurityQuestion(), p_request.GetSecurityAnswer());
+			rs = stmt.executeUpdate(sql);
 			
-			if (rs > 0)
-			{
-				Response.MessageSuccess("New User with Username " + p_request.GetUsername() + " has been registrated.");
-			}else
-			{
-				Response.MessageFailure("An unknown error occured.");
-			}
+			if (!(rs > 0))
+				throw new Exception("An unknown error occured.");
 			
+			sql = String.format("SELECT LAST_INSERT_ID();");
+			rs2 = stmt.executeQuery(sql);
+			rs2.next();
+			userId = rs2.getInt(1);
+			
+			sql = String.format("INSERT INTO Calendar (Name, CreatorID) VALUES ('Mein Kalendar', %d);", userId);
+			rs = stmt.executeUpdate(sql);
+			
+			if (!(rs > 0))
+				throw new Exception("An unknown error occured.");
+			
+			Response.SetUserId(userId);
+			Response.MessageSuccess("New User with Username " + p_request.GetUsername() + " has been registrated. New Calendar was created for this User.");
 		} catch (Exception e)
 		{
 			Response.MessageFailure(e.getMessage());
@@ -223,7 +234,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	public GetSecurityQuestionResponse GetSecurityQuestion(GetSecurityQuestionRequest p_request)
 	{
 		GetSecurityQuestionResponse Response = new GetSecurityQuestionResponse();
-		String statement;
+		String sql;
 		ResultSet rs;
 		
 		CheckUsernameOrEmailResponse CheckUsernameOrEmailrp;
@@ -238,10 +249,10 @@ public class WebCalendarRepo implements IWebCalendarRepo
 				throw new Exception(CheckUsernameOrEmailrp.GetMessage());
 			}
 			
-			statement = String.format("SELECT SecurityQuestion.Question FROM User JOIN SecurityQuestion ON User.SecurityQuestionID = SecurityQuestion.ID where Username = '%s' or EMail = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail());
-			rs = stmt.executeQuery(statement);
+			sql = String.format("SELECT SecurityQuestion.Question FROM User JOIN SecurityQuestion ON User.SecurityQuestionID = SecurityQuestion.ID where Username = '%s' or EMail = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail());
+			rs = stmt.executeQuery(sql);
 			rs.next();
-			Response.SetSecurityQuestion(rs.getString("Question"));
+			Response.SetSecurityQuestion(rs.getString(1));
 			Response.MessageSuccess("Question was found.");
 		} catch (Exception e)
 		{
@@ -251,17 +262,18 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return Response;
 	}
 	
+	
 	@Override
 	public ValidateSecurityAnswerResponse ValidateSecurityAnswer(ValidateSecurityAnswerRequest p_request)
 	{
 		ValidateSecurityAnswerResponse Response = new ValidateSecurityAnswerResponse();
-		String statement;
+		String sql;
 		ResultSet rs;
 		
 		try
 		{
-			statement = String.format("SELECT 1 FROM User WHERE (Username = '%s' OR EMail = '%s') AND SecurityAnswer = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail(), p_request.GetAnswer());
-			rs = stmt.executeQuery(statement);
+			sql = String.format("SELECT 1 FROM User WHERE (Username = '%s' OR EMail = '%s') AND SecurityAnswer = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail(), p_request.GetAnswer());
+			rs = stmt.executeQuery(sql);
 			
 			if(rs.first())
 			{
@@ -278,17 +290,18 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return Response;
 	}
 	
+	
 	@Override
 	public ResetPasswordResponse ResetPassword(ResetPasswordRequest p_request)
 	{
 		ResetPasswordResponse Response = new ResetPasswordResponse();
-		String statement;
+		String sql;
 		int rs;
 		
 		try
 		{
-			statement = String.format("UPDATE User SET pass = '%s' WHERE Username = '%s' OR EMail = '%s';", p_request.GetPassword(), p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail());
-			rs = stmt.executeUpdate(statement);
+			sql = String.format("UPDATE User SET pass = '%s' WHERE Username = '%s' OR EMail = '%s';", p_request.GetPassword(), p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail());
+			rs = stmt.executeUpdate(sql);
 			
 			if (rs > 0)
 			{
@@ -304,6 +317,162 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		return Response;
 	}
+	
+	
+	@Override
+	public CreateNewCalendarResponse CreateNewCalendar(CreateNewCalendarRequest p_request)
+	{
+		CreateNewCalendarResponse Response = new CreateNewCalendarResponse();
+		String sql;
+		int rs;
+		ResultSet rs2;
+		
+		try
+		{
+			sql = String.format("INSERT INTO Calendar (Name, CreatorID) VALUES ('%s', %d);", p_request.GetCalendarName(), p_request.GetUserId());
+			rs = stmt.executeUpdate(sql);
+			
+			sql = String.format("SELECT LAST_INSERT_ID();");
+			rs2 = stmt.executeQuery(sql);
+			rs2.next();
+			
+			Response.SetCalendarId(rs2.getInt(1));
+			Response.MessageSuccess(String.format("Calendar with the Name %s was successfully created.", p_request.GetCalendarName()));
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+
+		return Response;
+	}
+	
+	@Override
+	public GetAllUserCalendarResponse GetAllUserCalendar(GetAllUserCalendarRequest p_request)
+	{
+		GetAllUserCalendarResponse Response = new GetAllUserCalendarResponse();
+		Collection<Calendar> calendars = new ArrayList<Calendar>();
+		Calendar calendar;
+		String sql;
+		ResultSet rs;
+		
+		try
+		{
+			sql = String.format("SELECT Calendar.ID, Calendar.Name FROM Calendar WHERE Calendar.CreatorID = 1;", p_request.GetUserId());
+			rs = stmt.executeQuery(sql);
+			while (rs.next())
+			{
+				calendar = new Calendar();
+				calendar.SetId(rs.getInt(1));
+				calendar.SetName(rs.getString(2));
+				calendar.SetOwnerId(p_request.GetUserId());
+				calendars.add(calendar);
+			}
+			
+			Response.SetCalendars(calendars);
+			Response.MessageSuccess(String.format("Calendars of User %d were found.", p_request.GetUserId()));
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+
+		return Response;
+	}
+	
+	//TODO: Events zu einem bestimmten Kalender wiedergeben
+	
+	@Override
+	public GetEventsForUserResponse GetEventsForUser(GetEventsForUserRequest p_request)
+	{
+		GetEventsForUserResponse Response = new GetEventsForUserResponse();
+		Collection<EventCalendarView> events = new ArrayList<EventCalendarView>();
+		EventCalendarView event;
+		Collection<String> categories;
+		String sql;
+		ResultSet rs;
+		
+		try
+		{
+			sql = String.format("SELECT Event.ID, Event.StartTime, Event.EndTime, Event.Title, Event.Location, Event.CalendarID, EventUser.Required FROM Event JOIN EventUser ON Event.ID = EventUser.EventID JOIN User ON EventUser.UserID = User.ID WHERE User.ID = '%d' AND Event.CalendarID = %d;", p_request.GetUserId(), p_request.GetCalendarId());
+			rs = stmt.executeQuery(sql);
+			while (rs.next())
+			{
+				event = new EventCalendarView();
+				event.SetId(rs.getInt(1));
+				event.SetStartTime(rs.getDate(2));
+				event.SetEndTime(rs.getDate(3));
+				event.SetTitle(rs.getString(4));
+				event.SetLocation(rs.getString(5));
+				event.SetCalendarId(rs.getInt(6));
+				event.SetRequired(rs.getBoolean(7));
+				events.add(event);
+			}
+			for (EventCalendarView e : events)
+			{
+				categories = new ArrayList<String>();
+				sql = String.format("SELECT Category.Name FROM Category JOIN Event ON Category.EventID = Event.ID WHERE Event.ID = %d;", e.GetId());
+				rs = stmt.executeQuery(sql);
+				while (rs.next())
+					categories.add(rs.getString(1));
+				e.SetCategory(categories);
+			}
+			Response.SetEvents(events);
+			Response.MessageSuccess(String.valueOf(events.size()) + " has been returned;");
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+		
+		return Response;
+	}
+	
+	//TODO: Creator in Event zu CreatorID wechseln
+	
+	@Override
+	public GetEventDetailedResponse GetEventDetailed(GetEventDetailedRequest p_request)
+	{
+		GetEventDetailedResponse Response = new GetEventDetailedResponse();
+		Collection<String> optionalUser = new ArrayList<String>();
+		Collection<String> requiredUser = new ArrayList<String>();
+		Event event = new Event();
+		String sql;
+		ResultSet rs;
+		
+		try
+		{
+			sql = String.format("SELECT Event.StartTime, Event.EndTime, Event.Title, Event.Location, Event.CreatorID, Event.CreationTime, Event.Message, Event.CalendarID FROM Event WHERE Event.ID = %d;", p_request.GetEventId());
+			rs = stmt.executeQuery(sql);
+			rs.next();
+			event.SetStartTime(rs.getDate(1));
+			event.SetEndTime(rs.getDate(2));
+			event.SetTitle(rs.getString(3));
+			event.SetLocation(rs.getString(4));
+			//event.SetCreatorId(rs.getInt(5));
+			event.SetCreationTime(rs.getDate(6));
+			event.SetMessage(rs.getString(7));
+			event.SetCalendarId(rs.getInt(8));
+			
+			sql = String.format("SELECT User.EMail, User.FirstName, User.LastName ,EventUser.Required FROM EventUser JOIN Event ON EventUser.EventID = Event.ID JOIN User ON EventUser.UserID = User.ID WHERE Event.ID = %d;", p_request.GetEventId());
+			rs = stmt.executeQuery(sql);
+			while(rs.next())
+			{
+				if(rs.getBoolean(4))
+					requiredUser.add(String.format("%s, %s (%s)", rs.getString(3), rs.getString(2), rs.getString(1)));
+				else
+					optionalUser.add(String.format("%s, %s (%s)", rs.getString(3), rs.getString(2), rs.getString(1)));
+			}
+			event.SetOptionalUser(optionalUser);
+			event.SetRequiredUser(requiredUser);
+			
+			Response.SetEvent(event);
+			Response.MessageSuccess("Event informations recieved.");
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+		
+		return Response;
+	}
+	
 	
 	@Override
 	public SaveEventResponse SaveEvent(Event event)
@@ -333,21 +502,25 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return Response;
 	}
 
+	
 	@Override
 	public DeleteEventResponse DeleteEvent(Event event)
 	{
 		DeleteEventResponse Response = new DeleteEventResponse();
 		
-		Response.MessageFailure("Not implemented.");
-		
+		try
+		{
+			throw new Exception("Not implemented.");
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+
 		return Response;
 	}
 
 	
-
 	
 
-
-
-	
+		
 }

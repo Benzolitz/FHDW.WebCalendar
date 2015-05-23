@@ -19,7 +19,7 @@ public interface IWebCalendarRepo
 	ValidateLoginResponse ValidateLogin(ValidateLoginRequest p_request);
 	
 	/**
-	 * Registriert einen neuen Benutzer. 
+	 * Registriert einen neuen Benutzer. Erstellt zugleich einen leeren Kalender für diesen Benutzer.
 	 * @param p_request
 	 * @return
 	 */
@@ -44,7 +44,35 @@ public interface IWebCalendarRepo
 	 * @param p_request
 	 * @return
 	 */
-	ResetPasswordResponse ResetPassword(ResetPasswordRequest p_request); 
+	ResetPasswordResponse ResetPassword(ResetPasswordRequest p_request);
+	
+	/**
+	 * Erstellt für einen bestimmten Benutzer einen neuen Kalendar.
+	 * @param p_request
+	 * @return
+	 */
+	CreateNewCalendarResponse CreateNewCalendar(CreateNewCalendarRequest p_request);
+	
+	/**
+	 * Gibt alle Kalender von einem Benutzer zurück.
+	 * @param p_request
+	 * @return
+	 */
+	GetAllUserCalendarResponse GetAllUserCalendar(GetAllUserCalendarRequest p_request);
+	
+	/**
+	 * Gibt alle Termine inklusive Kategorien für die Kalendaransicht zu einem bestimmten Benutzer zurück.
+	 * @param p_request
+	 * @return
+	 */
+	GetEventsForUserResponse GetEventsForUser(GetEventsForUserRequest p_request); 
+	
+	/**
+	 * Gibt zu einem bestimmten Termin alle Informationen wieder.
+	 * @param p_request
+	 * @return
+	 */
+	GetEventDetailedResponse GetEventDetailed(GetEventDetailedRequest p_request);
 	
 	/**
 	 * Speichert einen neuen oder geänderten Termin.

@@ -38,6 +38,7 @@
 				</div>
 				<div class="divCenter">
 					<input id="btnSubmit" type="Submit" value="Login" />
+					<input id="btnRegister" type="Submit" value="Registrieren" />
 				</div>
 				<div id="divHint">
 					<%
