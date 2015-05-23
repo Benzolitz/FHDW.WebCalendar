@@ -98,8 +98,23 @@ public interface IWebCalendarRepo
 
 	/**
 	 * Löscht einen vorhandenen Termin.
-	 * @param event	Terminobjekt, welches gelöscht werden soll
+	 * @param p_request
+	 * @return
 	 */
-	DeleteEventResponse DeleteEvent(Event event);
+	DeleteEventResponse DeleteEvent(DeleteEventRequest p_request);
+	
+	/**
+	 * Löscht einen vorhandenen Kalendar und die dazugehörigen Termine.
+	 * @param p_request
+	 * @return
+	 */
+	DeleteCalendarResponse DeleteCalendar(DeleteCalendarRequest p_request);
+	
+	/**
+	 * Löscht einen Benutzer und die dazugehörigen Kalender und Termine.
+	 * @param p_request
+	 * @return
+	 */
+	DeleteUserResponse DeleteUser(DeleteUserRequest p_request);
 	
 }

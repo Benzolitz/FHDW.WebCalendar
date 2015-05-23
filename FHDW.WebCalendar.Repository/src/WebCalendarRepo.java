@@ -552,16 +552,70 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 
 	
+
 	@Override
-	public DeleteEventResponse DeleteEvent(Event event)
+	public DeleteEventResponse DeleteEvent(DeleteEventRequest p_request)
 	{
 		DeleteEventResponse Response = new DeleteEventResponse();
 		String sql;
-		ResultSet rs;
+		int rs;
 		
 		try
 		{
-			throw new Exception("Not implemented.");
+			sql = String.format("DELETE FROM Event WHERE ID = %d;", p_request.GetEventId());
+			rs = stmt.executeUpdate(sql);
+			if (!(rs > 0))
+				throw new Exception("An unknown error occured.");
+			
+			Response.MessageSuccess("Event successfully deleted.");
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+
+		return Response;
+	}
+
+	
+	@Override
+	public DeleteCalendarResponse DeleteCalendar(DeleteCalendarRequest p_request)
+	{
+		DeleteCalendarResponse Response = new DeleteCalendarResponse();
+		String sql;
+		int rs;
+		
+		try
+		{
+			sql = String.format("DELETE FROM Calendar WHERE ID = %d;", p_request.GetCalendarId());
+			rs = stmt.executeUpdate(sql);
+			if (!(rs > 0))
+				throw new Exception("An unknown error occured.");
+			
+			Response.MessageSuccess("Calendar successfully deleted.");
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+
+		return Response;
+	}
+
+	
+	@Override
+	public DeleteUserResponse DeleteUser(DeleteUserRequest p_request)
+	{
+		DeleteUserResponse Response = new DeleteUserResponse();
+		String sql;
+		int rs;
+		
+		try
+		{
+			sql = String.format("DELETE FROM User WHERE ID = %d;", p_request.GetUserId());
+			rs = stmt.executeUpdate(sql);
+			if (!(rs > 0))
+				throw new Exception("An unknown error occured.");
+			
+			Response.MessageSuccess("User successfully deleted.");
 		} catch (Exception e)
 		{
 			Response.MessageFailure(e.getMessage());
