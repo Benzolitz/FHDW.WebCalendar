@@ -138,6 +138,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return Response;
 	}
 	
+	@Deprecated
 	@Override
 	public ValidateLoginResponse ValidateLogin(ValidateLoginRequest p_request)
 	{
@@ -173,6 +174,28 @@ public class WebCalendarRepo implements IWebCalendarRepo
 			Response.MessageFailure(e.getMessage());
 		}
 		
+		return Response;
+	}
+	
+	@Override
+	public GetUserPasswordResponse GetUserPassword(GetUserPasswordRequest p_request)
+	{
+		GetUserPasswordResponse Response = new GetUserPasswordResponse();
+		String sql;
+		ResultSet rs;
+		
+		try
+		{
+			sql = String.format("SELECT Pass FROM user WHERE ID = '%d';", p_request.GetUserId());
+			rs = stmt.executeQuery(sql);
+			rs.next();
+			Response.SetPassword(rs.getString(1));
+			Response.MessageSuccess("Password was found.");
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+
 		return Response;
 	}
 	
@@ -263,6 +286,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 	
 	
+	@Deprecated
 	@Override
 	public ValidateSecurityAnswerResponse ValidateSecurityAnswer(ValidateSecurityAnswerRequest p_request)
 	{
@@ -290,6 +314,30 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return Response;
 	}
 	
+	
+	@Override
+	public GetSecurityAnswerResponse GetSecurityAnswer(GetSecurityAnswerRequest p_request)
+	{
+		GetSecurityAnswerResponse Response = new GetSecurityAnswerResponse();
+		String sql;
+		ResultSet rs;
+		
+		try
+		{
+			sql = String.format("SELECT SecurityAnswer FROM user WHERE ID = '%d';", p_request.GetUserId());
+			rs = stmt.executeQuery(sql);
+			rs.next();
+			
+			Response.SetAnswer(rs.getString(1));
+			Response.MessageSuccess("Login is successful.");
+			
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+
+		return Response;
+	}
 	
 	@Override
 	public ResetPasswordResponse ResetPassword(ResetPasswordRequest p_request)
@@ -427,6 +475,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	
 	//TODO: Creator in Event zu CreatorID wechseln
 	
+	//TODO: Creator in Event zu CreatorID wechseln
 	@Override
 	public GetEventDetailedResponse GetEventDetailed(GetEventDetailedRequest p_request)
 	{
@@ -507,6 +556,8 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	public DeleteEventResponse DeleteEvent(Event event)
 	{
 		DeleteEventResponse Response = new DeleteEventResponse();
+		String sql;
+		ResultSet rs;
 		
 		try
 		{
@@ -518,6 +569,8 @@ public class WebCalendarRepo implements IWebCalendarRepo
 
 		return Response;
 	}
+
+	
 
 	
 	

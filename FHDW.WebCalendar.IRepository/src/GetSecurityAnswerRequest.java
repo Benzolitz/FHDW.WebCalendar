@@ -1,5 +1,5 @@
 
-public class CheckUsernameOrEmailResponse extends IResponse
+public class GetSecurityAnswerRequest extends IRequest
 {
 	private int userId;
 
@@ -7,7 +7,7 @@ public class CheckUsernameOrEmailResponse extends IResponse
 	{
 		userId = p_userId;
 	}
-	
+		
 	public int GetUserId()
 	{
 		return userId;

@@ -16,7 +16,15 @@ public interface IWebCalendarRepo
 	 * @param p_request
 	 * @return
 	 */
+	@Deprecated
 	ValidateLoginResponse ValidateLogin(ValidateLoginRequest p_request);
+	
+	/**
+	 * Liefert das Passwort zu einem Benutzer.
+	 * @param p_request
+	 * @return
+	 */
+	GetUserPasswordResponse GetUserPassword(GetUserPasswordRequest p_request); 
 	
 	/**
 	 * Registriert einen neuen Benutzer. Erstellt zugleich einen leeren Kalender für diesen Benutzer.
@@ -37,7 +45,15 @@ public interface IWebCalendarRepo
 	 * @param p_request
 	 * @return
 	 */
+	@Deprecated
 	ValidateSecurityAnswerResponse ValidateSecurityAnswer(ValidateSecurityAnswerRequest p_request);
+	
+	/**
+	 * Liefert von einem Benutzer die Sicherheitsantwort.
+	 * @param p_request
+	 * @return
+	 */
+	GetSecurityAnswerResponse GetSecurityAnswer(GetSecurityAnswerRequest p_request);
 	
 	/**
 	 * Setzt das Password eines Benutzers zurück.
