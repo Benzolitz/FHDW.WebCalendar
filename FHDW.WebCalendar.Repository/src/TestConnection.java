@@ -215,7 +215,8 @@ public class TestConnection
 	{
 		GetEventsForUserResponse response;
 		GetEventsForUserRequest request = new GetEventsForUserRequest();
-		request.SetUsernameOrEmail("User1");
+		request.SetCalendarId(1);
+		request.SetUserId(1);
 		
 		response = testRepo.GetEventsForUser(request);
 		System.out.println("TestGetEventsForUser was successfully: " + String.valueOf(response.IsSuccess()));

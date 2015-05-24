@@ -1,5 +1,5 @@
 
-public class CheckUsernameOrEmailResponse extends IResponse
+public class DeleteUserRequest extends IRequest
 {
 	private int userId;
 

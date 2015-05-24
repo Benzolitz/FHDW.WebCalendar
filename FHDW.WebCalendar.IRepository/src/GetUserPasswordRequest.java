@@ -1,5 +1,5 @@
 
-public class CheckUsernameOrEmailResponse extends IResponse
+public class GetUserPasswordRequest extends IRequest
 {
 	private int userId;
 

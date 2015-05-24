@@ -16,7 +16,15 @@ public interface IWebCalendarRepo
 	 * @param p_request
 	 * @return
 	 */
+	@Deprecated
 	ValidateLoginResponse ValidateLogin(ValidateLoginRequest p_request);
+	
+	/**
+	 * Liefert das Passwort zu einem Benutzer.
+	 * @param p_request
+	 * @return
+	 */
+	GetUserPasswordResponse GetUserPassword(GetUserPasswordRequest p_request); 
 	
 	/**
 	 * Registriert einen neuen Benutzer. Erstellt zugleich einen leeren Kalender für diesen Benutzer.
@@ -37,7 +45,15 @@ public interface IWebCalendarRepo
 	 * @param p_request
 	 * @return
 	 */
+	@Deprecated
 	ValidateSecurityAnswerResponse ValidateSecurityAnswer(ValidateSecurityAnswerRequest p_request);
+	
+	/**
+	 * Liefert von einem Benutzer die Sicherheitsantwort.
+	 * @param p_request
+	 * @return
+	 */
+	GetSecurityAnswerResponse GetSecurityAnswer(GetSecurityAnswerRequest p_request);
 	
 	/**
 	 * Setzt das Password eines Benutzers zurück.
@@ -82,8 +98,23 @@ public interface IWebCalendarRepo
 
 	/**
 	 * Löscht einen vorhandenen Termin.
-	 * @param event	Terminobjekt, welches gelöscht werden soll
+	 * @param p_request
+	 * @return
 	 */
-	DeleteEventResponse DeleteEvent(Event event);
+	DeleteEventResponse DeleteEvent(DeleteEventRequest p_request);
+	
+	/**
+	 * Löscht einen vorhandenen Kalendar und die dazugehörigen Termine.
+	 * @param p_request
+	 * @return
+	 */
+	DeleteCalendarResponse DeleteCalendar(DeleteCalendarRequest p_request);
+	
+	/**
+	 * Löscht einen Benutzer und die dazugehörigen Kalender und Termine.
+	 * @param p_request
+	 * @return
+	 */
+	DeleteUserResponse DeleteUser(DeleteUserRequest p_request);
 	
 }
