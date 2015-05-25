@@ -18,9 +18,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Loginbereich</title>
+
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/all.css" />
-<link rel="stylesheet" type="text/css"
-	href="stylesheets/custom/login.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/custom/login.css" />
+
+<script src="scripts/framework/jquery-1.11.2.min.js"></script>
+<script src="scripts/custom/all.js"></script>
+<script src="scripts/custom/login.js"></script>
+
 </head>
 <body>
 	<div id="divLogin">
@@ -29,16 +34,14 @@
 		<div id="divContent">
 			<form name="frmLogin" method="post" action="LoginController">
 				<div class="divCenter">
-					<input id="txtUsername" name="username" type="text"
-						placeholder="Benutzername" />
+					<input id="txtUsername" name="username" type="text" placeholder="Benutzername" />
 				</div>
 				<div class="divCenter">
-					<input id="txtPassword" name="password" type="password"
-						placeholder="Passwort" />
+					<input id="txtPassword" name="password" type="password" placeholder="Passwort" />
 				</div>
 				<div class="divCenter">
 					<input id="btnSubmit" type="Submit" value="Login" />
-					<input id="btnRegister" type="Submit" value="Registrieren" />
+					<input id="btnRegister" type="button" value="Registrieren" />
 				</div>
 				<div id="divHint">
 					<%
@@ -49,9 +52,8 @@
 						}
 					%>
 				</div>
-				<div id="divLinks">
-					<a href="Register.jsp">Registrierung</a> <br /> <a
-						href="Reset.jsp">Passwort vergessen?</a>
+				<div id="divLinks"> 
+					<a href="Reset.jsp">Passwort vergessen?</a>
 				</div>
 			</form>
 		</div>

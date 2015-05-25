@@ -1,3 +1,5 @@
+package Controller;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
@@ -6,17 +8,34 @@ import java.util.Locale;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @WebServlet ("/CalendarController")
 public class CalendarController extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 	
-	protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException
 	{
-		response.setContentType("text/html");
+		String action = request.getParameter("action");
+		
+		switch (action.toLowerCase())
+		{
+			case "getcalendar" :
+				GetCalendar(response, Integer.parseInt(request.getParameter("weeknumber")));
+				break;
+			case "logout" : 
+				Logout(response, request.getCookies());
+				break;
+			default :
+				break;
+		}
+	}
+	
+	private void Logout(HttpServletResponse response, Cookie[] cookies) throws IOException
+	{
 		Cookie loginCookie = null;
-		Cookie[] cookies = request.getCookies();
 		if (cookies != null)
 		{
 			for (Cookie cookie : cookies)
@@ -36,20 +55,12 @@ public class CalendarController extends HttpServlet
 		response.sendRedirect("Login.jsp");
 	}
 	
-	protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException
+	private void GetCalendar(HttpServletResponse response, Integer weekNumber) throws IOException
 	{
-		String output;
+		String output = "";
 		try
 		{
-			Integer weekNumber = Integer.parseInt(request.getParameter("weeknumber"));
 			
-			if (weekNumber == - 1)
-			{
-				LocalDate date = LocalDate.now();
-				WeekFields weekFields = WeekFields.of(Locale.getDefault());
-				weekNumber = date.get(weekFields.weekOfWeekBasedYear());
-			}
-			output = "FUCK JAVA";
 		}
 		catch (Exception e)
 		{

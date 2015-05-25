@@ -3,14 +3,14 @@
 <%
 	String userName = null;
 	Cookie[] cookies = request.getCookies();
-	if(cookies != null)
+	if (cookies != null)
 	{
-		for(Cookie cookie : cookies)
+		for (Cookie cookie : cookies)
 		{
-			if(cookie.getName().equals("username")) userName = cookie.getValue();
+			if (cookie.getName().equals("username")) userName = cookie.getValue();
 		}
 	}
-	if(userName == null) response.sendRedirect("Login.jsp");
+	if (userName == null) response.sendRedirect("Login.jsp");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -30,14 +30,20 @@
 </head>
 <body>
 	<div id="header">
-		<form action="CalendarController" method="post">
-			<input type="Submit" value="Logout" />
-		</form>
+		<input id="btnLogout" type="button" value="Logout" onClick="Logout()" />
 	</div>
 
 	<div id="info"></div>
 
-	<div id="calender"></div>
+	<div id="calendar">
+		<div id="calendarHead">
+			<input id="txtSearchBox" type="text" placeholder="Suche"/>
+			<input id="btnLastWeek" type="button" value="d" onClick="getLastWeek()" />
+			<input id="btnNextWeek" type="button" value="d" onClick="getNextWeek()" />
+			<input id="hidCurrentWeek" type="hidden" />
+		</div>
+		<div id="calendarBody"></div>
+	</div>
 
 </body>
 </html>

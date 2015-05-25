@@ -5,9 +5,15 @@ $(document).ready(function() {
 });
 
 var getTable = function(weeknumber) {
-	$.get('CalendarController', {
-		weeknumber : weeknumber
-	}, function(responseText) {
-		$('#calender').text(responseText)
-	});
+	
 }
+
+var Logout = function() {
+	$.ajax({
+		type : "POST",
+		url : "CalendarController",
+		data : {
+			action : "logout"
+		}
+	});
+};
