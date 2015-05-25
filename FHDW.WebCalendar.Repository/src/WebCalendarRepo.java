@@ -200,6 +200,33 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 	
 	@Override
+	public GetAllSecurityQuestionsResponse GetAllSecurityQuestions(GetAllSecurityQuestionsRequest p_request)
+	{
+		GetAllSecurityQuestionsResponse Response = new GetAllSecurityQuestionsResponse();
+		Collection<String> categories = new ArrayList<String>();
+		String sql;
+		ResultSet rs;
+		
+		try
+		{
+			sql = String.format("DELETE Name FROM Category;");
+			rs = stmt.executeQuery(sql);
+			
+			while (rs.next())
+			{
+				categories.add(rs.getString(1));
+			}
+	
+			Response.MessageSuccess("Security questions successfully loaded.");
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+
+		return Response;
+	}
+	
+	@Override
 	public RegistrateNewUserResponse RegistrateNewUser(RegistrateNewUserRequest p_request)
 	{
 		RegistrateNewUserResponse Response = new RegistrateNewUserResponse();
@@ -468,7 +495,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return Response;
 	}
 	
-	//TODO: Creator in Event zu CreatorID wechseln
 	@Override
 	public GetEventDetailedResponse GetEventDetailed(GetEventDetailedRequest p_request)
 	{
@@ -525,12 +551,12 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		try
 		{
-			sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', %s, %s, '%s', %d, CURTIME(), %d);", p_request.GetTitle(), p_request.getLocation(), p_request.getStarttime(), p_request.getEndtime(), p_request.getMessage(), p_request.getCreatorId(), sdf.format(new Date()), p_request.getCalendarId());
+			sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME(), %d);", p_request.GetTitle(), p_request.GetLocation(), p_request.GetStarttime(), p_request.GetEndtime(), p_request.GetMessage(), p_request.GetCreatorId(), sdf.format(new Date()), p_request.GetCalendarId());
 			rs = stmt.executeUpdate(sql);
 			sql = String.format("SELECT LAST_INSERT_ID();");
 			rs2 = stmt.executeQuery(sql);
 			
-			for (String category : p_request.getCategories())
+			for (String category : p_request.GetCategories())
 			{
 				sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, rs2.getInt(1));
 				rs = stmt.executeUpdate(sql);
@@ -613,11 +639,40 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 
 	
+	@Override
+	public UpdateEventResponse UpdateEvent(UpdateEventRequest p_request)
+	{
+		UpdateEventResponse Response = new UpdateEventResponse();
+		String sql;
+		int rs;
+		
+		try
+		{
+			sql = String.format("UPDATE Event SET Title='%s', Location='%s', StartTime='%s', EndTime='%s', Message='%s' WHERE ID=%d;", p_request.GetTitle(), p_request.GetLocation(), sdf.format(p_request.GetStarttime()), sdf.format(p_request.GetEndtime()), p_request.GetMessage(), p_request.GetEventId());
+			rs = stmt.executeUpdate(sql);
+			if (!(rs > 0))
+				throw new Exception("An unknown error occured.");
+			
+			sql = String.format("DELETE FROM Category WHERE EventID = %d;", p_request.GetEventId());
+			rs = stmt.executeUpdate(sql);
+			
+			for (String category : p_request.GetCategories())
+			{
+				sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, p_request.GetEventId());
+				rs = stmt.executeUpdate(sql);
+			}
+			
+			Response.MessageSuccess("Event successfully updated.");
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+
+		return Response;
+	}
 
 	
 
 	
-	
-
 		
 }

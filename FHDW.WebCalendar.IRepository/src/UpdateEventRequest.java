@@ -1,32 +1,41 @@
 import java.util.Collection;
 import java.util.Date;
 
-public class SaveEventRequest extends IRequest
+
+public class UpdateEventRequest extends IRequest
 {
+	private int eventId;
 	private String title;
 	private String location;
 	private Date starttime;
 	private Date endtime;
 	private String message;
 	private Collection<String> categories;
-	private int creatorId;
-	private int calendarId;
 	
-	public SaveEventRequest()
+	public UpdateEventRequest()
 	{
 		
 	}
 	
-	public SaveEventRequest(String p_title, String p_location, Date p_starttime, Date p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId)
+	public UpdateEventRequest(int p_eventId, String p_title, String p_location, Date p_starttime, Date p_endtime, String p_message, Collection<String> p_categories)
 	{
+		eventId = p_eventId;
 		title = p_title;
 		location = p_location;
 		starttime = p_starttime;
 		endtime = p_endtime;
 		message = p_message;
 		categories = p_categories;
-		creatorId = p_creatorId;
-		calendarId = p_calendarId;
+	}
+
+	public int GetEventId()
+	{
+		return eventId;
+	}
+
+	public void SetEventId(int p_eventId)
+	{
+		eventId = p_eventId;
 	}
 
 	public String GetTitle()
@@ -88,25 +97,6 @@ public class SaveEventRequest extends IRequest
 	{
 		categories = p_categories;
 	}
-
-	public int GetCreatorId()
-	{
-		return creatorId;
-	}
-
-	public void SetCreatorId(int p_creatorId)
-	{
-		creatorId = p_creatorId;
-	}
-
-	public int GetCalendarId()
-	{
-		return calendarId;
-	}
-
-	public void SetCalendarId(int p_calendarId)
-	{
-		calendarId = p_calendarId;
-	}
-
+	
+	
 }

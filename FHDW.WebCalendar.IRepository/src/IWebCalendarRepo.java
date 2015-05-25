@@ -24,7 +24,14 @@ public interface IWebCalendarRepo
 	 * @param p_request
 	 * @return
 	 */
-	GetUserPasswordResponse GetUserPassword(GetUserPasswordRequest p_request); 
+	GetUserPasswordResponse GetUserPassword(GetUserPasswordRequest p_request);
+	
+	/**
+	 * Liefert alle möglichen Sicherheitsfragen.
+	 * @param p_request
+	 * @return
+	 */
+	GetAllSecurityQuestionsResponse GetAllSecurityQuestions(GetAllSecurityQuestionsRequest p_request);
 	
 	/**
 	 * Registriert einen neuen Benutzer. Erstellt zugleich einen leeren Kalender für diesen Benutzer.
@@ -116,5 +123,12 @@ public interface IWebCalendarRepo
 	 * @return
 	 */
 	DeleteUserResponse DeleteUser(DeleteUserRequest p_request);
+	
+	/**
+	 * Aktualisiert die Daten zu einem Termin.
+	 * @param p_request
+	 * @return
+	 */
+	UpdateEventResponse UpdateEvent (UpdateEventRequest p_request);
 	
 }
