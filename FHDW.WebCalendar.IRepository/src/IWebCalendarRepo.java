@@ -94,7 +94,7 @@ public interface IWebCalendarRepo
 	 * Speichert einen neuen oder geänderten Termin.
 	 * @param event	Terminobjekt, welches gespeichert werden soll
 	 */
-	SaveEventResponse SaveEvent(Event event);
+	SaveEventResponse SaveEvent(SaveEventRequest p_request);
 
 	/**
 	 * Löscht einen vorhandenen Termin.

@@ -516,33 +516,33 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 	
 	@Override
-	public SaveEventResponse SaveEvent(Event event)
+	public SaveEventResponse SaveEvent(SaveEventRequest p_request)
 	{
 		SaveEventResponse Response = new SaveEventResponse();
+		String sql;
+		int rs;
+		ResultSet rs2;
 		
 		try
-		{		
-			stmt.executeUpdate(String.format("INSERT INTO Event (StartTime, EndTime, Location, CreatorID, CreationTime, Message, CalendarID)"
-					+ "VALUES ('%s', '%s', '%s', %d, '%s', '%s', %d);",
-					sdf.format(event.GetStartTime()),
-					sdf.format(event.GetEndTime()),
-					event.GetLocation(),
-					event.GetCreator().GetId(),
-					sdf.format(new Date()),
-					event.GetMessage(),
-					1
-					));
-			Response.MessageSuccess("Inserted new Event.");
-		} catch (SQLException e)
 		{
-			e.printStackTrace();
-			Response.MessageFailure("Not implemented.");
-			System.out.println(e.getMessage());
+			sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', %s, %s, '%s', %d, CURTIME(), %d);", p_request.GetTitle(), p_request.getLocation(), p_request.getStarttime(), p_request.getEndtime(), p_request.getMessage(), p_request.getCreatorId(), sdf.format(new Date()), p_request.getCalendarId());
+			rs = stmt.executeUpdate(sql);
+			sql = String.format("SELECT LAST_INSERT_ID();");
+			rs2 = stmt.executeQuery(sql);
+			
+			for (String category : p_request.getCategories())
+			{
+				sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, rs2.getInt(1));
+				rs = stmt.executeUpdate(sql);
+			}
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
 		}
-		
+
 		return Response;
 	}
-
+	
 	@Override
 	public DeleteEventResponse DeleteEvent(DeleteEventRequest p_request)
 	{
@@ -611,6 +611,8 @@ public class WebCalendarRepo implements IWebCalendarRepo
 
 		return Response;
 	}
+
+	
 
 	
 

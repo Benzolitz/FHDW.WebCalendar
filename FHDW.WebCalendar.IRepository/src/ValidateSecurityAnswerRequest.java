@@ -4,6 +4,12 @@ public class ValidateSecurityAnswerRequest extends IRequest
 	private String usernameOrEmail;
 	private String answer;
 	
+	public ValidateSecurityAnswerRequest(String p_usernameOrEmail, String p_answer)
+	{
+		usernameOrEmail = p_usernameOrEmail;
+		answer = p_answer;
+	}
+	
 	public void SetUsernameOrEmail(String p_usernameOrEmail)
 	{
 		usernameOrEmail = p_usernameOrEmail;
