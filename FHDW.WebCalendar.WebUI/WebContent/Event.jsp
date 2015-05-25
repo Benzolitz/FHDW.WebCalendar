@@ -10,7 +10,7 @@
 			if(cookie.getName().equals("username")) userName = cookie.getValue();
 		}
 	}
-	if(userName == null) response.sendRedirect("Login.jsp");
+	//if(userName == null) response.sendRedirect("Login.jsp");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
