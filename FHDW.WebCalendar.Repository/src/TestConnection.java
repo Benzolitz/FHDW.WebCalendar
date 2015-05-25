@@ -45,33 +45,33 @@ public class TestConnection
 	
 	private static void TestCheckUsernameOrEmailWithUsername(WebCalendarRepo testRepo)
 	{
-		CheckUsernameOrEmailResponse response;
-		CheckUsernameOrEmailRequest request = new CheckUsernameOrEmailRequest();
+		GetUserIdResponse response;
+		GetUserIdRequest request = new GetUserIdRequest();
 		request.SetUsernameOrEmail("User1");
 		
-		response = testRepo.CheckUsernameOrEmail(request);
+		response = testRepo.GetUserId(request);
 		System.out.println("TestCheckUsernameOrEmailWithUsername was successfully: " + String.valueOf(response.IsSuccess()));
 		System.out.println(response.GetMessage());
 	}
 	
 	private static void TestCheckUsernameOrEmailWithEmail(WebCalendarRepo testRepo)
 	{
-		CheckUsernameOrEmailResponse response;
-		CheckUsernameOrEmailRequest request = new CheckUsernameOrEmailRequest();
+		GetUserIdResponse response;
+		GetUserIdRequest request = new GetUserIdRequest();
 		request.SetUsernameOrEmail("Email1@Mail.de");
 		
-		response = testRepo.CheckUsernameOrEmail(request);
+		response = testRepo.GetUserId(request);
 		System.out.println("TestCheckUsernameOrEmailWithEmail was successfully: " + String.valueOf(response.IsSuccess()));
 		System.out.println(response.GetMessage());
 	}
 	
 	private static void TestCheckUsernameOrEmailWithWrongUsername(WebCalendarRepo testRepo)
 	{
-		CheckUsernameOrEmailResponse response;
-		CheckUsernameOrEmailRequest request = new CheckUsernameOrEmailRequest();
+		GetUserIdResponse response;
+		GetUserIdRequest request = new GetUserIdRequest();
 		request.SetUsernameOrEmail("UserWhichDoesntExist");
 		
-		response = testRepo.CheckUsernameOrEmail(request);
+		response = testRepo.GetUserId(request);
 		System.out.println("TestCheckUsernameOrEmailWithUsername was successfully: " + String.valueOf(!response.IsSuccess()));
 		System.out.println(response.GetMessage());
 	}

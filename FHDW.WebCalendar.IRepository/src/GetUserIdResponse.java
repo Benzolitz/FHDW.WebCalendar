@@ -1,5 +1,5 @@
 
-public class CheckUsernameOrEmailResponse extends IResponse
+public class GetUserIdResponse extends IResponse
 {
 	private int userId;
 

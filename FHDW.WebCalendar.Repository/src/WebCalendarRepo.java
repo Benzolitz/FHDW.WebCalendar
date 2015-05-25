@@ -106,9 +106,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 	
 	@Override
-	public CheckUsernameOrEmailResponse CheckUsernameOrEmail(CheckUsernameOrEmailRequest p_request)
+	public GetUserIdResponse GetUserId(GetUserIdRequest p_request)
 	{
-		CheckUsernameOrEmailResponse Response = new CheckUsernameOrEmailResponse();
+		GetUserIdResponse Response = new GetUserIdResponse();
 		String sql;
 		ResultSet rs;
 		
@@ -146,13 +146,13 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		String sql;
 		ResultSet rs;
 		
-		CheckUsernameOrEmailResponse CheckUsernameOrEmailrp;
-		CheckUsernameOrEmailRequest CheckUsernameOrEmailrq = new CheckUsernameOrEmailRequest();
+		GetUserIdResponse CheckUsernameOrEmailrp;
+		GetUserIdRequest CheckUsernameOrEmailrq = new GetUserIdRequest();
 		CheckUsernameOrEmailrq.SetUsernameOrEmail(p_request.GetUsernameOrEmail());
 		
 		try
 		{
-			CheckUsernameOrEmailrp = CheckUsernameOrEmail(CheckUsernameOrEmailrq);
+			CheckUsernameOrEmailrp = GetUserId(CheckUsernameOrEmailrq);
 			if(!CheckUsernameOrEmailrp.IsSuccess())
 			{
 				throw new Exception(CheckUsernameOrEmailrp.GetMessage());
@@ -208,19 +208,19 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		int rs;
 		ResultSet rs2;
 		
-		CheckUsernameOrEmailResponse CheckUsernameOrEmailrp;
-		CheckUsernameOrEmailRequest CheckUsernameOrEmailrq = new CheckUsernameOrEmailRequest();
+		GetUserIdResponse CheckUsernameOrEmailrp;
+		GetUserIdRequest CheckUsernameOrEmailrq = new GetUserIdRequest();
 		
 		try
 		{
 			CheckUsernameOrEmailrq.SetUsernameOrEmail(p_request.GetUsername());
-			CheckUsernameOrEmailrp = CheckUsernameOrEmail(CheckUsernameOrEmailrq);
+			CheckUsernameOrEmailrp = GetUserId(CheckUsernameOrEmailrq);
 			if(CheckUsernameOrEmailrp.IsSuccess())
 			{
 				throw new Exception("Username already exists.");
 			}
 			CheckUsernameOrEmailrq.SetUsernameOrEmail(p_request.GetEMail());
-			CheckUsernameOrEmailrp = CheckUsernameOrEmail(CheckUsernameOrEmailrq);
+			CheckUsernameOrEmailrp = GetUserId(CheckUsernameOrEmailrq);
 			if(CheckUsernameOrEmailrp.IsSuccess())
 			{
 				throw new Exception("Email already in use.");
@@ -260,13 +260,13 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		String sql;
 		ResultSet rs;
 		
-		CheckUsernameOrEmailResponse CheckUsernameOrEmailrp;
-		CheckUsernameOrEmailRequest CheckUsernameOrEmailrq = new CheckUsernameOrEmailRequest();
+		GetUserIdResponse CheckUsernameOrEmailrp;
+		GetUserIdRequest CheckUsernameOrEmailrq = new GetUserIdRequest();
 		CheckUsernameOrEmailrq.SetUsernameOrEmail(p_request.GetUsernameOrEmail());
 		
 		try
 		{
-			CheckUsernameOrEmailrp = CheckUsernameOrEmail(CheckUsernameOrEmailrq);
+			CheckUsernameOrEmailrp = GetUserId(CheckUsernameOrEmailrq);
 			if(!CheckUsernameOrEmailrp.IsSuccess())
 			{
 				throw new Exception(CheckUsernameOrEmailrp.GetMessage());
@@ -284,7 +284,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		return Response;
 	}
-	
 	
 	@Deprecated
 	@Override
@@ -313,7 +312,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		return Response;
 	}
-	
 	
 	@Override
 	public GetSecurityAnswerResponse GetSecurityAnswer(GetSecurityAnswerRequest p_request)
@@ -365,7 +363,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		return Response;
 	}
-	
 	
 	@Override
 	public CreateNewCalendarResponse CreateNewCalendar(CreateNewCalendarRequest p_request)
@@ -425,9 +422,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 
 		return Response;
 	}
-	
-	//TODO: Events zu einem bestimmten Kalender wiedergeben
-	
+		
 	@Override
 	public GetEventsForUserResponse GetEventsForUser(GetEventsForUserRequest p_request)
 	{
@@ -472,8 +467,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		return Response;
 	}
-	
-	//TODO: Creator in Event zu CreatorID wechseln
 	
 	//TODO: Creator in Event zu CreatorID wechseln
 	@Override
@@ -522,7 +515,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return Response;
 	}
 	
-	
 	@Override
 	public SaveEventResponse SaveEvent(Event event)
 	{
@@ -551,8 +543,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return Response;
 	}
 
-	
-
 	@Override
 	public DeleteEventResponse DeleteEvent(DeleteEventRequest p_request)
 	{
@@ -575,7 +565,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 
 		return Response;
 	}
-
 	
 	@Override
 	public DeleteCalendarResponse DeleteCalendar(DeleteCalendarRequest p_request)
@@ -599,7 +588,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 
 		return Response;
 	}
-
 	
 	@Override
 	public DeleteUserResponse DeleteUser(DeleteUserRequest p_request)

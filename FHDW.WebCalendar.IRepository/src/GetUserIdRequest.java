@@ -1,5 +1,5 @@
 
-public class CheckUsernameOrEmailRequest extends IResponse
+public class GetUserIdRequest extends IResponse
 {
 	private String usernameOrEmail;
 	

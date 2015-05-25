@@ -9,7 +9,7 @@ public interface IWebCalendarRepo
 	 * @param p_request
 	 * @return Response-Objekt, in dem Informationen über die Abfrage stehen
 	 */
-	CheckUsernameOrEmailResponse CheckUsernameOrEmail(CheckUsernameOrEmailRequest p_request); 
+	GetUserIdResponse GetUserId(GetUserIdRequest p_request); 
 	
 	/**
 	 * Prüft, ob der Login für den Benutzer richtig ist.
