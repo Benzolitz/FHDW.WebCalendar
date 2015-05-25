@@ -137,46 +137,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		return Response;
 	}
-	
-	@Deprecated
-	@Override
-	public ValidateLoginResponse ValidateLogin(ValidateLoginRequest p_request)
-	{
-		ValidateLoginResponse Response = new ValidateLoginResponse();
-		String sql;
-		ResultSet rs;
 		
-		GetUserIdResponse CheckUsernameOrEmailrp;
-		GetUserIdRequest CheckUsernameOrEmailrq = new GetUserIdRequest();
-		CheckUsernameOrEmailrq.SetUsernameOrEmail(p_request.GetUsernameOrEmail());
-		
-		try
-		{
-			CheckUsernameOrEmailrp = GetUserId(CheckUsernameOrEmailrq);
-			if(!CheckUsernameOrEmailrp.IsSuccess())
-			{
-				throw new Exception(CheckUsernameOrEmailrp.GetMessage());
-			}
-			
-			sql = String.format("SELECT ID FROM user WHERE (Username = '%s' OR EMail = '%s') AND pass = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail(), p_request.GetPassword());
-			rs = stmt.executeQuery(sql);
-
-			if(rs.next())
-			{
-				Response.SetUserId(rs.getInt(1));
-				Response.MessageSuccess("Login is successful.");
-			}else
-			{
-				throw new Exception("Login failed. Wrong Password.");
-			}
-		} catch (Exception e)
-		{
-			Response.MessageFailure(e.getMessage());
-		}
-		
-		return Response;
-	}
-	
 	@Override
 	public GetUserPasswordResponse GetUserPassword(GetUserPasswordRequest p_request)
 	{
@@ -311,35 +272,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		return Response;
 	}
-	
-	@Deprecated
-	@Override
-	public ValidateSecurityAnswerResponse ValidateSecurityAnswer(ValidateSecurityAnswerRequest p_request)
-	{
-		ValidateSecurityAnswerResponse Response = new ValidateSecurityAnswerResponse();
-		String sql;
-		ResultSet rs;
 		
-		try
-		{
-			sql = String.format("SELECT 1 FROM User WHERE (Username = '%s' OR EMail = '%s') AND SecurityAnswer = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail(), p_request.GetAnswer());
-			rs = stmt.executeQuery(sql);
-			
-			if(rs.first())
-			{
-				Response.MessageSuccess("Answer was correct.");
-			}else
-			{
-				throw new Exception("Answer was incorrect.");
-			}
-		} catch (Exception e)
-		{
-			Response.MessageFailure(e.getMessage());
-		}
-		
-		return Response;
-	}
-	
 	@Override
 	public GetSecurityAnswerResponse GetSecurityAnswer(GetSecurityAnswerRequest p_request)
 	{

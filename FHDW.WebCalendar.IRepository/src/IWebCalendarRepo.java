@@ -10,15 +10,7 @@ public interface IWebCalendarRepo
 	 * @return Response-Objekt, in dem Informationen über die Abfrage stehen
 	 */
 	GetUserIdResponse GetUserId(GetUserIdRequest p_request); 
-	
-	/**
-	 * Prüft, ob der Login für den Benutzer richtig ist.
-	 * @param p_request
-	 * @return
-	 */
-	@Deprecated
-	ValidateLoginResponse ValidateLogin(ValidateLoginRequest p_request);
-	
+		
 	/**
 	 * Liefert das Passwort zu einem Benutzer.
 	 * @param p_request
@@ -46,15 +38,7 @@ public interface IWebCalendarRepo
 	 * @return
 	 */
 	GetSecurityQuestionResponse GetSecurityQuestion (GetSecurityQuestionRequest p_request);
-	
-	/**
-	 * Überprüft, ob die angegebene Antwort mit der Antwort bei der Registrierung übereinstimmt.
-	 * @param p_request
-	 * @return
-	 */
-	@Deprecated
-	ValidateSecurityAnswerResponse ValidateSecurityAnswer(ValidateSecurityAnswerRequest p_request);
-	
+		
 	/**
 	 * Liefert von einem Benutzer die Sicherheitsantwort.
 	 * @param p_request
