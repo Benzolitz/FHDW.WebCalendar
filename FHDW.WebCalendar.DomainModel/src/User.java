@@ -7,7 +7,7 @@ public class User
 	private String FirstName;
 	private String LastName;
 	private String PhoneNumber;
-	private int SecurityQuestion;
+	private int SecurityQuestionId;
 	private String SecurityAnswer;
 	
 	public void SetId(int p_id)
@@ -80,14 +80,14 @@ public class User
 		return PhoneNumber;
 	}
 	
-	public void SetSecurityQuestion(int p_securityQuestion)
+	public void SetSecurityQuestion(int p_securityQuestionId)
 	{
-		SecurityQuestion = p_securityQuestion;
+		SecurityQuestionId = p_securityQuestionId;
 	}
 	
 	public int GetSecurityQuestion()
 	{
-		return SecurityQuestion;
+		return SecurityQuestionId;
 	}
 	
 	public void SetSecurityAnswer(String p_securityAnswer)

@@ -28,20 +28,23 @@
 
 </head>
 <body>
-	<div id="divLogin">
-		<div id="divHeadline">Anmeldung</div>
+	<div id="divLogin" class="claMainBox">
+		<div id="divHeadline" class="claHeadLine">Anmeldung</div>
 		<hr />
 		<div id="divContent">
 			<form name="frmLogin" method="post" action="LoginController">
 				<div class="divCenter">
-					<input id="txtUsername" name="username" type="text" placeholder="Benutzername" />
+					<input id="txtUsername" class="claTextDefault" name="username" type="text" placeholder="Benutzername" />
 				</div>
 				<div class="divCenter">
-					<input id="txtPassword" name="password" type="password" placeholder="Passwort" />
+					<input id="txtPassword" class="claTextDefault" name="password" type="password" placeholder="Passwort" />
+				</div>
+				<div id="divLinks" class="divCenter"> 
+					<a href="Reset.jsp">Passwort vergessen?</a>
 				</div>
 				<div class="divCenter">
-					<input id="btnSubmit" type="Submit" value="Login" />
-					<input id="btnRegister" type="button" value="Registrieren" />
+					<input id="btnSubmit" class="claButtonDefault" type="Submit" value="Login" />
+					<input id="btnRegister" class="claButtonDefault" type="button" value="Registrieren" />
 				</div>
 				<div id="divHint">
 					<%
@@ -51,9 +54,6 @@
 							out.println(message);
 						}
 					%>
-				</div>
-				<div id="divLinks"> 
-					<a href="Reset.jsp">Passwort vergessen?</a>
 				</div>
 			</form>
 		</div>

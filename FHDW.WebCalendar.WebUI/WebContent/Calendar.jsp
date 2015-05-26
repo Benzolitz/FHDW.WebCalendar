@@ -37,10 +37,18 @@
 
 	<div id="calendar">
 		<div id="calendarHead">
-			<input id="txtSearchBox" type="text" placeholder="Suche"/>
-			<input id="btnLastWeek" type="button" value="d" onClick="getLastWeek()" />
-			<input id="btnNextWeek" type="button" value="d" onClick="getNextWeek()" />
-			<input id="hidCurrentWeek" type="hidden" />
+			<div>
+				<input id="btnNewEvent" type="button" value="Neuer Termin" />
+			</div>
+			<div>
+				<input id="btnLastWeek" type="button" value="&larr;" onClick="getLastWeek()" /> 
+				<input id="btnNextWeek" type="button" value="&rarr;" onClick="getNextWeek()" />
+			</div>
+			<div>
+				<input id="txtSearchBox" type="text" placeholder="Suche" />
+			</div>
+			<input id="hidCurrentWeek" type="hidden" /> 
+			<input id="hidCurrentYear" type="hidden" />
 		</div>
 		<div id="calendarBody"></div>
 	</div>

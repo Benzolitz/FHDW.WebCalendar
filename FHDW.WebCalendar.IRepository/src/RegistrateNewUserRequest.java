@@ -10,6 +10,23 @@ public class RegistrateNewUserRequest extends IRequest
 	private int SecurityQuestion;
 	private String SecurityAnswer;
 	
+	public RegistrateNewUserRequest()
+	{
+		
+	}
+	
+	public RegistrateNewUserRequest(String p_username, String p_email, String p_password, String p_firstName, String p_lastName, String p_phoneNumber, int p_securityQuestion, String p_securityAnswer)
+	{
+		username = p_username;
+	    email = p_email;
+	    password = p_password;
+	    FirstName = p_firstName;
+	    LastName = p_lastName;
+	    PhoneNumber = p_phoneNumber;
+		SecurityQuestion = p_securityQuestion;
+		SecurityAnswer = p_securityAnswer;
+	}
+	
 	public void SetUsername(String p_username) {
         username = p_username;
     }
@@ -28,12 +45,12 @@ public class RegistrateNewUserRequest extends IRequest
         return email;
     }
 
+	public void SetPassword(String p_password) {
+        password = p_password;
+    }
+	
     public String GetPassword() {
         return password;
-    }
-
-    public void SetPassword(String p_password) {
-        password = p_password;
     }
 
     public void SetFirstName(String p_firstName) {

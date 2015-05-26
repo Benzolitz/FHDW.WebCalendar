@@ -137,46 +137,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		return Response;
 	}
-	
-	@Deprecated
-	@Override
-	public ValidateLoginResponse ValidateLogin(ValidateLoginRequest p_request)
-	{
-		ValidateLoginResponse Response = new ValidateLoginResponse();
-		String sql;
-		ResultSet rs;
 		
-		GetUserIdResponse CheckUsernameOrEmailrp;
-		GetUserIdRequest CheckUsernameOrEmailrq = new GetUserIdRequest();
-		CheckUsernameOrEmailrq.SetUsernameOrEmail(p_request.GetUsernameOrEmail());
-		
-		try
-		{
-			CheckUsernameOrEmailrp = GetUserId(CheckUsernameOrEmailrq);
-			if(!CheckUsernameOrEmailrp.IsSuccess())
-			{
-				throw new Exception(CheckUsernameOrEmailrp.GetMessage());
-			}
-			
-			sql = String.format("SELECT ID FROM user WHERE (Username = '%s' OR EMail = '%s') AND pass = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail(), p_request.GetPassword());
-			rs = stmt.executeQuery(sql);
-
-			if(rs.next())
-			{
-				Response.SetUserId(rs.getInt(1));
-				Response.MessageSuccess("Login is successful.");
-			}else
-			{
-				throw new Exception("Login failed. Wrong Password.");
-			}
-		} catch (Exception e)
-		{
-			Response.MessageFailure(e.getMessage());
-		}
-		
-		return Response;
-	}
-	
 	@Override
 	public GetUserPasswordResponse GetUserPassword(GetUserPasswordRequest p_request)
 	{
@@ -191,6 +152,33 @@ public class WebCalendarRepo implements IWebCalendarRepo
 			rs.next();
 			Response.SetPassword(rs.getString(1));
 			Response.MessageSuccess("Password was found.");
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+
+		return Response;
+	}
+	
+	@Override
+	public GetAllSecurityQuestionsResponse GetAllSecurityQuestions(GetAllSecurityQuestionsRequest p_request)
+	{
+		GetAllSecurityQuestionsResponse Response = new GetAllSecurityQuestionsResponse();
+		Collection<String> categories = new ArrayList<String>();
+		String sql;
+		ResultSet rs;
+		
+		try
+		{
+			sql = String.format("DELETE Name FROM Category;");
+			rs = stmt.executeQuery(sql);
+			
+			while (rs.next())
+			{
+				categories.add(rs.getString(1));
+			}
+	
+			Response.MessageSuccess("Security questions successfully loaded.");
 		} catch (Exception e)
 		{
 			Response.MessageFailure(e.getMessage());
@@ -284,35 +272,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		return Response;
 	}
-	
-	@Deprecated
-	@Override
-	public ValidateSecurityAnswerResponse ValidateSecurityAnswer(ValidateSecurityAnswerRequest p_request)
-	{
-		ValidateSecurityAnswerResponse Response = new ValidateSecurityAnswerResponse();
-		String sql;
-		ResultSet rs;
 		
-		try
-		{
-			sql = String.format("SELECT 1 FROM User WHERE (Username = '%s' OR EMail = '%s') AND SecurityAnswer = '%s';", p_request.GetUsernameOrEmail(), p_request.GetUsernameOrEmail(), p_request.GetAnswer());
-			rs = stmt.executeQuery(sql);
-			
-			if(rs.first())
-			{
-				Response.MessageSuccess("Answer was correct.");
-			}else
-			{
-				throw new Exception("Answer was incorrect.");
-			}
-		} catch (Exception e)
-		{
-			Response.MessageFailure(e.getMessage());
-		}
-		
-		return Response;
-	}
-	
 	@Override
 	public GetSecurityAnswerResponse GetSecurityAnswer(GetSecurityAnswerRequest p_request)
 	{
@@ -468,7 +428,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return Response;
 	}
 	
-	//TODO: Creator in Event zu CreatorID wechseln
 	@Override
 	public GetEventDetailedResponse GetEventDetailed(GetEventDetailedRequest p_request)
 	{
@@ -516,33 +475,33 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 	
 	@Override
-	public SaveEventResponse SaveEvent(Event event)
+	public SaveEventResponse SaveEvent(SaveEventRequest p_request)
 	{
 		SaveEventResponse Response = new SaveEventResponse();
+		String sql;
+		int rs;
+		ResultSet rs2;
 		
 		try
-		{		
-			stmt.executeUpdate(String.format("INSERT INTO Event (StartTime, EndTime, Location, CreatorID, CreationTime, Message, CalendarID)"
-					+ "VALUES ('%s', '%s', '%s', %d, '%s', '%s', %d);",
-					sdf.format(event.GetStartTime()),
-					sdf.format(event.GetEndTime()),
-					event.GetLocation(),
-					event.GetCreator().GetId(),
-					sdf.format(new Date()),
-					event.GetMessage(),
-					1
-					));
-			Response.MessageSuccess("Inserted new Event.");
-		} catch (SQLException e)
 		{
-			e.printStackTrace();
-			Response.MessageFailure("Not implemented.");
-			System.out.println(e.getMessage());
+			sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME(), %d);", p_request.GetTitle(), p_request.GetLocation(), p_request.GetStarttime(), p_request.GetEndtime(), p_request.GetMessage(), p_request.GetCreatorId(), sdf.format(new Date()), p_request.GetCalendarId());
+			rs = stmt.executeUpdate(sql);
+			sql = String.format("SELECT LAST_INSERT_ID();");
+			rs2 = stmt.executeQuery(sql);
+			
+			for (String category : p_request.GetCategories())
+			{
+				sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, rs2.getInt(1));
+				rs = stmt.executeUpdate(sql);
+			}
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
 		}
-		
+
 		return Response;
 	}
-
+	
 	@Override
 	public DeleteEventResponse DeleteEvent(DeleteEventRequest p_request)
 	{
@@ -613,9 +572,40 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 
 	
+	@Override
+	public UpdateEventResponse UpdateEvent(UpdateEventRequest p_request)
+	{
+		UpdateEventResponse Response = new UpdateEventResponse();
+		String sql;
+		int rs;
+		
+		try
+		{
+			sql = String.format("UPDATE Event SET Title='%s', Location='%s', StartTime='%s', EndTime='%s', Message='%s' WHERE ID=%d;", p_request.GetTitle(), p_request.GetLocation(), sdf.format(p_request.GetStarttime()), sdf.format(p_request.GetEndtime()), p_request.GetMessage(), p_request.GetEventId());
+			rs = stmt.executeUpdate(sql);
+			if (!(rs > 0))
+				throw new Exception("An unknown error occured.");
+			
+			sql = String.format("DELETE FROM Category WHERE EventID = %d;", p_request.GetEventId());
+			rs = stmt.executeUpdate(sql);
+			
+			for (String category : p_request.GetCategories())
+			{
+				sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, p_request.GetEventId());
+				rs = stmt.executeUpdate(sql);
+			}
+			
+			Response.MessageSuccess("Event successfully updated.");
+		} catch (Exception e)
+		{
+			Response.MessageFailure(e.getMessage());
+		}
+
+		return Response;
+	}
 
 	
-	
 
+	
 		
 }

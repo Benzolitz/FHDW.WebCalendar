@@ -22,7 +22,7 @@ var EnableSubmitButton = function() {
 };
 var ResetTextBoxBorders = function() {
 	$(".claRequiredField").each(function() {
-		$(this).css("border", "1px solid #ABADB3");
+		$(this).css("border", "none");
 	});
 
 	DisableSubmitButton();
@@ -31,7 +31,7 @@ var SetHintForEmptyField = function() {
 	if ($(this).val() === "") {
 		$(this).css("border", "1px solid #F00")
 	} else {
-		$(this).css("border", "1px solid #ABADB3")
+		$(this).css("border", "none")
 	}
 };
 var test = function() {
