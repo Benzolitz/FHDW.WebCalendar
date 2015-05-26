@@ -1,8 +1,8 @@
-package objects.Calendar.Event;
+package Model.Calendar.Event;
 import java.util.Collection;
 import java.util.Date;
 
-import objects.BaseObject;
+import Model.BaseObject;
 
 public class EventCalendarView extends BaseObject
 {

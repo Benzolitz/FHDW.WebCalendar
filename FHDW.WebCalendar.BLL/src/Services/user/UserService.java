@@ -1,16 +1,16 @@
 package Services.user;
 
-import objects.user.User;
 import Exceptions.IOException;
 import Exceptions.NotFound;
 import Exceptions.ServiceException;
-import Helper.UserHelper;
+import Helper.User.UserHelper;
 import IRepository.Request.GetUserIdRequest;
 import IRepository.Request.GetUserPasswordRequest;
 import IRepository.Request.RegistrateNewUserRequest;
 import IRepository.Response.GetUserIdResponse;
 import IRepository.Response.GetUserPasswordResponse;
 import IRepository.Response.RegistrateNewUserResponse;
+import Model.User.User;
 import Services.BaseService;
 
 

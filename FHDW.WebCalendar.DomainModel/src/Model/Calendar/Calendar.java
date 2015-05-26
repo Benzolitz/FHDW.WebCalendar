@@ -1,6 +1,6 @@
-package objects.Calendar;
+package Model.Calendar;
 
-import objects.BaseObject;
+import Model.BaseObject;
 
 
 public class Calendar extends BaseObject

@@ -1,4 +1,4 @@
-package objects.user;
+package Model.User;
 
 public class UserSecurity
 {	

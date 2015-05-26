@@ -1,6 +1,6 @@
-package Helper;
+package Helper.User;
 
-import objects.user.User;
+import Model.User.User;
 
 public class UserHelper
 {	

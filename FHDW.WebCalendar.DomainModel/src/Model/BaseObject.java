@@ -1,4 +1,4 @@
-package objects;
+package Model;
 
 public class BaseObject
 {	
