@@ -1,6 +1,7 @@
 package Services;
 
-import JDBC.WebCalendarRepo;
+import Repository.JDBC.WebCalendarRepo;
+
 
 /**
  * @author Frederik Heinrichs

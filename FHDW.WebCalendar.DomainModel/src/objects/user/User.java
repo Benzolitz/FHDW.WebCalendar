@@ -1,4 +1,6 @@
-package objects;
+package objects.user;
+
+import objects.BaseObject;
 
 public class User extends BaseObject
 {

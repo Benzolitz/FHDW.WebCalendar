@@ -1,6 +1,9 @@
-package objects;
+package objects.Calendar.Event;
 import java.util.Collection;
 import java.util.Date;
+
+import objects.BaseObject;
+import objects.user.User;
 
 public class Event extends BaseObject
 {

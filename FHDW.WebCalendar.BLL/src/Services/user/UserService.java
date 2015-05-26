@@ -1,16 +1,17 @@
-package Services;
+package Services.user;
 
+import objects.user.User;
 import Exceptions.IOException;
 import Exceptions.NotFound;
 import Exceptions.ServiceException;
 import Helper.UserHelper;
-import Request.GetUserIdRequest;
-import Request.GetUserPasswordRequest;
-import Request.RegistrateNewUserRequest;
-import Response.GetUserIdResponse;
-import Response.GetUserPasswordResponse;
-import Response.RegistrateNewUserResponse;
-import objects.User;
+import IRepository.Request.GetUserIdRequest;
+import IRepository.Request.GetUserPasswordRequest;
+import IRepository.Request.RegistrateNewUserRequest;
+import IRepository.Response.GetUserIdResponse;
+import IRepository.Response.GetUserPasswordResponse;
+import IRepository.Response.RegistrateNewUserResponse;
+import Services.BaseService;
 
 
 public class UserService extends BaseService 
@@ -28,11 +29,12 @@ public class UserService extends BaseService
 			throw new IOException("");
 		}
 		
-		RegistrateNewUserResponse response = GetRepo().RegistrateNewUser(new RegistrateNewUserRequest(p_user));
+		RegistrateNewUserResponse response = GetRepo().RegistrateNewUser(new RegistrateNewUserRequest());
 		if (!response.IsSuccess()) {
 			throw new ServiceException();
 		}
 		p_user.SetId(response.GetUserId());
+		
 		return response.GetUserId();
 	}
 	

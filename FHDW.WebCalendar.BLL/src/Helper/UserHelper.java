@@ -1,6 +1,6 @@
 package Helper;
 
-import objects.User;
+import objects.user.User;
 
 public class UserHelper
 {	

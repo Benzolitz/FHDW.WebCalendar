@@ -1,21 +1,14 @@
-import com.sun.org.apache.regexp.internal.recompile;
+package objects.Calendar;
+
+import objects.BaseObject;
 
 
-public class Calendar
+public class Calendar extends BaseObject
 {
-	private int id;
+
 	private int ownerId;
 	private String name;
-	
-	public void SetId(int p_id)
-	{
-		id = p_id;
-	}
-	
-	public int GetId()
-	{
-		return id;
-	}
+
 	
 	public void SetOwnerId(int p_ownerId)
 	{
