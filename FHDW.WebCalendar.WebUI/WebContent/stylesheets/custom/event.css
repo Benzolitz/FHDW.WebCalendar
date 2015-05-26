@@ -1,21 +1,6 @@
-#appointment {
+#event {
 	width: 750px;
 	height: 500px;
-	
-	
-	border: solid 1px #000;
-	
-	margin-left: auto;
-	margin-top: 100px;
-	margin-right: auto;
-}
-
-h2 {
-	text-align: center;
-}
-
-input[type="Submit"] {
-	width: 135px;
 }
 
 .fa {

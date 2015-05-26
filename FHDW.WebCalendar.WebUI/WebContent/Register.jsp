@@ -17,8 +17,6 @@
 <html>
 <head>
 
-<link rel="icon" type="image/png" href="Interrobang_20.png" />
-
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Loginbereich</title>
 

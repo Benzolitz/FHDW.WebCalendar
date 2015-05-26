@@ -35,6 +35,7 @@
 				<div class="claCenterBoxDefault">
 					<input id="txtUsermail" class="claTextDefault" name="usermail" type="text" placeholder="E-Mailadresse" />
 				</div>
+				<hr />
 				<div class="claCenterBoxDefault">
 					<input id="btnSubmit" class="claButtonDefault" type="Submit" value="Neues Passwort" />
 				</div>
