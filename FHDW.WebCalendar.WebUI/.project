@@ -5,6 +5,8 @@
 	<projects>
 		<project>FHDW.WebCalendar.BLL</project>
 		<project>FHDW.WebCalendar.DomainModel</project>
+		<project>FHDW.WebCalendar.Repository</project>
+		<project>FHDW.WebCalendar.IRepository</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -20,7 +20,8 @@
 <title>Loginbereich</title>
 
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/all.css" />
-<link rel="stylesheet" type="text/css" href="stylesheets/custom/login.css" />
+<link rel="stylesheet" type="text/css"
+	href="stylesheets/custom/login.css" />
 
 <script src="scripts/framework/jquery-1.11.2.min.js"></script>
 <script src="scripts/custom/all.js"></script>
@@ -33,29 +34,30 @@
 		<hr />
 		<div id="divContent">
 			<form name="frmLogin" method="post" action="LoginController">
-				<div class="divCenter">
-					<input id="txtUsername" class="claTextDefault" name="username" type="text" placeholder="Benutzername" />
+				<div class="claCenterBoxDefault">
+					<input id="txtUsername" class="claTextDefault" name="username"
+						type="text" value="<% String username = request.getParameter("username"); if(username != null) out.print(username);%>" placeholder="Benutzername" />
 				</div>
-				<div class="divCenter">
-					<input id="txtPassword" class="claTextDefault" name="password" type="password" placeholder="Passwort" />
+				<div class="claCenterBoxDefault">
+					<input id="txtPassword" class="claTextDefault" name="password"
+						type="password" placeholder="Passwort" />
 				</div>
-				<div id="divLinks" class="divCenter"> 
+				<div id="divLinks" class="claCenterBoxDefault">
 					<a href="Reset.jsp">Passwort vergessen?</a>
 				</div>
-				<div class="divCenter">
-					<input id="btnSubmit" class="claButtonDefault" type="Submit" value="Login" />
-					<input id="btnRegister" class="claButtonDefault" type="button" value="Registrieren" />
-				</div>
-				<div id="divHint">
-					<%
-						String message = request.getParameter("message");
-						if (message != null)
-						{
-							out.println(message);
-						}
-					%>
+				<div class="claCenterBoxDefault">
+					<input id="btnSubmit" class="claButtonDefault" type="Submit"
+						value="Login" /> <input id="btnRegister" class="claButtonDefault"
+						type="button" value="Registrieren" />
 				</div>
 			</form>
+			<%
+				String message = request.getParameter("message");
+				if (message != null)
+				{
+					out.println("<div id='divHint'>" + message + "</div>");
+				}
+			%>
 		</div>
 	</div>
 </body>

@@ -1,17 +1,11 @@
 #divLogin {
 	width: 400px;
-	height: 250px;
+	height: 200px;
 }
 
 #divContent {
 	width: 100%;
 	height: 215px;
-	margin-top: 10px;
-}
-
-#divContent > form > .divCenter {
-	width: 350px;
-	margin: auto;
 }
 
 #txtUsername, #txtPassword {
@@ -22,14 +16,9 @@
 	text-align: center;
 }
 
-#txtPassword {
-	margin-top: 10px;
-}
-
 #btnSubmit, #btnRegister {
 	width: 168px;	
 	height: 40px;
-	margin-top: 15px;
 	font-size: 20px;
 }
 
@@ -44,7 +33,7 @@
 
 #divHint {
 	width: 380px;
-	margin: auto;
+	margin: 15px auto;
 	
 	text-align: center;
 	

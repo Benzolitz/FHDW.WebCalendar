@@ -1,13 +1,10 @@
 $(document).ready(function() {
-
 	DisableSubmitButton();
 
 	$(".claRequiredField").keyup(test);
 	$(".claRequiredField").focusout(SetHintForEmptyField);
 
-	$("#btnReset").click(ResetTextBoxBorders);
-
-
+	$("#btnReset").click(resetTextBoxBorders);
 });
 
 var DisableSubmitButton = function() {
@@ -20,7 +17,7 @@ var EnableSubmitButton = function() {
 	$("#btnSubmit").removeClass("claDisabledButton");
 	$("#btnSubmit").addClass("claEnabledButton");
 };
-var ResetTextBoxBorders = function() {
+var resetTextBoxBorders = function() {
 	$(".claRequiredField").each(function() {
 		$(this).css("border", "none");
 	});
@@ -29,9 +26,9 @@ var ResetTextBoxBorders = function() {
 };
 var SetHintForEmptyField = function() {
 	if ($(this).val() === "") {
-		$(this).css("border", "1px solid #F00")
+		$(this).addClass("claRequiredFieldEmpty");
 	} else {
-		$(this).css("border", "none")
+		$(this).removeClass("claRequiredFieldEmpty");
 	}
 };
 var test = function() {
@@ -52,4 +49,3 @@ var RequiredInformationGiven = function() {
 
 	return RequiredFieldsSet;
 };
-

@@ -50,6 +50,10 @@ hr {
 	font-weight: bold;
 }
 
+.claCenterBoxDefault {
+	width: 350px;
+	margin: 7px auto;
+}
 
 .claTextDefault {
 	border-radius: 5px;

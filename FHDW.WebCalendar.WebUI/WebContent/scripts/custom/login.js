@@ -20,4 +20,10 @@ $(document).ready(function() {
 
 		window.location.replace("Register.jsp" + parameter);
 	});
+	
+	if(document.getElementById("divHint") !== null)
+	{
+		$("#divLogin").animate({height : $("#divLogin").height() + 50});
+	}
+	
 });
