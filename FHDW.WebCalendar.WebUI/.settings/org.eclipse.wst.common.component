@@ -2,6 +2,12 @@
     <wb-module deploy-name="FHDW.WebCalendar.WebUI">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="FHDW.WebCalendar.BLL.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/FHDW.WebCalendar.BLL/FHDW.WebCalendar.BLL">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="FHDW.WebCalendar.DomainModel.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/FHDW.WebCalendar.DomainModel/FHDW.WebCalendar.DomainModel">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="FHDW.WebCalendar.WebUI"/>
         <property name="java-output-path" value="/FHDW.WebCalendar.WebUI/build/classes"/>
     </wb-module>
