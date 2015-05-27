@@ -1,37 +1,11 @@
 package IRepository;
 
-import IRepository.Request.CreateNewCalendarRequest;
-import IRepository.Request.DeleteCalendarRequest;
-import IRepository.Request.DeleteEventRequest;
-import IRepository.Request.DeleteUserRequest;
-import IRepository.Request.GetAllSecurityQuestionsRequest;
-import IRepository.Request.GetAllUserCalendarRequest;
-import IRepository.Request.GetEventDetailedRequest;
-import IRepository.Request.GetEventsForUserRequest;
-import IRepository.Request.GetSecurityAnswerRequest;
-import IRepository.Request.GetSecurityQuestionRequest;
-import IRepository.Request.GetUserIdRequest;
-import IRepository.Request.GetUserPasswordRequest;
-import IRepository.Request.RegistrateNewUserRequest;
-import IRepository.Request.ResetPasswordRequest;
-import IRepository.Request.SaveEventRequest;
-import IRepository.Request.UpdateEventRequest;
-import IRepository.Response.CreateNewCalendarResponse;
-import IRepository.Response.DeleteCalendarResponse;
-import IRepository.Response.DeleteEventResponse;
-import IRepository.Response.DeleteUserResponse;
-import IRepository.Response.GetAllSecurityQuestionsResponse;
-import IRepository.Response.GetAllUserCalendarResponse;
-import IRepository.Response.GetEventDetailedResponse;
-import IRepository.Response.GetEventsForUserResponse;
-import IRepository.Response.GetSecurityAnswerResponse;
-import IRepository.Response.GetSecurityQuestionResponse;
-import IRepository.Response.GetUserIdResponse;
-import IRepository.Response.GetUserPasswordResponse;
-import IRepository.Response.RegistrateNewUserResponse;
-import IRepository.Response.ResetPasswordResponse;
-import IRepository.Response.SaveEventResponse;
-import IRepository.Response.UpdateEventResponse;
+import java.util.Collection;
+import java.util.Date;
+
+import Model.Calendar.Calendar;
+import Model.Calendar.Event.Event;
+import Model.Calendar.Event.EventCalendarView;
 
 /**
  * @author Eduard
@@ -41,113 +15,130 @@ public interface IWebCalendarRepo
 {
 	/**
 	 * Prüft, ob es einen Benutzer mit dem übergebenen Benutzernamen bzw. Email gibt.
-	 * @param p_request
-	 * @return Response-Objekt, in dem Informationen über die Abfrage stehen
+	 * @param p_usernameOrEmail
+	 * @return Gibt die BenutzerID des Benutzers zurück.
 	 */
-	GetUserIdResponse GetUserId(GetUserIdRequest p_request); 
+	int GetUserId(String p_usernameOrEmail); 
 		
 	/**
 	 * Liefert das Passwort zu einem Benutzer.
-	 * @param p_request
+	 * @param userId
 	 * @return
 	 */
-	GetUserPasswordResponse GetUserPassword(GetUserPasswordRequest p_request);
+	String GetUserPassword(int p_userId);
 	
 	/**
 	 * Liefert alle möglichen Sicherheitsfragen.
-	 * @param p_request
 	 * @return
 	 */
-	GetAllSecurityQuestionsResponse GetAllSecurityQuestions(GetAllSecurityQuestionsRequest p_request);
+	Collection<String> GetAllSecurityQuestions();
 	
 	/**
 	 * Registriert einen neuen Benutzer. Erstellt zugleich einen leeren Kalender für diesen Benutzer.
-	 * @param p_request
-	 * @return
+	 * @param p_username
+	 * @param p_email
+	 * @param p_password
+	 * @param p_firstName
+	 * @param p_lastName
+	 * @param p_phoneNumber
+	 * @param p_securityQuestion
+	 * @param p_securityAnswer
+	 * @return Gibt die BenutzerID vom erstellten Benutzer zurück.
 	 */
-	RegistrateNewUserResponse RegistrateNewUser(RegistrateNewUserRequest p_request);
+	int RegistrateNewUser(String p_username, String p_email, String p_password, String p_firstName, String p_lastName, String p_phoneNumber, int p_securityQuestion, String p_securityAnswer);
 	
 	/**
 	 * Liefert die Sicherheitsfrage zu einem Benutzerkonto.
-	 * @param p_request
+	 * @param p_userId
 	 * @return
 	 */
-	GetSecurityQuestionResponse GetSecurityQuestion (GetSecurityQuestionRequest p_request);
+	String GetSecurityQuestion(int p_userId);
 		
 	/**
 	 * Liefert von einem Benutzer die Sicherheitsantwort.
-	 * @param p_request
+	 * @param p_userId
 	 * @return
 	 */
-	GetSecurityAnswerResponse GetSecurityAnswer(GetSecurityAnswerRequest p_request);
+	String GetSecurityAnswer(int p_userId);
 	
 	/**
 	 * Setzt das Password eines Benutzers zurück.
-	 * @param p_request
-	 * @return
+	 * @param p_userId
+	 * @param p_password
 	 */
-	ResetPasswordResponse ResetPassword(ResetPasswordRequest p_request);
+	void ResetPassword(int p_userId, String p_password);
 	
 	/**
 	 * Erstellt für einen bestimmten Benutzer einen neuen Kalendar.
-	 * @param p_request
-	 * @return
+	 * @param p_userId
+	 * @param p_calendarName
+	 * @return Gibt die KalenderID des erstellten Kalendars zurück.
 	 */
-	CreateNewCalendarResponse CreateNewCalendar(CreateNewCalendarRequest p_request);
+	int CreateNewCalendar(int p_userId, String p_calendarName);
 	
 	/**
 	 * Gibt alle Kalender von einem Benutzer zurück.
-	 * @param p_request
+	 * @param p_userId
 	 * @return
 	 */
-	GetAllUserCalendarResponse GetAllUserCalendar(GetAllUserCalendarRequest p_request);
+	Collection<Calendar> GetAllUserCalendar(int p_userId);
 	
 	/**
 	 * Gibt alle Termine inklusive Kategorien für die Kalendaransicht zu einem bestimmten Benutzer zurück.
-	 * @param p_request
+	 * @param p_calendarId
+	 * @param p_userId
 	 * @return
 	 */
-	GetEventsForUserResponse GetEventsForUser(GetEventsForUserRequest p_request); 
+	Collection<EventCalendarView> GetEventsForUser(int p_calendarId, int p_userId); 
 	
 	/**
 	 * Gibt zu einem bestimmten Termin alle Informationen wieder.
-	 * @param p_request
+	 * @param p_eventId
 	 * @return
 	 */
-	GetEventDetailedResponse GetEventDetailed(GetEventDetailedRequest p_request);
+	Event GetEventDetailed(int p_eventId);
 	
 	/**
-	 * Speichert einen neuen oder geänderten Termin.
-	 * @param event	Terminobjekt, welches gespeichert werden soll
+	 * Speichert einen neuen Termin.
+	 * @param p_title
+	 * @param p_location
+	 * @param p_starttime
+	 * @param p_endtime
+	 * @param p_message
+	 * @param p_categories
+	 * @param p_creatorId
+	 * @param p_calendarId
 	 */
-	SaveEventResponse SaveEvent(SaveEventRequest p_request);
+	void SaveEvent(String p_title, String p_location, Date p_starttime, Date p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId);
 
 	/**
 	 * Löscht einen vorhandenen Termin.
-	 * @param p_request
-	 * @return
+	 * @param p_eventId
 	 */
-	DeleteEventResponse DeleteEvent(DeleteEventRequest p_request);
+	void DeleteEvent(int p_eventId);
 	
 	/**
 	 * Löscht einen vorhandenen Kalendar und die dazugehörigen Termine.
-	 * @param p_request
-	 * @return
+	 * @param p_calendarId
 	 */
-	DeleteCalendarResponse DeleteCalendar(DeleteCalendarRequest p_request);
+	void DeleteCalendar(int p_calendarId);
 	
 	/**
 	 * Löscht einen Benutzer und die dazugehörigen Kalender und Termine.
-	 * @param p_request
-	 * @return
+	 * @param p_userId
 	 */
-	DeleteUserResponse DeleteUser(DeleteUserRequest p_request);
+	void DeleteUser(int p_userId);
 	
 	/**
 	 * Aktualisiert die Daten zu einem Termin.
-	 * @param p_request
-	 * @return
+	 * @param p_eventId
+	 * @param p_title
+	 * @param p_location
+	 * @param p_starttime
+	 * @param p_endtime
+	 * @param p_message
+	 * @param p_categories
 	 */
-	UpdateEventResponse UpdateEvent (UpdateEventRequest p_request);
+	void UpdateEvent(int p_eventId, String p_title, String p_location, Date p_starttime, Date p_endtime, String p_message, Collection<String> p_categories);
 	
 }
