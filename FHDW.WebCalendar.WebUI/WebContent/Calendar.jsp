@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%
 	String userName = null;
 	Cookie[] cookies = request.getCookies();
@@ -20,8 +19,7 @@
 
 
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/all.css" />
-<link rel="stylesheet" type="text/css"
-	href="stylesheets/custom/calendar.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/custom/calendar.css" />
 
 
 <script src="scripts/framework/jquery-1.11.2.min.js"></script>
@@ -41,13 +39,13 @@
 				<input id="btnNewEvent" type="button" value="Neuer Termin" />
 			</div>
 			<div>
-				<input id="btnLastWeek" type="button" value="&larr;" onClick="getLastWeek()" /> 
+				<input id="btnLastWeek" type="button" value="&larr;" onClick="getLastWeek()" />
 				<input id="btnNextWeek" type="button" value="&rarr;" onClick="getNextWeek()" />
 			</div>
 			<div>
 				<input id="txtSearchBox" type="text" placeholder="Suche" />
 			</div>
-			<input id="hidCurrentWeek" type="hidden" /> 
+			<input id="hidCurrentWeek" type="hidden" />
 			<input id="hidCurrentYear" type="hidden" />
 		</div>
 		<div id="calendarBody"></div>

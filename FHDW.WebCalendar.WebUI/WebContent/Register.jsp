@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%
 	String userName = null;
 	Cookie[] cookies = request.getCookies();
@@ -21,8 +20,7 @@
 <title>Loginbereich</title>
 
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/all.css" />
-<link rel="stylesheet" type="text/css"
-	href="stylesheets/custom/register.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/custom/register.css" />
 
 
 <script src="scripts/framework/jquery-1.11.2.min.js"></script>
@@ -38,7 +36,8 @@
 		<div id="divContent">
 			<form name="frmLogin" method="post" action="RegisterController">
 				<div class="claCenterBoxDefault">
-					<input id="txtUsername" name="txtUsername" class="claTextDefault claUserData claRequiredField" type="text" value="<% String username = request.getParameter("username"); if(username != null) out.print(username);%>" placeholder="Benutzername*" />
+					<input id="txtUsername" name="txtUsername" class="claTextDefault claUserData claRequiredField" type="text" value="<%String username = request.getParameter("username");
+			if (username != null) out.print(username);%>" placeholder="Benutzername*" />
 				</div>
 				<div class="claCenterBoxDefault">
 					<input id="txtPassword" name="txtPassword" class="claTextDefault claUserData claRequiredField" type="password" placeholder="Passwort*" />
@@ -65,7 +64,7 @@
 					<input id="txtUserSecurityAnswer" name="txtUserSecurityAnswer" class="claTextDefault claUserData claRequiredField" type="text" placeholder="Sicherheitsantwort*" />
 				</div>
 				<div class="claCenterBoxDefault">
-					<input id="btnSubmit" name="btnSubmit" class="claButtonDefault claButtons" type="Submit" value="Registrieren" /> 
+					<input id="btnSubmit" name="btnSubmit" class="claButtonDefault claButtons" type="Submit" value="Registrieren" />
 					<input id="btnReset" name="btnReset" class="claButtonDefault claButtons" type="Reset" value="Zur&uuml;cksetzen" />
 				</div>
 				<div id="divHint">Mit * gekennzeichnete Felder, m&uuml;ssen ausgef&uuml;llt werden!</div>

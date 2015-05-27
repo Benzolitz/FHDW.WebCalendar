@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%
 	String userName = null;
 	Cookie[] cookies = request.getCookies();
@@ -20,8 +19,7 @@
 <title>Loginbereich</title>
 
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/all.css" />
-<link rel="stylesheet" type="text/css"
-	href="stylesheets/custom/login.css" />
+<link rel="stylesheet" type="text/css" href="stylesheets/custom/login.css" />
 
 <script src="scripts/framework/jquery-1.11.2.min.js"></script>
 <script src="scripts/custom/all.js"></script>
@@ -35,20 +33,18 @@
 		<div id="divContent">
 			<form name="frmLogin" method="post" action="LoginController">
 				<div class="claCenterBoxDefault">
-					<input id="txtUsername" class="claTextDefault" name="username"
-						type="text" value="<% String username = request.getParameter("username"); if(username != null) out.print(username);%>" placeholder="Benutzername" />
+					<input id="txtUsername" class="claTextDefault" name="username" type="text" value="<%String username = request.getParameter("username");
+			if (username != null) out.print(username);%>" placeholder="Benutzername" />
 				</div>
 				<div class="claCenterBoxDefault">
-					<input id="txtPassword" class="claTextDefault" name="password"
-						type="password" placeholder="Passwort" />
+					<input id="txtPassword" class="claTextDefault" name="password" type="password" placeholder="Passwort" />
 				</div>
 				<div id="divLinks" class="claCenterBoxDefault">
 					<a href="Reset.jsp">Passwort vergessen?</a>
 				</div>
 				<div class="claCenterBoxDefault">
-					<input id="btnSubmit" class="claButtonDefault" type="Submit"
-						value="Login" /> <input id="btnRegister" class="claButtonDefault"
-						type="button" value="Registrieren" />
+					<input id="btnSubmit" class="claButtonDefault" type="Submit" value="Login" />
+					<input id="btnRegister" class="claButtonDefault" type="button" value="Registrieren" />
 				</div>
 			</form>
 			<%
