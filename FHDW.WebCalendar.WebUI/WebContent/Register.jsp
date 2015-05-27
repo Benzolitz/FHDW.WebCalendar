@@ -22,7 +22,6 @@
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/all.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/register.css" />
 
-
 <script src="scripts/framework/jquery-1.11.2.min.js"></script>
 <script src="scripts/custom/all.js"></script>
 <script src="scripts/custom/register.js"></script>

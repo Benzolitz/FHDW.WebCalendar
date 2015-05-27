@@ -16,7 +16,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Loginbereich</title>
+<title>Login</title>
 
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/all.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/login.css" />

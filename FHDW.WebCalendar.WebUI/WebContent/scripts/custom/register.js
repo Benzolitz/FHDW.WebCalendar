@@ -1,11 +1,27 @@
+var samePasswords = false;
 $(document).ready(function() {
 	DisableSubmitButton();
 
 	$(".claRequiredField").keyup(test);
-	$(".claRequiredField").focusout(SetHintForEmptyField);
+	$(".claRequiredField").focusout(checkForEmptyField);
+
+	$("#txtPassword").keyup(checkPasswords);
+	$("#txtPasswordCheck").keyup(checkPasswords);
 
 	$("#btnReset").click(resetTextBoxBorders);
 });
+
+var checkPasswords = function() {
+	if ($("#txtPassword").val() === $("#txtPasswordCheck").val()) {
+		samePasswords = true;
+		$("#txtPassword").removeClass("claRequiredFieldEmpty");
+		$("#txtPasswordCheck").removeClass("claRequiredFieldEmpty");
+	} else {
+		samePasswords = false;
+		$("#txtPassword").addClass("claRequiredFieldEmpty");
+		$("#txtPasswordCheck").addClass("claRequiredFieldEmpty");
+	}
+};
 
 var DisableSubmitButton = function() {
 	$("#btnSubmit").attr("disabled");
@@ -24,7 +40,7 @@ var resetTextBoxBorders = function() {
 
 	DisableSubmitButton();
 };
-var SetHintForEmptyField = function() {
+var checkForEmptyField = function() {
 	if ($(this).val() === "") {
 		$(this).addClass("claRequiredFieldEmpty");
 	} else {
@@ -32,7 +48,7 @@ var SetHintForEmptyField = function() {
 	}
 };
 var test = function() {
-	if (RequiredInformationGiven()) {
+	if (RequiredInformationGiven() && samePasswords) {
 		EnableSubmitButton();
 	} else {
 		DisableSubmitButton();
