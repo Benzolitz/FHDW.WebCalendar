@@ -13,6 +13,12 @@ import java.io.IOException;
 public class LoginController extends javax.servlet.http.HttpServlet
 {
 	private static final long serialVersionUID = 1L;
+	private UserService userService;
+	
+	public LoginController()
+	{
+		//userService = new UserService();
+	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException
 	{
@@ -21,28 +27,29 @@ public class LoginController extends javax.servlet.http.HttpServlet
 		Login(response, username, password);
 	}
 	
-	private void Login(HttpServletResponse p_response, String p_username, String p_password) throws IOException
+	private void Login(HttpServletResponse p_response , String p_username, String p_password) throws IOException
 	{
+		String redirect = "";
 		try
-		{
-			UserService userService = new UserService();
-			
-			if (userService.CheckLoginData(p_username, p_password))
-			//if (p_username.equals(p_password))
+		{			
+			//if (userService.CheckLoginData(p_username, p_password))
+			if (p_username.equals(p_password))
 			{
 				Cookie cookie = new Cookie("username", p_username);
 				cookie.setMaxAge(3600);
 				p_response.addCookie(cookie);
-				p_response.sendRedirect("Calendar.jsp");
+				redirect =  "Calendar.jsp";
 			}
 			else
 			{
-				p_response.sendRedirect("Login.jsp?username=" + p_username + "&message=Der Benutzername, oder das Passwort sind falsch!");
+				redirect = "Login.jsp?username=" + p_username + "&message=Der Benutzername, oder das Passwort sind falsch!";
 			}
 		}
 		catch (Exception exception)
 		{
-			p_response.sendRedirect("Login.jsp?username=" + p_username + "&message=" + exception.getMessage());
+			redirect = "Login.jsp?username=" + p_username + "&message=" + exception.getMessage();
 		}
+		
+		p_response.sendRedirect(redirect);
 	}
 }
