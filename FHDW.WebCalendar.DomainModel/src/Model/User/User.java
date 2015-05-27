@@ -10,7 +10,6 @@ public class User extends BaseObject
 	private String lastname;
 	private String phonenumber;
 	private UserSecurity userSecurity;
-
 	/**
 	 * @param p_username
 	 */

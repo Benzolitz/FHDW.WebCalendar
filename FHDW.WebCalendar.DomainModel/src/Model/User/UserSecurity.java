@@ -2,6 +2,10 @@ package Model.User;
 
 public class UserSecurity
 {	
+	private String password;
+	private int securityQuestionId;
+	private String securityQuestion;
+	private String securityAnswer;
 	
 	/**
 	 * @return the password
@@ -65,19 +69,5 @@ public class UserSecurity
 	public void SetSecurityAnswer(String p_securityAnswer)
 	{
 		securityAnswer = p_securityAnswer;
-	}
-
-	private String password;
-	private int securityQuestionId;
-	private String securityQuestion;
-	private String securityAnswer;
-	
-	public UserSecurity(String password, int questionId, String question, String answer) {
-		this.password = password;
-		this.securityQuestion = question;
-		this.securityAnswer = answer;
-		this.securityQuestionId = questionId;
-		
-	}
-	
+	}	
 }
