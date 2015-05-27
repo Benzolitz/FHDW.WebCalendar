@@ -4,7 +4,6 @@ import Model.BaseObject;
 
 public class User extends BaseObject
 {
-
 	private String username;
 	private String email;
 	private String firstname;
@@ -31,15 +30,15 @@ public class User extends BaseObject
 	/**
 	 * @return the userSecurity
 	 */
-	public UserSecurity getUserSecurity()
+	public UserSecurity GetUserSecurity()
 	{
 		return userSecurity;
 	}
 
 	/**
-	 * @param p_userSecurity the userSecurity to set
+	 * @param p_userSecurity the userSecurity to Set
 	 */
-	public void setUserSecurity(UserSecurity p_userSecurity)
+	public void SetUserSecurity(UserSecurity p_userSecurity)
 	{
 		userSecurity = p_userSecurity;
 	}
@@ -63,7 +62,7 @@ public class User extends BaseObject
 	/**
 	 * @return
 	 */
-	public String getFirstname()
+	public String GetFirstname()
 	{
 		return firstname;
 	}
@@ -71,7 +70,7 @@ public class User extends BaseObject
 	/**
 	 * @param p_firstname
 	 */
-	public void setFirstname(String p_firstname)
+	public void SetFirstname(String p_firstname)
 	{
 		firstname = p_firstname;
 	}
@@ -79,7 +78,7 @@ public class User extends BaseObject
 	/**
 	 * @return
 	 */
-	public String getLastname()
+	public String GetLastname()
 	{
 		return lastname;
 	}
@@ -87,7 +86,7 @@ public class User extends BaseObject
 	/**
 	 * @param p_lastname
 	 */
-	public void setLastname(String p_lastname)
+	public void SetLastname(String p_lastname)
 	{
 		lastname = p_lastname;
 	}
@@ -95,7 +94,7 @@ public class User extends BaseObject
 	/**
 	 * @return
 	 */
-	public String getPhonenumber()
+	public String GetPhonenumber()
 	{
 		return phonenumber;
 	}
@@ -103,7 +102,7 @@ public class User extends BaseObject
 	/**
 	 * @param p_phonenumber
 	 */
-	public void setPhonenumber(String p_phonenumber)
+	public void SetPhonenumber(String p_phonenumber)
 	{
 		phonenumber = p_phonenumber;
 	}

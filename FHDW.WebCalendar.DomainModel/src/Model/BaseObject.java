@@ -1,8 +1,7 @@
 package Model;
 
 public class BaseObject
-{	
-	
+{
 	private int id;
 	
 	public void SetId(int p_id)
@@ -14,6 +13,4 @@ public class BaseObject
 	{
 		return id;
 	}
-	
-	
 }

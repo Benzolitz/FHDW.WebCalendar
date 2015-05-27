@@ -5,10 +5,8 @@ import Model.BaseObject;
 
 public class Calendar extends BaseObject
 {
-
 	private int ownerId;
 	private String name;
-
 	
 	public void SetOwnerId(int p_ownerId)
 	{
