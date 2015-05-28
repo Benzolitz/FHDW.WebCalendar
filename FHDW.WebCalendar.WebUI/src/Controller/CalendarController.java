@@ -33,7 +33,7 @@ public class CalendarController extends HttpServlet
 		}
 	}
 	
-	private void Logout(HttpServletResponse p_response, Cookie[] p_cookies) throws IOException
+	public static void Logout(HttpServletResponse p_response, Cookie[] p_cookies) throws IOException
 	{
 		Cookie calendarCookie = null;
 		if (p_cookies != null)
@@ -52,8 +52,6 @@ public class CalendarController extends HttpServlet
 			calendarCookie.setMaxAge(0);
 			p_response.addCookie(calendarCookie);
 		}
-		
-		p_response.sendRedirect("Login.jsp");
 	}
 	
 	private void GetCalendar(HttpServletResponse response, Integer weekNumber) throws IOException
