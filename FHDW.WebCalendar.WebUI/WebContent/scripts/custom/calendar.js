@@ -1,8 +1,40 @@
 $(document).ready(function() {
 	{
+		checkCookie();
 		buildUserCalendar(-1, new Date().getFullYear());
 	}
 });
+
+var checkCookie = function() {
+	var cookieValue = getCalendarCookieValue();
+	var cookieValues = cookieValue.split("&");
+
+	for (var i = 0; i < cookieValues.length; i++) {
+		var value = cookieValues[i].split("=");
+
+		if (value[0].toLowerCase() === "userid") {
+			$("#ckiUserId").val(value[1]);
+		}
+	}
+};
+
+var getCalendarCookieValue = function() {
+	var calendarCookie = null;
+	var cookieName = "\"FHDW.WebCalendar=";
+	var cookies = document.cookie.split(';');
+	var cookieValue = "";
+
+	for (var i = 0; i < cookies.length; i++) {
+		if (cookies[i].indexOf(cookieName)) {
+			calendarCookie = cookies[i];
+		}
+	}
+
+	cookieValue = calendarCookie.substring(cookieName.length);
+	cookieValue = cookieValue.substring(0, cookieValue.length - 1);
+
+	return cookieValue;
+};
 
 var buildUserCalendar = function(p_week, p_year) {
 	var week = checkWeek(p_week);

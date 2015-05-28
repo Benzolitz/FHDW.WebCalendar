@@ -35,7 +35,7 @@ public class LoginController extends javax.servlet.http.HttpServlet
 			//if (userService.CheckLoginData(p_username, p_password))
 			if (p_username.equals(p_password))
 			{
-				Cookie cookie = new Cookie("username", p_username);
+				Cookie cookie = new Cookie("FHDW.WebCalendar", "login=true&userId=2&username="+ p_username);
 				cookie.setMaxAge(3600);
 				p_response.addCookie(cookie);
 				redirect =  "Calendar.jsp";

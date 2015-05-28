@@ -35,22 +35,22 @@ public class CalendarController extends HttpServlet
 	
 	private void Logout(HttpServletResponse p_response, Cookie[] p_cookies) throws IOException
 	{
-		Cookie loginCookie = null;
+		Cookie calendarCookie = null;
 		if (p_cookies != null)
 		{
 			for (Cookie cookie : p_cookies)
 			{
-				if (cookie.getName().equals("username"))
+				if (cookie.getName().equals("FHDW.WebCalendar"))
 				{
-					loginCookie = cookie;
+					calendarCookie = cookie;
 					break;
 				}
 			}
 		}
-		if (loginCookie != null)
+		if (calendarCookie != null)
 		{
-			loginCookie.setMaxAge(0);
-			p_response.addCookie(loginCookie);
+			calendarCookie.setMaxAge(0);
+			p_response.addCookie(calendarCookie);
 		}
 		
 		p_response.sendRedirect("Login.jsp");
