@@ -64,27 +64,530 @@
 	<div id="header">
 		<input id="btnLogout" type="button" value="Logout" onClick="Logout()" />
 	</div>
-
-	<div id="info"></div>
-
-	<div id="calendar">
-		<div id="calendarHead">
-			<div>
+	<div id="calendarBox">
+		<div id="userControls">
+			<div id="divSearchBox">
+				<input id="txtSearchBox" type="text" placeholder="Suche" />
+			</div>
+			<div id="divNewEvent">
 				<input id="btnNewEvent" type="button" value="Neuer Termin" />
 			</div>
-			<div>
-				<input id="btnLastWeek" type="button" value="&larr;" onClick="getLastWeek()" />
-				<input id="btnNextWeek" type="button" value="&rarr;" onClick="getNextWeek()" />
-			</div>
-			<div>
-				<input id="txtSearchBox" type="text" placeholder="Suche" />
+			<div id="divArrows">
+				<input id="btnLastWeek" type="button" value="&uarr;" onClick="getLastWeek()" /> <br />
+				<input id="btnNextWeek" type="button" value="&darr;" onClick="getNextWeek()" />
 			</div>
 			<input id="ckiUserId" type="hidden" value="<%=userId%>" />
 			<input id="hidCurrentWeek" type="hidden" />
 			<input id="hidCurrentYear" type="hidden" />
 		</div>
-		<div id="calendarBody"></div>
+		<div id="calendar">
+			<table style="width: 100%">
+				<thead>
+					<tr>
+						<td style="width: 2%;"></td>
+						<th style="width: 14%;">Mo.</th>
+						<th style="width: 14%;">Di.</th>
+						<th style="width: 14%;">Mi.</th>
+						<th style="width: 14%;">Do.</th>
+						<th style="width: 14%;">Fr.</th>
+						<th style="width: 14%;">Sa.</th>
+						<th style="width: 14%;">So.</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr style="height: 45px;">
+						<td style="border-bottom: 2px solid #000;"></td>
+						<td style="border-bottom: 2px solid #000;"></td>
+						<td style="border-bottom: 2px solid #000;"></td>
+						<td style="border-bottom: 2px solid #000;"></td>
+						<td style="border-bottom: 2px solid #000;"></td>
+						<td style="border-bottom: 2px solid #000;"></td>
+						<td style="border-bottom: 2px solid #000;"></td>
+						<td style="border-bottom: 2px solid #000;"></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>00</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>01</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>02</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>03</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>04</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>05</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>06</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>07</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>08</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>09</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>10</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>11</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>12</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>13</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>14</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>15</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>16</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>17</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>18</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>19</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>20</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>21</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>22</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td>23</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
-
 </body>
 </html>
