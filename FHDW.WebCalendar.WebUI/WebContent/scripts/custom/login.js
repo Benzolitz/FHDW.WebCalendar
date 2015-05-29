@@ -1,15 +1,4 @@
 $(document).ready(function() {
-	$("#btnSubmit").click(function() {
-		$.ajax({
-			type : "POST",
-			url : "LoginController",
-			data : {
-				username : $("txtUsername").val(),
-				password : $("txtPassword").val()
-			}
-		});
-	});
-
 	$("#btnRegister").click(function() {
 		var parameter = "";
 		var username = $("#txtUsername").val();
