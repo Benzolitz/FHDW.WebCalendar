@@ -93,19 +93,19 @@ td {
 #tabCalendar {
 	width: 100%;
 	border-spacing: 0;
-	border-top: 1px solid #000;
-	border-left: 1px solid #000;
-	border-bottom: 1px solid #000;
+	border-top: 1px solid #f33;
+	border-left: 1px solid #f33;
+	border-bottom: 1px solid #f33;
 }
 
 #tdTime {
 	width: 2%;
-	border-right: 1px solid #000;
+	border-right: 1px solid #f33;
 }
 
 .claHead {
 	width: 14%;
-	border-right: 1px solid #000;
+	border-right: 1px solid #f33;
 }
 
 #trAllDay {
@@ -113,9 +113,9 @@ td {
 }
 
 .claAllDay {
-	border-bottom: 1px solid #000;
-	border-right: 1px solid #000;
-	border-top: 1px solid #000;
+	border-bottom: 1px solid #f33;
+	border-right: 1px solid #f33;
+	border-top: 1px solid #f33;
 }
 
 .claTimeFrame {
@@ -127,11 +127,11 @@ td {
 }
 
 .claFullHour {
-	border-top: 1px solid #000;
-	border-right: 1px solid #000;
+	border-top: 1px solid #f33;
+	border-right: 1px solid #f33;
 }
 
 .claHalfHour {
-	border-top: 1px dotted #000;
-	border-right: 1px solid #000;
+	border-top: 1px dotted #f33;
+	border-right: 1px solid #f33;
 }
