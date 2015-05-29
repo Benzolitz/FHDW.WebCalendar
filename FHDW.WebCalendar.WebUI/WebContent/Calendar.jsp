@@ -70,7 +70,7 @@
 				<input id="txtSearchBox" type="text" placeholder="Suche" />
 			</div>
 			<div id="divNewEvent">
-				<input id="btnNewEvent" type="button" value="Neuer Termin" />
+				<input id="btnNewEvent" type="button" value="Neuer Termin" onClick="newEvent()" />
 			</div>
 			<div id="divArrows">
 				<input id="btnLastWeek" type="button" value="&uarr;" onClick="getLastWeek()" /> <br />
@@ -81,509 +81,509 @@
 			<input id="hidCurrentYear" type="hidden" />
 		</div>
 		<div id="calendar">
-			<table style="width: 100%">
+			<table id="tabCalendar">
 				<thead>
 					<tr>
-						<td style="width: 2%;"></td>
-						<th style="width: 14%;">Mo.</th>
-						<th style="width: 14%;">Di.</th>
-						<th style="width: 14%;">Mi.</th>
-						<th style="width: 14%;">Do.</th>
-						<th style="width: 14%;">Fr.</th>
-						<th style="width: 14%;">Sa.</th>
-						<th style="width: 14%;">So.</th>
+						<td id="tdTime"></td>
+						<th class="claHead">Mo.</th>
+						<th class="claHead">Di.</th>
+						<th class="claHead">Mi.</th>
+						<th class="claHead">Do.</th>
+						<th class="claHead">Fr.</th>
+						<th class="claHead">Sa.</th>
+						<th class="claHead">So.</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr style="height: 45px;">
-						<td style="border-bottom: 2px solid #000;"></td>
-						<td style="border-bottom: 2px solid #000;"></td>
-						<td style="border-bottom: 2px solid #000;"></td>
-						<td style="border-bottom: 2px solid #000;"></td>
-						<td style="border-bottom: 2px solid #000;"></td>
-						<td style="border-bottom: 2px solid #000;"></td>
-						<td style="border-bottom: 2px solid #000;"></td>
-						<td style="border-bottom: 2px solid #000;"></td>
+					<tr id="trAllDay">
+						<td class="claAllDay"></td>
+						<td class="claAllDay"></td>
+						<td class="claAllDay"></td>
+						<td class="claAllDay"></td>
+						<td class="claAllDay"></td>
+						<td class="claAllDay"></td>
+						<td class="claAllDay"></td>
+						<td class="claAllDay"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>00</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">00</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>01</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">01</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>02</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">02</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>03</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">03</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>04</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">04</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>05</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">05</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>06</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">06</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>07</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">07</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>08</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">08</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>09</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">09</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>10</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">10</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>11</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">11</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>12</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">12</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>13</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">13</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>14</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">14</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>15</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">15</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>16</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">16</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>17</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">17</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>18</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">18</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>19</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">19</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>20</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">20</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>21</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">21</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>22</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">22</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td>23</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claFullHour claTimeColumn">23</td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
+						<td class="claFullHour"></td>
 					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
+					<tr class="claTimeFrame">
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
+						<td class="claHalfHour"></td>
 					</tr>
 				</tbody>
 			</table>

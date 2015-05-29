@@ -63,3 +63,11 @@ var Logout = function() {
 		}
 	});
 };
+
+var newEvent = function() {
+	openEventWindow(-1);
+}
+
+var openEventWindow = function(p_eventId) {
+	// TODO: WENN p_eventId != -1 DANN Event Informationen abfragen.
+}

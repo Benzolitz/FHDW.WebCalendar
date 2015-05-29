@@ -5,15 +5,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Services.user.UserService;
-
 import java.io.IOException;
 
 @WebServlet ("/LoginController")
 public class LoginController extends javax.servlet.http.HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-	private UserService userService;
+	private Services.UserService userService;
 	
 	public LoginController()
 	{

@@ -1,22 +1,23 @@
 #header {
-	width: 100%; 
-	min-width: 750px; 
-	height: 35px; 
-	background-color: #987;
-	padding: 5px;
+	width: 100%;
+	min-width: 750px;
+	height: 35px;
+}
+
+#btnLogout {
+	float: right;
 }
 
 #calendarBox {
-	width: 100%; 
-	min-width: 750px; 
-	heigth: 750px; 
+	width: 100%;
+	min-width: 750px;
+	heigth: 750px;
 	min-height: 500px;
 }
 
 #userControls {
-	width: 200px; 
-	height: 100%; 
-	background-color: #123; 
+	width: 200px;
+	height: 100%;
 	float: left;
 	padding: 5px;
 }
@@ -78,18 +79,59 @@
 }
 
 #calendar {
-	background-color: #aaa; 
-	width: auto; 
-	height: 100%; 
-	overflow: hidden; 
+	width: auto;
+	height: 100%;
+	overflow: hidden;
 	padding: 10px;
-}
-
-table, th, td {
-	border: 1px solid #dfe;
 }
 
 td {
 	font-size: 10px;
 	text-align: right;
+}
+
+#tabCalendar {
+	width: 100%;
+	border-spacing: 0;
+	border-top: 1px solid #000;
+	border-left: 1px solid #000;
+	border-bottom: 1px solid #000;
+}
+
+#tdTime {
+	width: 2%;
+	border-right: 1px solid #000;
+}
+
+.claHead {
+	width: 14%;
+	border-right: 1px solid #000;
+}
+
+#trAllDay {
+	height: 45px;
+}
+
+.claAllDay {
+	border-bottom: 1px solid #000;
+	border-right: 1px solid #000;
+	border-top: 1px solid #000;
+}
+
+.claTimeFrame {
+	height: 13px;
+}
+
+.claTimeColumn {
+	padding-right: 2px;
+}
+
+.claFullHour {
+	border-top: 1px solid #000;
+	border-right: 1px solid #000;
+}
+
+.claHalfHour {
+	border-top: 1px dotted #000;
+	border-right: 1px solid #000;
 }
