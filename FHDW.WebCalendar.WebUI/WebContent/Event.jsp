@@ -16,56 +16,93 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title></title>
+<title>Termin</title>
+
+<link rel="stylesheet" href="stylesheets/framework/font-awesome.min.css">
 
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/all.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/event.css" />
 
-<link rel="stylesheet" href="stylesheets/framework/font-awesome.min.css">
+<script src="scripts/framework/jquery-1.11.2.min.js"></script>
+<script src="scripts/custom/event.js"></script>
 
 </head>
 <body>
 	<div id="event" class="claMainBox">
 		<div class="claHeadLine">Terminverwaltung</div>
 		<hr />
-		<form name="appointmentForm" action="EventController" method="post">
-			<div id="fields" style="width: 80%; height: 50%; float: left; margin-top: 5px;">
-				<span class="fa fa-bookmark" style="margin-right: 5px; margin-left: 7px;"></span>
-				<input type="text" class="claTextDefault" name="appointmentTitel" placeholder="Terminname" />
-				<span class="fa fa-folder-open"></span>
-				<input type="text" class="claTextDefault" name="appointmentCategorie" placeholder="Kategorie" />
-				<br />
+		<form id="frmContent" action="#" method="post">
+			<div id="divEventData">
+				<div class="claDataRow">
+					<div id="divEventTitle" class="claTwoRowData">
+						<div class="claIcon">
+							<span class="fa fa-bookmark faData"></span>
+						</div>
+						<input type="text" class="claTextDefault claTxtTwoRowData" name="eventTitle" placeholder="Terminname" />
+					</div>
+					<div id="divEventCategory" class="claTwoRowData">
+						<div class="claIcon">
+							<span class="fa fa-folder-open faData"></span>
+						</div>
+						<input type="text" class="claTextDefault claTxtTwoRowData" name="eventCategory" placeholder="Kategorie (optional)" />
+					</div>
+				</div>
+				<div class="claDataRow">
+					<div id="divEventStart" class="claTwoRowData">
+						<div class="claIcon">
+							<span class="fa fa-clock-o faData"></span>
+						</div>
+						<input type="text" class="claTextDefault claTxtTwoRowData" name="eventStart" placeholder="Terminstart" />
+					</div>
+					<div id="divEventEnd" class="claTwoRowData">
+						<div class="claIcon">
+							<span class="fa fa-clock-o faData"></span>
+						</div>
+						<input type="text" class="claTextDefault claTxtTwoRowData" name="eventEnd" placeholder="Terminende" />
+					</div>
+				</div>
+				<div class="claDataRow">
+					<div id="divEventLocation" class="claOneRowData">
+						<div class="claIcon">
+							<span class="fa fa-building faData"></span>
+						</div>
+						<input type="text" class="claTextDefault claTxtOneRowData" name="eventLocation" placeholder="Ort" />
+					</div>
+				</div>
+				<div class="claDataRow">
+					<div id="divEventRequiredGuests" class="claOneRowData">
+						<div class="claIcon">
+							<span class="fa fa-users faData"></span>
+						</div>
+						<input type="text" class="claTextDefault claTxtOneRowData" name="eventRequiredGuests" placeholder="Erforderliche Personen" />
+					</div>
+				</div>
+				<div class="claDataRow">
+					<div id="divEventOptionalGuests" class="claOneRowData">
+						<div class="claIcon">
+							<span class="fa fa-user-plus faData"></span>
+						</div>
+						<input type="text" class="claTextDefault claTxtOneRowData" name="eventOptionalGuests" placeholder="Optionale Personen" />
+					</div>
+				</div>
 
-				<span class="fa fa-clock-o" style="margin-right: 2px; margin-left: 7px;"></span>
-				<input type="text" class="claTextDefault" name="appointmentStart" placeholder="Start" />
-				<span class="fa fa-clock-o" style="margin-right: 4px; margin-left: 6px;"></span>
-				<input type="text" class="claTextDefault" name="appointmentEnd" placeholder="Ende" />
-				<br />
-
-				<span class="fa fa-building" style="margin-right: 2px; margin-left: 7px;"></span>
-				<input type="text" class="claTextDefault" name="appointmentLocation" placeholder="Ort" />
-				<br />
-				<span class="fa fa-users" style="margin-right: 1px;"></span>
-				<input type="text" class="claTextDefault" name="appointmentRequired" style="width: 545px;" placeholder="Erforderlich" />
-				<br />
-				<span class="fa fa-user-plus"></span>
-				<input type="text" class="claTextDefault" name="appointmentOptional" style="width: 545px;" placeholder="Optional" />
-				<br />
 			</div>
-			<div id="buttons" style="float: right; height: 50%; width: 19%;">
-				<br />
-				<input type="Submit" value="Speichern" />
-				<br />
-				<br />
-				<input type="Submit" value="Anhang" />
+			<div id="divButtons">
+				<div class="claCenterDiv">
+					<input id="btnSubmit" class="claButtonDefault claEventButtons" type="Submit" value="Speichern" />
+				</div>
+				<div class="claCenterDiv">
+					<input id="btnFile" class="claButtonDefault claEventButtons" type="Button" value="Anh&auml;nge" />
+				</div>
 			</div>
-			<div id="addition" style="clear: both; width: 95%; height: 260px; margin: 5px;">
-				<span class="fa fa-comments"></span>
-				<br />
-				<textarea name="taeAppointmentComment" style="width: 95%; height: 85%; margin-left: 5px;" placeholder="Anmerkung"></textarea>
-				<br />
+			<div id="divEventComment">
+				<span id="faComment" class="fa fa-comments"></span>
+				<span id="spaCharactersLeft">
+					Übrige Zeichen:
+					<span id="spaChars"></span>
+				</span>
+				<textarea id="txaEventComment" maxlength="4000" placeholder="Bemerkung (optional)"></textarea>
 			</div>
-
 		</form>
 	</div>
 </body>
