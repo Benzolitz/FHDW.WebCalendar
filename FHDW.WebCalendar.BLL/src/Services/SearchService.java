@@ -17,6 +17,12 @@ public class SearchService extends BaseService
 	}
 	
 	
+	/**
+	 * @param p_calendar
+	 * @param searchString
+	 * 
+	 * @return
+	 */
 	public List<Event> searchEvents(Calendar p_calendar, String searchString) {
 		
 		//TODO: comming soon

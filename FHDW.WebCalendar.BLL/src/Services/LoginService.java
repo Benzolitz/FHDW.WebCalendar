@@ -1,13 +1,18 @@
 package Services;
 
-import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
 import HTMLHelper.UserHTMLHelper;
+import Repository.JDBC.WebCalendarRepo;
 
 /**
  * @author Frederik Heinrichs
- *TODO: Kommentar schreiben
+ * 
+ * Buisness Logik für den Loginbereich in der Applikation
+ * 
+ * @see WebCalendarRepo
+ * @see UserHTMLHelper
+ * @see UserService
  */
 public class LoginService extends BaseService
 {
@@ -25,22 +30,44 @@ public class LoginService extends BaseService
 	 * @return userId wenn das Password korrekt ist<br>
 	 *         -1 , wenn das Password nicht korrekt ist<br>
 	 *         
-	 * @throws NotFound 
-	 * @throws IOException 
-	 * @throws DatabaseException       
+	 * @throws NotFound wenn der Benutzer nicht vorhanden ist
+	 * @throws IOException wenn das Eingebene Password oder der Benutzername nicht den RegelEntsprechen
+	 * 
+	 *  @see UserHTMLHelper#checkUserPassword(String)
+	 *  @see UserHTMLHelper#checkUserName(String)
 	 */
-	public int CheckLoginData(String p_username, String p_password) throws DatabaseException, IOException, NotFound {		
-		if (!UserHTMLHelper.checkUserPassword(p_password)) {
-			return -1;
-		} else {	
-			UserService userService = new UserService();
-			int userId = userService.GetUserId(p_username);
-			String userPasswordToCompare = userService.GetUserPassword(userId);
-			if (!userPasswordToCompare.equals(p_password)) {
-				return userId;
-			}
+	public int CheckLoginData(String p_username, String p_password) throws IOException, NotFound {		
+		//Check userName
+		UserService userService = new UserService();
+		int userId = userService.GetUserId(p_username); // throws IOException, Notfound
+		
+		//Check UserPassword
+		return checkUserPassword(userId, p_password) ? userId : -1; // throws IOExceptions
+	}
+	
+	/**
+	 * Überprüfe das eingebene Password eines Benutzers
+	 * 
+	 * @param p_userId
+	 * @param p_password
+	 * 
+	 * @return true wenn das eingebene Password korrekt war<br>
+	 *         false wenn das eingebenen Password nicht mit dem aus der Datenbank übereinstimmt
+	 * 
+	 * @throws NotFound wenn das password zu einem benutzer nicht gefunden werden konnte
+	 * @throws IOException wenn das eingebenen Password nicht korrekt war
+	 * 
+	 * @see UserHTMLHelper#checkUserPassword(String)
+	 */
+	protected boolean checkUserPassword(int p_userId, String p_password) throws NotFound, IOException {
+		UserHTMLHelper.checkUserPassword(p_password); 
+		UserService userService = new UserService();
+		String userPasswordToCompare = userService.GetUserPassword(p_userId);
+		if (!userPasswordToCompare.equals(p_password)) {
+			return true;
+		} else {
+			return false;
 		}
-		return -1;
 	}
 	
 

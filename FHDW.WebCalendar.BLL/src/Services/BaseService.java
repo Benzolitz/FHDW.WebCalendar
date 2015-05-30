@@ -5,7 +5,8 @@ import Repository.JDBC.WebCalendarRepo;
 
 /**
  * @author Frederik Heinrichs
- * TODO: Kommentar schreiben
+ * 
+ * Abstrakter Basis Service für die Verwaltung gemeinsamer Attribute
  * 
  */
 public abstract class BaseService {
@@ -13,10 +14,11 @@ public abstract class BaseService {
 	public static WebCalendarRepo repo;
 
 	/**
-	 * gelt Singelton for WebCalendarRepo repo
-	 * @see WebCalendarRepo
+	 * Singelton wür das Repository
 	 * 
 	 * @return WebCalendarRepo
+	 * 
+	 * @see WebCalendarRepo
 	 */
 	public static WebCalendarRepo GetRepo() {
 		if (repo == null) {

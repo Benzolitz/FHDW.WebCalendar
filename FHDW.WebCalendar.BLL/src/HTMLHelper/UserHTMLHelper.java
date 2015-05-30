@@ -1,30 +1,29 @@
 package HTMLHelper;
 
+import Exceptions.IOException;
 import Model.User.User;
+import Model.User.UserSecurity;
 
+/**
+ * @author Frederik Heinrichs
+ *
+ * HTMLHelper für die überprüfung eingebener Daten für User objekte
+ * 
+ * @see User
+ * @see UserSecurity
+ */
 public class UserHTMLHelper
 {	
 	/**
 	 * TODO: Kommentar schreiben
 	 * @param p_user
 	 * @return
+	 * @throws IOException 
 	 */
-	public static boolean checkUserData(User p_user) {
-		if (!UserHTMLHelper.checkUserPassword(p_user.GetUserSecurity().GetPassword())) {
-			return false;
-		}
-		
-		if (!UserHTMLHelper.checkUserName(p_user.GetUsername())) {
-			return false;
-		}
-		
-		if (!UserHTMLHelper.checkUserName(p_user.GetFirstname())) {
-			return false;
-		}
-		
-		if (!UserHTMLHelper.checkUserName(p_user.GetLastname())) {
-			return false;
-		}
+	public static boolean checkUserData(User p_user) throws IOException {
+		UserHTMLHelper.checkUserPassword(p_user.GetUserSecurity().GetPassword());
+		UserHTMLHelper.checkUserName(p_user.GetUsername());
+
 		
 		if (!UserHTMLHelper.checkUserMail(p_user.GetEMail())) {
 			return false;
@@ -33,11 +32,7 @@ public class UserHTMLHelper
 		if (!UserHTMLHelper.checkPhonenNumber(p_user.GetPhonenumber())) {
 			return false;
 		}
-		
-		if (!UserHTMLHelper.checkSecurityAnswer(p_user.GetUserSecurity().GetSecurityAnswer())) {
-			return false;
-		}
-		
+				
 		return true;
 	}
 	
@@ -47,17 +42,15 @@ public class UserHTMLHelper
 	 * 
 	 * @param p_password
 	 * 
-	 * @return true, wenn p_password eine korrekte Syntax bestizt<br>
-	 * 		   false, wenn p_password eine falsche Syntax bestizt
+	 * @throws IOException wenn das eingebene password leer war oder kleiner als 6 Zeichen
 	 */
-	public static boolean checkUserPassword(String p_password) {
+	public static void checkUserPassword(String p_password) throws IOException {
 		if (p_password.isEmpty()) {
-			return false;
+			throw new IOException("Das eingebenen Password war leer");
 		} else {
 			if (p_password.length() < 6) {
-				return false;
+				throw new IOException("Das eingebenen Password war zu lang");
 			}	
-			return true;
 		}
 	}
 	
@@ -70,23 +63,15 @@ public class UserHTMLHelper
 	 * 
 	 * @return true, wenn p_username eine korrekte Syntax bestizt<br>
 	 * 		   false, wenn p_username eine falsche Syntax bestizt
+	 * @throws IOException 
 	 */
-	public static boolean checkUserName(String p_username) {
+	public static void checkUserName(String p_username) throws IOException {
 		if (p_username.isEmpty()) {
-			return false;
+			throw new IOException("Der Eingebenen Benutzername ist leer");
 		} else {
 			if (p_username.length() > 12) {
-				return false;
+				throw new IOException("Der Eingebenen Benutzername hat mehr als 12 Zeichen");
 			}
-			
-//			Pattern pattern = Pattern.compile(p_username);
-//		    Matcher matcher = pattern.matcher("[0-9_a-zA-F]");
-//			TODO:
-//			if (!matcher.matches()) {
-//				return false;
-//			}
-			
-			return true;
 		}	
 	}
 	
@@ -141,19 +126,4 @@ public class UserHTMLHelper
 		}	
 	}
 	
-	/**
-	 * TODO: Regeln aufstellen
-	 * @param p_answer
-	 * @return
-	 */
-	public static boolean checkSecurityAnswer(String p_answer) {
-		if (p_answer.isEmpty()) {
-			
-			return false;
-		} else {
-			// TODO: Gibt es Regeln die beim Password eingehalten werden müssen?
-			
-			return true;
-		}	
-	}
 }
