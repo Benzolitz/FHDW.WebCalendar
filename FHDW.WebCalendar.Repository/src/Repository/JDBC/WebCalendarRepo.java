@@ -182,9 +182,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		rs2.next();
 		
 		sql = String.format("INSERT INTO Calendar (Name, CreatorID) VALUES ('Mein Kalendar', %d);", rs2.getInt(1));
-		rs = stmt.executeUpdate(sql);
-		
 		userId = rs2.getInt(1);
+		
+		rs = stmt.executeUpdate(sql);
 		
 		return userId;
 	}
