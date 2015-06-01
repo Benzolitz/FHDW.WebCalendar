@@ -1,5 +1,6 @@
 package IRepository;
 
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
 
@@ -18,20 +19,20 @@ public interface IWebCalendarRepo
 	 * @param p_usernameOrEmail
 	 * @return Gibt die BenutzerID des Benutzers zurück.
 	 */
-	int GetUserId(String p_usernameOrEmail); 
+	int GetUserId(String p_usernameOrEmail) throws SQLException; 
 		
 	/**
 	 * Liefert das Passwort zu einem Benutzer.
 	 * @param userId
 	 * @return
 	 */
-	String GetUserPassword(int p_userId);
+	String GetUserPassword(int p_userId) throws SQLException;
 	
 	/**
 	 * Liefert alle möglichen Sicherheitsfragen.
 	 * @return
 	 */
-	Collection<String> GetAllSecurityQuestions();
+	Collection<String> GetAllSecurityQuestions() throws SQLException;
 	
 	/**
 	 * Registriert einen neuen Benutzer. Erstellt zugleich einen leeren Kalender für diesen Benutzer.
@@ -45,28 +46,28 @@ public interface IWebCalendarRepo
 	 * @param p_securityAnswer
 	 * @return Gibt die BenutzerID vom erstellten Benutzer zurück.
 	 */
-	int RegistrateNewUser(String p_username, String p_email, String p_password, String p_firstName, String p_lastName, String p_phoneNumber, int p_securityQuestion, String p_securityAnswer);
+	int RegistrateNewUser(String p_username, String p_email, String p_password, String p_firstName, String p_lastName, String p_phoneNumber, int p_securityQuestion, String p_securityAnswer) throws SQLException;
 	
 	/**
 	 * Liefert die Sicherheitsfrage zu einem Benutzerkonto.
 	 * @param p_userId
 	 * @return
 	 */
-	String GetSecurityQuestion(int p_userId);
+	String GetSecurityQuestion(int p_userId) throws SQLException;
 		
 	/**
 	 * Liefert von einem Benutzer die Sicherheitsantwort.
 	 * @param p_userId
 	 * @return
 	 */
-	String GetSecurityAnswer(int p_userId);
+	String GetSecurityAnswer(int p_userId) throws SQLException;
 	
 	/**
 	 * Setzt das Password eines Benutzers zurück.
 	 * @param p_userId
 	 * @param p_password
 	 */
-	void ResetPassword(int p_userId, String p_password);
+	void ResetPassword(int p_userId, String p_password) throws SQLException;
 	
 	/**
 	 * Erstellt für einen bestimmten Benutzer einen neuen Kalendar.
@@ -74,14 +75,14 @@ public interface IWebCalendarRepo
 	 * @param p_calendarName
 	 * @return Gibt die KalenderID des erstellten Kalendars zurück.
 	 */
-	int CreateNewCalendar(int p_userId, String p_calendarName);
+	int CreateNewCalendar(int p_userId, String p_calendarName) throws SQLException;
 	
 	/**
 	 * Gibt alle Kalender von einem Benutzer zurück.
 	 * @param p_userId
 	 * @return
 	 */
-	Collection<Calendar> GetAllUserCalendar(int p_userId);
+	Collection<Calendar> GetAllUserCalendar(int p_userId) throws SQLException;
 	
 	/**
 	 * Gibt alle Termine inklusive Kategorien für die Kalendaransicht zu einem bestimmten Benutzer zurück.
@@ -89,14 +90,14 @@ public interface IWebCalendarRepo
 	 * @param p_userId
 	 * @return
 	 */
-	Collection<EventCalendarView> GetEventsForUser(int p_calendarId, int p_userId); 
+	Collection<EventCalendarView> GetEventsForUser(int p_calendarId, int p_userId) throws SQLException; 
 	
 	/**
 	 * Gibt zu einem bestimmten Termin alle Informationen wieder.
 	 * @param p_eventId
 	 * @return
 	 */
-	Event GetEventDetailed(int p_eventId);
+	Event GetEventDetailed(int p_eventId) throws SQLException;
 	
 	/**
 	 * Speichert einen neuen Termin.
@@ -109,25 +110,25 @@ public interface IWebCalendarRepo
 	 * @param p_creatorId
 	 * @param p_calendarId
 	 */
-	void SaveEvent(String p_title, String p_location, Date p_starttime, Date p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId);
+	void SaveEvent(String p_title, String p_location, Date p_starttime, Date p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId) throws SQLException;
 
 	/**
 	 * Löscht einen vorhandenen Termin.
 	 * @param p_eventId
 	 */
-	void DeleteEvent(int p_eventId);
+	void DeleteEvent(int p_eventId) throws SQLException;
 	
 	/**
 	 * Löscht einen vorhandenen Kalendar und die dazugehörigen Termine.
 	 * @param p_calendarId
 	 */
-	void DeleteCalendar(int p_calendarId);
+	void DeleteCalendar(int p_calendarId) throws SQLException;
 	
 	/**
 	 * Löscht einen Benutzer und die dazugehörigen Kalender und Termine.
 	 * @param p_userId
 	 */
-	void DeleteUser(int p_userId);
+	void DeleteUser(int p_userId) throws SQLException;
 	
 	/**
 	 * Aktualisiert die Daten zu einem Termin.
@@ -139,6 +140,6 @@ public interface IWebCalendarRepo
 	 * @param p_message
 	 * @param p_categories
 	 */
-	void UpdateEvent(int p_eventId, String p_title, String p_location, Date p_starttime, Date p_endtime, String p_message, Collection<String> p_categories);
+	void UpdateEvent(int p_eventId, String p_title, String p_location, Date p_starttime, Date p_endtime, String p_message, Collection<String> p_categories) throws SQLException;
 	
 }
