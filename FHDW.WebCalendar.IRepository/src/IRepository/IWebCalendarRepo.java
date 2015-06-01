@@ -7,6 +7,7 @@ import java.util.Date;
 import Model.Calendar.Calendar;
 import Model.Calendar.Event.Event;
 import Model.Calendar.Event.EventCalendarView;
+import Model.SecurityQuestion.SecurityQuestion;
 
 /**
  * @author Eduard
@@ -32,7 +33,7 @@ public interface IWebCalendarRepo
 	 * Liefert alle möglichen Sicherheitsfragen.
 	 * @return
 	 */
-	Collection<String> GetAllSecurityQuestions() throws SQLException;
+	Collection<SecurityQuestion> GetAllSecurityQuestions() throws SQLException;
 	
 	/**
 	 * Registriert einen neuen Benutzer. Erstellt zugleich einen leeren Kalender für diesen Benutzer.
