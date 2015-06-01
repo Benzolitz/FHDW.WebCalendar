@@ -1,8 +1,13 @@
 package Controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.annotation.WebServlet;
@@ -11,21 +16,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import flexjson.JSONSerializer;
+
 @WebServlet ("/CalendarController")
 public class CalendarController extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException
 	{
 		String action = request.getParameter("action");
 		
 		switch (action.toLowerCase())
 		{
-			case "getcalendar" :
-				GetCalendar(response, Integer.parseInt(request.getParameter("weeknumber")));
+			case "getevents" :
+				GetEvents(response);
 				break;
-			case "logout" : 
+			case "logout" :
 				Logout(response, request.getCookies());
 				break;
 			default :
@@ -54,12 +61,16 @@ public class CalendarController extends HttpServlet
 		}
 	}
 	
-	private void GetCalendar(HttpServletResponse response, Integer weekNumber) throws IOException
+	private void GetEvents(HttpServletResponse response) throws IOException
 	{
 		String output = "";
 		try
 		{
+			// TODO: Event Daten holen.
 			
+			
+			// JSONSerializer serializer = new JSONSerializer();
+			// output = serializer.serialize(event);
 		}
 		catch (Exception e)
 		{

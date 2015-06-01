@@ -1,3 +1,4 @@
+<%@page import="Services.RegistrationService, java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%
 	Cookie calendarCookie = null;
@@ -17,7 +18,7 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Loginbereich</title>
+<title>Registrierung</title>
 
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/all.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/register.css" />
@@ -56,7 +57,28 @@
 					<input id="txtUserphone" name="txtUserphone" class="claTextDefault claUserData" type="text" placeholder="Telefon" />
 				</div>
 				<div class="claCenterBoxDefault">
-					<input id="txtUserSecurityQuestion" name="txtUserSecurityQuestion" class="claTextDefault claUserData claRequiredField" type="text" placeholder="Sicherheitsfrage*" />
+					<select id="selSecurityQuestion" name="selSecurityQuestion">
+						<%
+							RegistrationService registrationService = new RegistrationService();
+							Collection <String> secAnswers = registrationService.getAlLSecurityQuestions();
+							
+							int i = 0;
+							String options = "";
+							for (String answer : secAnswers)
+							{
+								if (i == 0)
+								{
+									options += "<option value=\"0\" disabled selected>Sicherheitsfrage*</option>";
+								}
+								else
+								{
+									options += String.format("<option value=\"%d\">%s</option>", i, answer);
+								}
+								i ++ ;
+							}
+							out.print(options);
+						%>
+					</select>
 				</div>
 				<div class="claCenterBoxDefault">
 					<input id="txtUserSecurityAnswer" name="txtUserSecurityAnswer" class="claTextDefault claUserData claRequiredField" type="text" placeholder="Sicherheitsantwort*" />

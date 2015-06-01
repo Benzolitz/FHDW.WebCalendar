@@ -6,16 +6,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import Services.*;
 
 @WebServlet ("/LoginController")
 public class LoginController extends javax.servlet.http.HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-	private Services.UserService userService;
+	private UserService userService;
+	private LoginService loginService;
 	
 	public LoginController()
 	{
-		//userService = new UserService();
+		userService = new UserService();
+		loginService = new LoginService();
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException
@@ -25,18 +28,17 @@ public class LoginController extends javax.servlet.http.HttpServlet
 		Login(response, username, password);
 	}
 	
-	private void Login(HttpServletResponse p_response , String p_username, String p_password) throws IOException
+	private void Login(HttpServletResponse p_response, String p_username, String p_password) throws IOException
 	{
 		String redirect = "";
 		try
-		{			
-			//if (userService.CheckLoginData(p_username, p_password))
-			if (p_username.equals(p_password))
+		{
+			if (loginService.CheckLoginData(p_username, p_password) > 0)
 			{
-				Cookie cookie = new Cookie("FHDW.WebCalendar", "login=true&userId=2&username="+ p_username);
+				Cookie cookie = new Cookie("FHDW.WebCalendar", String.format("login=true&userId=%d&username=%s", userService.GetUserId(p_username), p_username));
 				cookie.setMaxAge(3600);
 				p_response.addCookie(cookie);
-				redirect =  "Calendar.jsp";
+				redirect = "Calendar.jsp";
 			}
 			else
 			{

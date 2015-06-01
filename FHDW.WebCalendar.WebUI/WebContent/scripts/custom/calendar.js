@@ -4,9 +4,9 @@ $(document).ready(function() {
 	}
 });
 
-
 /**
  * Baut die Tabelle und setzt die Termine eines Nutzers.
+ * 
  * @param p_week
  * @param p_year
  */
@@ -23,6 +23,7 @@ var buildUserCalendar = function(p_week, p_year) {
 
 /**
  * Überprüfe die angegebene Kalenderwoche.
+ * 
  * @param p_week
  * @return Gibt eine Kalenderwoche zurück.
  */
@@ -32,6 +33,7 @@ var checkWeek = function(p_week) {
 
 /**
  * Hole die aktuelle Kalenderwoche.
+ * 
  * @source http://stackoverflow.com/a/6117889
  * @return Gibt die aktuelle Kalenderwoche zurück.
  */
@@ -45,6 +47,7 @@ Date.prototype.getWeekNumber = function() {
 
 /**
  * Baue die Wochentabelle auf.
+ * 
  * @param p_week
  * @param p_year
  * @return Gibt eine aufgebaute Tabelle zurück
@@ -62,6 +65,7 @@ var getUserTable = function(p_week, p_year) {
 
 /**
  * Baut den Kalenderkopf auf.
+ * 
  * @param p_week
  * @param p_year
  * @return Gibt einen aufgebauten Kalenderkopf zurück.
@@ -86,6 +90,7 @@ var getTableHead = function(p_week, p_year) {
 
 /**
  * Hole den ersten Tag einer Kalenderwoche.
+ * 
  * @source http://stackoverflow.com/a/16591175
  * @param p_week
  * @param p_year
@@ -105,6 +110,7 @@ function getDateOfISOWeek(p_week, p_year) {
 
 /**
  * Hole ein formatiertes Datum.
+ * 
  * @param p_firstDayOfWeek
  * @param p_additionalDays
  * @return Formatiertes Datum - "ddd. dd.MM.yyyy"
@@ -133,6 +139,7 @@ var getDate = function(p_firstDayOfWeek, p_additionalDays) {
 
 /**
  * Baue den Body der Tabelle.
+ * 
  * @return Aufgabauter Body der Tabelle.
  */
 var getTableBody = function() {
@@ -147,6 +154,7 @@ var getTableBody = function() {
 
 /**
  * Baue eine Tabellenreihe für ganztägige Termine.
+ * 
  * @return Tabellenreihe für ganztägige Termine.
  */
 var getAllDayRow = function() {
@@ -162,6 +170,7 @@ var getAllDayRow = function() {
 
 /**
  * Baue eine Tabellenreihe im halben stunden Zyklus.
+ * 
  * @return Tabellenreihe im halben stunden Zyklus.
  */
 var getTimeRows = function() {
@@ -194,12 +203,32 @@ var getTimeRows = function() {
 
 /**
  * Hole alle Termine des Benutzers aus der Datenbank.
+ * 
  * @return Termine des Benutzers.
  */
-var getUserEvents = function() {
-	var events = "";
+var getUserEvents = function(p_week) {
 
-	return events;
+	$.ajax({
+		type : "POST",
+		url : "CalendarController",
+		dataType : "json",
+		data : {
+			action : "getEvents",
+			week : p_week,
+			userid : $("#hidUserId").val()
+		},
+		success : function(response) {
+			alert(response);
+		},
+		error : function(request, textStatus, errorThrown) {
+			alert("error: " + textStatus);
+		},
+		complete : function(request, textStatus) {
+			alert("complete - " + textStatus);
+		}
+	});
+	
+	return "";
 };
 
 /**
@@ -257,6 +286,7 @@ var newEvent = function() {
 
 /**
  * PopUp Fenster für eine Termineingabe
+ * 
  * @param p_eventId
  */
 var openEventWindow = function(p_eventId) {
