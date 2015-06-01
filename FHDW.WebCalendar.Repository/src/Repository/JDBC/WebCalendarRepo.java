@@ -14,6 +14,7 @@ import IRepository.IWebCalendarRepo;
 import Model.Calendar.Calendar;
 import Model.Calendar.Event.Event;
 import Model.Calendar.Event.EventCalendarView;
+import Model.SecurityQuestion.SecurityQuestion;
 
 
 public class WebCalendarRepo implements IWebCalendarRepo
@@ -147,9 +148,10 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	
 	//TODO: DomainModel anstatt Strings zurückgeben
 	@Override
-	public Collection<String> GetAllSecurityQuestions() throws SQLException
+	public Collection<SecurityQuestion> GetAllSecurityQuestions() throws SQLException
 	{
-		Collection<String> questions = null;
+		Collection<SecurityQuestion> questions = null;
+		SecurityQuestion question = null;
 		String sql;
 		ResultSet rs;
 		
@@ -157,10 +159,15 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		rs = stmt.executeQuery(sql);
 		
-		questions = new ArrayList<String>();
+		questions = new ArrayList<SecurityQuestion>();
 		
 		while (rs.next())
-			questions.add(rs.getString(2));
+		{
+			question = new SecurityQuestion();
+			question.SetId(rs.getInt(1));
+			question.SetName(rs.getString(2));
+			questions.add(question);
+		}
 
 		return questions;
 	}
