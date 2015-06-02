@@ -21,10 +21,7 @@ public abstract class BaseService {
 	 * @see WebCalendarRepo
 	 */
 	public static WebCalendarRepo GetRepo() {
-		if (repo == null) {
-			repo = new WebCalendarRepo();
-		}
-		return repo;
+		return repo == null ? new WebCalendarRepo() : repo;
 	}
 	
 }
