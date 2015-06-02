@@ -38,41 +38,28 @@ public class UserHelper
 	
 	/**
 	 * Überprüft die Syntax eines Passwords<br>
-	 * Passwörter dürfen nicht leer sein und müssen aus mindestens sechs Zeichen bestehen.
 	 * 
 	 * @param p_password
 	 * 
-	 * @throws IOException wenn das eingebene password leer war oder kleiner als 6 Zeichen
+	 * @throws IOException wenn das eingebene password leer war
 	 */
 	public static void checkUserPassword(String p_password) throws IOException {
-		if (p_password.isEmpty()) {
+		if (p_password == null  || p_password.isEmpty()) {
 			throw new IOException("Das eingebenen Password war leer");
-		} else {
-			if (p_password.length() < 6) {
-				throw new IOException("Das eingebenen Password war zu lang");
-			}	
-		}
+		} 
 	}
 	
 	/**
 	 * Überprüft die Syntax eines Benutzernamen<br>
-	 * Benutzernamen dürfen nur aus Zeichen und Zahlen bestehen <br>
-	 * und maximal aus 12 Zeichen
 	 * 
 	 * @param p_username
 	 * 
-	 * @return true, wenn p_username eine korrekte Syntax bestizt<br>
-	 * 		   false, wenn p_username eine falsche Syntax bestizt
-	 * @throws IOException 
+	 * @throws IOException IOException wenn der eingebene user_name leer war
 	 */
 	public static void checkUserName(String p_username) throws IOException {
-		if (p_username.isEmpty()) {
+		if (p_username == null || p_username.isEmpty()) {
 			throw new IOException("Der Eingebenen Benutzername ist leer");
-		} else {
-			if (p_username.length() > 12) {
-				throw new IOException("Der Eingebenen Benutzername hat mehr als 12 Zeichen");
-			}
-		}	
+		} 	
 	}
 	
 	/**
