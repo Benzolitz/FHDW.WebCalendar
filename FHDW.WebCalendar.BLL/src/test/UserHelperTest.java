@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import HTMLHelper.UserHTMLHelper;
+import HTMLHelper.UserHelper;
 
 
 public class UserHelperTest
@@ -38,22 +38,22 @@ public class UserHelperTest
 	@Test
 	public void testCheckNames()
 	{
-		assertFalse(UserHTMLHelper.checkName(""));
-		assertTrue(UserHTMLHelper.checkName(""));
+		assertFalse(UserHelper.checkName(""));
+		assertTrue(UserHelper.checkName(""));
 	}
 	
 	@Test
 	public void testCheckMail()
 	{
-		assertFalse(UserHTMLHelper.checkUserMail(""));
-		assertTrue(UserHTMLHelper.checkUserMail(""));
+		assertFalse(UserHelper.checkUserMail(""));
+		assertTrue(UserHelper.checkUserMail(""));
 	}
 	
 	@Test
 	public void testCheckTelephoneNumbers()
 	{
-		assertFalse(UserHTMLHelper.checkPhonenNumber(""));
-		assertTrue(UserHTMLHelper.checkPhonenNumber(""));
+		assertFalse(UserHelper.checkPhonenNumber(""));
+		assertTrue(UserHelper.checkPhonenNumber(""));
 	}
 		
 }

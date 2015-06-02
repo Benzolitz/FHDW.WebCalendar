@@ -12,7 +12,7 @@ import Model.User.UserSecurity;
  * @see User
  * @see UserSecurity
  */
-public class UserHTMLHelper
+public class UserHelper
 {	
 	/**
 	 * TODO: Kommentar schreiben
@@ -21,15 +21,15 @@ public class UserHTMLHelper
 	 * @throws IOException 
 	 */
 	public static boolean checkUserData(User p_user) throws IOException {
-		UserHTMLHelper.checkUserPassword(p_user.GetUserSecurity().GetPassword());
-		UserHTMLHelper.checkUserName(p_user.GetUsername());
+		UserHelper.checkUserPassword(p_user.GetUserSecurity().GetPassword());
+		UserHelper.checkUserName(p_user.GetUsername());
 
 		
-		if (!UserHTMLHelper.checkUserMail(p_user.GetEMail())) {
+		if (!UserHelper.checkUserMail(p_user.GetEMail())) {
 			return false;
 		}
 		
-		if (!UserHTMLHelper.checkPhonenNumber(p_user.GetPhonenumber())) {
+		if (!UserHelper.checkPhonenNumber(p_user.GetPhonenumber())) {
 			return false;
 		}
 				

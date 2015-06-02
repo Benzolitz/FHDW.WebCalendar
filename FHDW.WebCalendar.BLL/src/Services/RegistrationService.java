@@ -6,7 +6,7 @@ import java.util.Collection;
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
-import HTMLHelper.UserHTMLHelper;
+import HTMLHelper.UserHelper;
 import Model.SecurityQuestion.SecurityQuestion;
 import Model.User.User;
 import Repository.JDBC.WebCalendarRepo;
@@ -17,7 +17,7 @@ import Repository.JDBC.WebCalendarRepo;
  * Buisness Logik für die Registrierung eines Benutzers
  * 
  * @see WebCalendarRepo
- * @see UserHTMLHelper
+ * @see UserHelper
  * @see LoginService
  */
 public class RegistrationService extends BaseService
@@ -38,10 +38,10 @@ public class RegistrationService extends BaseService
 	 * @throws Exception Wenn ein ubekannter Fehler in der Datenbank entstanden ist 
 	 * @throws IOException wenn die eingebenen Benutzerdaten nicht korrekt waren
 	 * 
-	 * @see UserHTMLHelper#checkUserData(User)
+	 * @see UserHelper#checkUserData(User)
 	 */
 	public int RegsiterNewUser(User p_user) throws Exception, IOException {	
-		UserHTMLHelper.checkUserData(p_user); // throws IOException
+		UserHelper.checkUserData(p_user); // throws IOException
 		
 		//TODO: Warum nicht den User als übergabe parameter im WebRepo?	
 		int result_userid = GetRepo().RegistrateNewUser(p_user.GetUsername(), p_user.GetEMail(), p_user.GetUserSecurity().GetPassword(), 

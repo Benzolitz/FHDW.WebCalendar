@@ -3,7 +3,7 @@ package Services;
 import java.sql.SQLException;
 
 import Exceptions.IOException;
-import HTMLHelper.EventHTMLHelper;
+import HTMLHelper.EventHelper;
 import Model.Calendar.Calendar;
 import Model.Calendar.Event.Event;
 
@@ -11,7 +11,7 @@ public class EventService extends BaseService
 {	
 
 	public int createEvent(Event event) throws IOException {
-		EventHTMLHelper.checkEventData(event);
+		EventHelper.checkEventData(event);
 		try
 		{
 			GetRepo().SaveEvent(event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(), event.GetCalendarId(), event.GetCalendarId());
@@ -27,7 +27,7 @@ public class EventService extends BaseService
 	}
 	
 	public boolean changeEvent(Event event) throws IOException {
-		EventHTMLHelper.checkEventData(event);
+		EventHelper.checkEventData(event);
 		try
 		{
 			GetRepo().UpdateEvent(event.GetId(), event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory());

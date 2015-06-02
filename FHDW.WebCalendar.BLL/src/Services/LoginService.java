@@ -2,7 +2,7 @@ package Services;
 
 import Exceptions.IOException;
 import Exceptions.NotFound;
-import HTMLHelper.UserHTMLHelper;
+import HTMLHelper.UserHelper;
 import Repository.JDBC.WebCalendarRepo;
 
 /**
@@ -11,7 +11,7 @@ import Repository.JDBC.WebCalendarRepo;
  * Buisness Logik für den Loginbereich in der Applikation
  * 
  * @see WebCalendarRepo
- * @see UserHTMLHelper
+ * @see UserHelper
  * @see UserService
  */
 public class LoginService extends BaseService
@@ -33,8 +33,8 @@ public class LoginService extends BaseService
 	 * @throws NotFound wenn der Benutzer nicht vorhanden ist
 	 * @throws IOException wenn das Eingebene Password oder der Benutzername nicht den RegelEntsprechen
 	 * 
-	 *  @see UserHTMLHelper#checkUserPassword(String)
-	 *  @see UserHTMLHelper#checkUserName(String)
+	 *  @see UserHelper#checkUserPassword(String)
+	 *  @see UserHelper#checkUserName(String)
 	 */
 	public int CheckLoginData(String p_username, String p_password) throws IOException, NotFound {		
 		//Check userName
@@ -57,10 +57,10 @@ public class LoginService extends BaseService
 	 * @throws NotFound wenn das password zu einem benutzer nicht gefunden werden konnte
 	 * @throws IOException wenn das eingebenen Password nicht korrekt war
 	 * 
-	 * @see UserHTMLHelper#checkUserPassword(String)
+	 * @see UserHelper#checkUserPassword(String)
 	 */
 	protected boolean checkUserPassword(int p_userId, String p_password) throws NotFound, IOException {
-		UserHTMLHelper.checkUserPassword(p_password); 
+		UserHelper.checkUserPassword(p_password); 
 		UserService userService = new UserService();
 		String userPasswordToCompare = userService.GetUserPassword(p_userId);
 		if (!userPasswordToCompare.equals(p_password)) {

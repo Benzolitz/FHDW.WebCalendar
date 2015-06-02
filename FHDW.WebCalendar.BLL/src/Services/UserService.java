@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import Exceptions.IOException;
 import Exceptions.NotFound;
-import HTMLHelper.UserHTMLHelper;
+import HTMLHelper.UserHelper;
 import Model.User.User;
 import Repository.JDBC.WebCalendarRepo;
 
@@ -14,7 +14,7 @@ import Repository.JDBC.WebCalendarRepo;
  * Buisness Logik für die Verwaltung von Benutzerdaten
  * 
  * @see WebCalendarRepo
- * @see UserHTMLHelper
+ * @see UserHelper
  */
 public class UserService extends BaseService
 {	
@@ -32,10 +32,10 @@ public class UserService extends BaseService
 	 * @throws IOException wenn der eingebene Benutzername nicht den Regeln entspricht
 	 * @throws NotFound wenn keine BenutzerId gefunden wurde
 	 * 
-	 * @see UserHTMLHelper#checkUserName(String)
+	 * @see UserHelper#checkUserName(String)
 	 */
 	public int GetUserId(String p_username) throws IOException, NotFound {
-		UserHTMLHelper.checkUserName(p_username);// throws IOExceptions		
+		UserHelper.checkUserName(p_username);// throws IOExceptions		
 		
 		int reuslt_userID = -1;
 		try

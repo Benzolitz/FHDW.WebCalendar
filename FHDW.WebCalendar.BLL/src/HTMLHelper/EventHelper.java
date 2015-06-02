@@ -12,7 +12,7 @@ import Model.Calendar.Event.Event;
  * 
  * @see Event
  */
-public class EventHTMLHelper
+public class EventHelper
 {	
 	public static void checkEventData(Event event) throws IOException { 
 		throw new IOException("");	
