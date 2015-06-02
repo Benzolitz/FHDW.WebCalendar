@@ -39,9 +39,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
 			String connectionPassword = "";
 			String database = "WebCalendar";
 			conn = DriverManager.getConnection(connectionUrl, connectionUser, connectionPassword);
-			stmt=conn.createStatement();
+			stmt = conn.createStatement();
 			
-			stmt.execute("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = \"" + database + "\";");
+			stmt.execute(String.format("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '%s';", database));
 			
 			if (!stmt.getResultSet().first())
 			{
@@ -63,15 +63,13 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		} catch (Exception e)
 		{
 			System.out.println(e.getMessage());
-		} finally {
-			//try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-			//try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-			//try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
 		}
 	}
 	
 	private void InitDatabaseTablesWithTestData(Statement p_stmt) throws Exception
 	{
+		BufferedReader in;
+		String str;
 		Collection<String> filePaths = new ArrayList<String>()
 				{{ 
 					add("src/../1.SecurityQuestion.sql");
@@ -87,8 +85,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 					add("src/../5.CategoryTestData.sql");
 					add("src/../6.EventUserTestData.sql");
 				}};
-		BufferedReader in;
-		String str;
+		
 		try
 		{
 			System.out.println("Importing...");
@@ -98,12 +95,11 @@ public class WebCalendarRepo implements IWebCalendarRepo
 				System.out.println("\t"+filePath);
 				StringBuffer sb = new StringBuffer();
 				while ((str = in.readLine()) != null)
-				{
 					sb.append(str + "\n ");
-				}
 				in.close();
 				p_stmt.executeUpdate(sb.toString());
 			}
+			System.out.println("Import finished.");
 		} catch (Exception e)
 		{
 			throw new Exception(e);
@@ -114,15 +110,14 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	@Override
 	public int GetUserId(String p_usernameOrEmail) throws SQLException
 	{
-		Integer userId = null;
+		Integer userId;
 		String sql;
 		ResultSet rs;
 	
 		if (p_usernameOrEmail.contains("@"))
 			sql = String.format("SELECT ID FROM User WHERE EMail = '%s';", p_usernameOrEmail);
 		else
-			sql = String.format("SELECT ID FROM User WHERE Username = '%s';", p_usernameOrEmail);
-				
+			sql = String.format("SELECT ID FROM User WHERE Username = '%s';", p_usernameOrEmail);			
 		rs = stmt.executeQuery(sql);
 		rs.next();
 		userId = rs.getInt(1);
@@ -133,12 +128,11 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	@Override
 	public String GetUserPassword(int p_userId) throws SQLException
 	{
-		String userPassword = null;
+		String userPassword;
 		String sql;
 		ResultSet rs;
 		
-		sql = String.format("SELECT Pass FROM user WHERE ID = '%d';", p_userId);
-		
+		sql = String.format("SELECT Pass FROM User WHERE ID = '%d';", p_userId);
 		rs = stmt.executeQuery(sql);
 		rs.next();
 		userPassword = rs.getString(1);
@@ -150,13 +144,12 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	@Override
 	public Collection<SecurityQuestion> GetAllSecurityQuestions() throws SQLException
 	{
-		Collection<SecurityQuestion> questions = null;
-		SecurityQuestion question = null;
+		Collection<SecurityQuestion> questions;
+		SecurityQuestion question;
 		String sql;
 		ResultSet rs;
 		
 		sql = String.format("SELECT ID, Question FROM SecurityQuestion;");
-		
 		rs = stmt.executeQuery(sql);
 		
 		questions = new ArrayList<SecurityQuestion>();
@@ -175,23 +168,20 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	@Override
 	public int RegistrateNewUser(String p_username, String p_email, String p_password, String p_firstName, String p_lastName, String p_phoneNumber, int p_securityQuestion, String p_securityAnswer) throws SQLException
 	{
-		Integer userId = null;
+		Integer userId;
 		String sql;
-		int rs;
-		ResultSet rs2;
+		ResultSet rs;
 		
 		sql = String.format("INSERT INTO User (Username, EMail, pass, FirstName, LastName, SecurityQuestionID, SecurityAnswer) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%s');", p_username, p_email, p_password, p_firstName, p_lastName, p_securityQuestion, p_securityAnswer);
 
-		rs = stmt.executeUpdate(sql);
-		
+		stmt.executeUpdate(sql);
 		sql = String.format("SELECT LAST_INSERT_ID();");
-		rs2 = stmt.executeQuery(sql);
-		rs2.next();
+		rs = stmt.executeQuery(sql);
+		rs.next();
 		
-		sql = String.format("INSERT INTO Calendar (Name, CreatorID) VALUES ('Mein Kalendar', %d);", rs2.getInt(1));
-		userId = rs2.getInt(1);
-		
-		rs = stmt.executeUpdate(sql);
+		sql = String.format("INSERT INTO Calendar (Name, CreatorID) VALUES ('Mein Kalendar', %d);", rs.getInt(1));
+		userId = rs.getInt(1);
+		stmt.executeUpdate(sql);
 		
 		return userId;
 	}
@@ -204,7 +194,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		ResultSet rs;
 		
 		sql = String.format("SELECT SecurityQuestion.Question FROM User JOIN SecurityQuestion ON User.SecurityQuestionID = SecurityQuestion.ID where User.ID = '%d';", p_userId);
-		
 		rs = stmt.executeQuery(sql);
 		rs.next();
 		securityQuestion = rs.getString(1);
@@ -220,7 +209,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		ResultSet rs;
 		
 		sql = String.format("SELECT SecurityAnswer FROM User WHERE ID = '%d';", p_userId);
-		
 		rs = stmt.executeQuery(sql);
 		rs.next();
 		securityAnswer = rs.getString(1);
@@ -232,11 +220,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	public void ResetPassword(int p_userId, String p_password) throws SQLException
 	{
 		String sql;
-		int rs;
 		
 		sql = String.format("UPDATE User SET pass = '%s' WHERE ID = '%d';", p_password, p_userId);
-		
-		rs = stmt.executeUpdate(sql);
+		stmt.executeUpdate(sql);
 	}
 	
 	@Override
@@ -244,17 +230,15 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	{
 		Integer calendarId = null;
 		String sql;
-		int rs;
-		ResultSet rs2;
+		ResultSet rs;
 		
 		sql = String.format("INSERT INTO Calendar (Name, CreatorID) VALUES ('%s', %d);", p_calendarName, p_userId);
-		
-		rs = stmt.executeUpdate(sql);
+		stmt.executeUpdate(sql);
 		
 		sql = String.format("SELECT LAST_INSERT_ID();");
-		rs2 = stmt.executeQuery(sql);
-		rs2.next();
-		calendarId = rs2.getInt(1);
+		rs = stmt.executeQuery(sql);
+		rs.next();
+		calendarId = rs.getInt(1);
 
 		return calendarId;
 	}
@@ -262,13 +246,12 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	@Override
 	public Collection<Calendar> GetAllUserCalendar(int p_userId)  throws SQLException
 	{
-		Collection<Calendar> calendars = null;
+		Collection<Calendar> calendars;
 		Calendar calendar;
 		String sql;
 		ResultSet rs;
 		
 		sql = String.format("SELECT Calendar.ID, Calendar.Name FROM Calendar WHERE Calendar.CreatorID = %d;", p_userId);
-		
 		rs = stmt.executeQuery(sql);
 		
 		calendars = new ArrayList<Calendar>();
@@ -288,16 +271,17 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	@Override
 	public Collection<EventCalendarView> GetEventsForUser(int p_calendarId, int p_userId) throws SQLException
 	{
-		Collection<EventCalendarView> events = null;
+		Collection<EventCalendarView> events;
 		EventCalendarView event;
 		Collection<String> categories;
 		String sql;
 		ResultSet rs;
 		
 		sql = String.format("SELECT Event.ID, Event.StartTime, Event.EndTime, Event.Title, Event.Location, Event.CalendarID, EventUser.Required FROM Event JOIN EventUser ON Event.ID = EventUser.EventID JOIN User ON EventUser.UserID = User.ID WHERE User.ID = '%d' AND Event.CalendarID = %d;", p_userId, p_calendarId);
-		
 		rs = stmt.executeQuery(sql);
+		
 		events = new ArrayList<EventCalendarView>();
+		
 		while (rs.next())
 		{
 			event = new EventCalendarView();
@@ -329,12 +313,11 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	{
 		Collection<String> optionalUser = new ArrayList<String>();
 		Collection<String> requiredUser = new ArrayList<String>();
-		Event event = null;
+		Event event;
 		String sql;
 		ResultSet rs;
 		
 		sql = String.format("SELECT Event.StartTime, Event.EndTime, Event.Title, Event.Location, Event.CreatorID, Event.CreationTime, Event.Message, Event.CalendarID FROM Event WHERE Event.ID = %d;", p_eventId);
-		
 		rs = stmt.executeQuery(sql);
 		rs.next();
 		event = new Event();
@@ -366,19 +349,18 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	public void SaveEvent(String p_title, String p_location, Date p_starttime, Date p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId) throws SQLException
 	{
 		String sql;
-		int rs;
-		ResultSet rs2;
+		ResultSet rs;
 		
 		sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME(), %d);", p_title, p_location, p_starttime, p_endtime, p_message, p_creatorId, sdf.format(new Date()), p_calendarId);
+		stmt.executeUpdate(sql);
 		
-		rs = stmt.executeUpdate(sql);
 		sql = String.format("SELECT LAST_INSERT_ID();");
-		rs2 = stmt.executeQuery(sql);
+		rs = stmt.executeQuery(sql);
 		
 		for (String category : p_categories)
 		{
-			sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, rs2.getInt(1));
-			rs = stmt.executeUpdate(sql);
+			sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, rs.getInt(1));
+			stmt.executeUpdate(sql);
 		}
 	}
 	
@@ -386,52 +368,44 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	public void DeleteEvent(int p_eventId) throws SQLException
 	{
 		String sql;
-		int rs;
 		
 		sql = String.format("DELETE FROM Event WHERE ID = %d;",p_eventId);
-		
-		rs = stmt.executeUpdate(sql);
+		stmt.executeUpdate(sql);
 	}
 	
 	@Override
 	public void DeleteCalendar(int p_calendarId) throws SQLException
 	{
 		String sql;
-		int rs;
 		
 		sql = String.format("DELETE FROM Calendar WHERE ID = %d;", p_calendarId);
-		
-		rs = stmt.executeUpdate(sql);
+		stmt.executeUpdate(sql);
 	}
 	
 	@Override
 	public void DeleteUser(int p_userId) throws SQLException
 	{
 		String sql;
-		int rs;
 		
 		sql = String.format("DELETE FROM User WHERE ID = %d;", p_userId);
-	
-		rs = stmt.executeUpdate(sql);
+		stmt.executeUpdate(sql);
 	}
 
 	@Override
 	public void UpdateEvent(int p_eventId, String p_title, String p_location, Date p_starttime, Date p_endtime, String p_message, Collection<String> p_categories) throws SQLException
 	{
 		String sql;
-		int rs;
 		
 		sql = String.format("UPDATE Event SET Title='%s', Location='%s', StartTime='%s', EndTime='%s', Message='%s' WHERE ID=%d;", p_title, p_location, sdf.format(p_starttime), sdf.format(p_endtime), p_message, p_eventId);
-			
-		rs = stmt.executeUpdate(sql);
+		stmt.executeUpdate(sql);
 		
 		sql = String.format("DELETE FROM Category WHERE EventID = %d;", p_eventId);
-		rs = stmt.executeUpdate(sql);
+		stmt.executeUpdate(sql);
 		
 		for (String category : p_categories)
 		{
 			sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, p_eventId);
-			rs = stmt.executeUpdate(sql);
+			stmt.executeUpdate(sql);
 		}
 	}
 
