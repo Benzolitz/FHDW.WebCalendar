@@ -1,11 +1,13 @@
 package Services;
 
+import java.sql.SQLException;
 import java.util.Collection;
 
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
 import HTMLHelper.UserHTMLHelper;
+import Model.SecurityQuestion.SecurityQuestion;
 import Model.User.User;
 import Repository.JDBC.WebCalendarRepo;
 
@@ -82,7 +84,14 @@ public class RegistrationService extends BaseService
 		
 		// Check securityAnswer (SecurityCheck)
 		if(checkSecurityAnswer(p_userId, p_securityAnswer)) { // throws NotFound
-			GetRepo().ResetPassword(p_userId, p_newPassword);
+			try
+			{
+				GetRepo().ResetPassword(p_userId, p_newPassword);
+			}
+			catch (SQLException e)
+			{
+				e.printStackTrace();
+			}
 			// TODO: ein return wert wäre gut boolean damit ich prüfen kann ob es geklappt hat oder nicht
 			return true;		
 		} else {
@@ -97,8 +106,16 @@ public class RegistrationService extends BaseService
 	 * 
 	 * @throws NotFound wenn keine SecurityQeustions gefunden werden konnten
 	 */
-	public Collection<String> getAlLSecurityQuestions() throws DatabaseException, NotFound {
-		Collection<String> result_securityQuestions = GetRepo().GetAllSecurityQuestions();
+	public Collection<SecurityQuestion> getAlLSecurityQuestions() throws DatabaseException, NotFound {
+		Collection <SecurityQuestion> result_securityQuestions = null;
+		try
+		{
+			result_securityQuestions = GetRepo().GetAllSecurityQuestions();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 		
 		if (result_securityQuestions == null || result_securityQuestions.isEmpty()) {
 			throw new NotFound("Es wurden keine SecurityQeustions gefunden");
@@ -121,7 +138,15 @@ public class RegistrationService extends BaseService
 	 * @throws NotFound wenn keine Benutzerantwort in der Datenbank gefunden werden konnte
 	 */
 	private boolean checkSecurityAnswer(int p_userId, String p_securityAnswer) throws NotFound {
-		String user_answer = GetRepo().GetSecurityAnswer(p_userId);
+		String user_answer = "";
+		try
+		{
+			user_answer = GetRepo().GetSecurityAnswer(p_userId);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 		if (user_answer.isEmpty()) {
 			throw new NotFound("Es wurde keine Benutzerantwort in der Datenbank gefunden");
 		} else {		

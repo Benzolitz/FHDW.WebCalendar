@@ -1,5 +1,6 @@
 package Services;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -25,7 +26,15 @@ public class CalenderService extends BaseService
 	}
 	
 	public Collection<EventCalendarView> getAllEvents(Calendar p_calelndar) {
-		Collection<EventCalendarView> result_events = GetRepo().GetEventsForUser(p_calelndar.GetId(), p_calelndar.GetOwnerId());
+		Collection <EventCalendarView> result_events = new ArrayList<EventCalendarView>();
+		try
+		{
+			result_events = GetRepo().GetEventsForUser(p_calelndar.GetId(), p_calelndar.GetOwnerId());
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 		//TODO: Exception handling was ist wenn der Benutzer nicht exitiert
 		return result_events;
 	}

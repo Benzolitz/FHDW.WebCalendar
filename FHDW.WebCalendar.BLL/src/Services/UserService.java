@@ -1,5 +1,7 @@
 package Services;
 
+import java.sql.SQLException;
+
 import Exceptions.IOException;
 import Exceptions.NotFound;
 import HTMLHelper.UserHTMLHelper;
@@ -19,8 +21,7 @@ public class UserService extends BaseService
 	public UserService() {
 		// nothing to init
 	}
-	
-	
+		
 	/**
 	 * Überprüfe den Eingebenen Benutzernamen und lade die BenutzerId zu einem Benutzernamen
 	 * 
@@ -36,7 +37,15 @@ public class UserService extends BaseService
 	public int GetUserId(String p_username) throws IOException, NotFound {
 		UserHTMLHelper.checkUserName(p_username);// throws IOExceptions		
 		
-		int reuslt_userID = GetRepo().GetUserId(p_username);//TODO: Was ist wenn der User nicht vorhanden ist? Kann die DB da nicht schon vorgefertigte Exceptions werfen? NotFound!		
+		int reuslt_userID = -1;
+		try
+		{
+			reuslt_userID = GetRepo().GetUserId(p_username);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}//TODO: Was ist wenn der User nicht vorhanden ist? Kann die DB da nicht schon vorgefertigte Exceptions werfen? NotFound!		
 		if (reuslt_userID <= 0) {
 			throw new NotFound("Benutzer wurde nicht gefunden");
 		} else {
@@ -69,7 +78,15 @@ public class UserService extends BaseService
 	 * @throws NotFound wenn das password für den Benutzer leer ist
 	 */
 	public String GetUserPassword(int p_userId) throws NotFound {		
-		String result_userPw = GetRepo().GetUserPassword(p_userId);
+		String result_userPw = "";
+		try
+		{
+			result_userPw = GetRepo().GetUserPassword(p_userId);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 		
 		if (result_userPw.isEmpty()) {
 			throw new NotFound("Es wurde kein Password zu dem Benutzer gefunden!");
