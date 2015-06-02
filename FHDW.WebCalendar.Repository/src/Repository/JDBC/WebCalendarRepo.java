@@ -21,7 +21,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 {
 	Connection conn = null;
 	Statement stmt = null;
-	ResultSet rs = null;
 	java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	public WebCalendarRepo()
