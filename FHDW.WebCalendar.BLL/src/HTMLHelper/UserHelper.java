@@ -7,7 +7,7 @@ import Model.User.UserSecurity;
 /**
  * @author Frederik Heinrichs
  *
- * HTMLHelper für die überprüfung eingebener Daten für User objekte
+ * Helper für die überprüfung eingebener Daten für User objekte
  * 
  * @see User
  * @see UserSecurity

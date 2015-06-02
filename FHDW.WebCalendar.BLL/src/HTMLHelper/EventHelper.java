@@ -8,7 +8,7 @@ import Model.Calendar.Event.Event;
 /**
  * @author Frederik Heinrichs
  * 
- * HTMLHelper für die überprüfung eingebener Daten für Event objekte
+ * Helper für die überprüfung eingebener Daten für Event objekte
  * 
  * @see Event
  */

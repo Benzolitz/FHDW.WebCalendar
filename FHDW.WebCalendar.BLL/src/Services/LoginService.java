@@ -63,14 +63,11 @@ public class LoginService extends BaseService
 		UserHelper.checkUserPassword(p_password); 
 		UserService userService = new UserService();
 		String userPasswordToCompare = userService.GetUserPassword(p_userId);
-		if (!userPasswordToCompare.equals(p_password)) {
+		if (userPasswordToCompare.equals(p_password)) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-
-	
-
 }
