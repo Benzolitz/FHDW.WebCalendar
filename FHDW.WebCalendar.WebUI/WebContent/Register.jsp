@@ -1,3 +1,4 @@
+<%@page import="Model.SecurityQuestion.SecurityQuestion"%>
 <%@page import="Services.RegistrationService, java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%
@@ -60,21 +61,21 @@
 					<select id="selSecurityQuestion" name="selSecurityQuestion">
 						<%
 							RegistrationService registrationService = new RegistrationService();
-							Collection <String> secAnswers = registrationService.getAlLSecurityQuestions();
+							Collection <SecurityQuestion> questions = registrationService.getAlLSecurityQuestions();
 							
 							int i = 0;
 							String options = "";
-							for (String answer : secAnswers)
+							for (SecurityQuestion question : questions)
 							{
 								if (i == 0)
 								{
 									options += "<option value=\"0\" disabled selected>Sicherheitsfrage*</option>";
+									i ++ ;
 								}
 								else
 								{
-									options += String.format("<option value=\"%d\">%s</option>", i, answer);
+									options += String.format("<option value=\"%d\">%s</option>", question.GetId(), question.GetName());
 								}
-								i ++ ;
 							}
 							out.print(options);
 						%>
