@@ -36,8 +36,7 @@
 		<div id="divContent">
 			<form name="frmLogin" method="post" action="RegisterController">
 				<div class="claCenterBoxDefault">
-					<input id="txtUsername" name="txtUsername" class="claTextDefault claUserData claRequiredField" type="text" value="<%String username = request.getParameter("username");
-			if (username != null) out.print(username);%>" placeholder="Benutzername*" />
+					<input id="txtUsername" name="txtUsername" class="claTextDefault claUserData claRequiredField" type="text" value="<%=request.getParameter("username") == null ? "" : request.getParameter("username")%>" placeholder="Benutzername*" />
 				</div>
 				<div class="claCenterBoxDefault">
 					<input id="txtPassword" name="txtPassword" class="claTextDefault claUserData claRequiredField" type="password" placeholder="Passwort*" />

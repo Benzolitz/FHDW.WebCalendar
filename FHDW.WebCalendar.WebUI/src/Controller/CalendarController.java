@@ -1,14 +1,9 @@
 package Controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import java.util.Collection;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -16,13 +11,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import flexjson.JSONSerializer;
+import com.google.gson.Gson;
+import com.google.gson.reflect.*;
+import java.lang.reflect.Type;
+import Model.Calendar.Event.Event;
 
 @WebServlet ("/CalendarController")
 public class CalendarController extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException
 	{
 		String action = request.getParameter("action");
@@ -67,15 +65,34 @@ public class CalendarController extends HttpServlet
 		try
 		{
 			// TODO: Event Daten holen.
+			Collection <Event> eventCollection = new ArrayList <Event>();
+			eventCollection.add(getTestEvent());
 			
+			Type type = new TypeToken<Collection <Event>> (){}.getType();
 			
-			// JSONSerializer serializer = new JSONSerializer();
-			// output = serializer.serialize(event);
+			output = new Gson().toJson(eventCollection, type);
 		}
 		catch (Exception e)
 		{
 			output = e.getMessage();
 		}
-		response.getWriter().write(output);
+		response.getWriter().print(output);
+	}
+	
+	private Event getTestEvent()
+	{
+		Event event = new Event();
+		
+		Calendar cal = Calendar.getInstance();
+		
+		cal.set(2015, 06, 01, 00, 00);
+		event.SetEndTime(cal);
+		
+		cal.set(2015, 06, 14, 00, 00);
+		event.SetStartTime(cal);
+		
+		event.SetTitle("TEST");
+		
+		return event;
 	}
 }

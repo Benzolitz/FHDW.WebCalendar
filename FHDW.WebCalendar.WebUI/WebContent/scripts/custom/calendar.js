@@ -15,10 +15,8 @@ var buildUserCalendar = function(p_week, p_year) {
 	$("#hidCurrentWeek").val(week);
 	$("#hidCurrentYear").val(p_year);
 
-	var calendarTable = getUserTable(week, p_year);
-	var calendarEvents = getUserEvents(week, p_year);
-
-	$("#calendar").html(calendarTable);
+	buildCalendar(week, p_year);
+	showUserEvents(week, p_year);
 };
 
 /**
@@ -52,7 +50,7 @@ Date.prototype.getWeekNumber = function() {
  * @param p_year
  * @return Gibt eine aufgebaute Tabelle zurück
  */
-var getUserTable = function(p_week, p_year) {
+var buildCalendar = function(p_week, p_year) {
 	var table = "<table id='tabCalendar'>";
 
 	table += getTableHead(p_week, p_year);
@@ -60,7 +58,7 @@ var getUserTable = function(p_week, p_year) {
 
 	table += "</table>";
 
-	return table;
+	$("#calendar").html(table);
 };
 
 /**
@@ -206,7 +204,7 @@ var getTimeRows = function() {
  * 
  * @return Termine des Benutzers.
  */
-var getUserEvents = function(p_week) {
+var showUserEvents = function(p_week) {
 
 	$.ajax({
 		type : "POST",
@@ -220,15 +218,73 @@ var getUserEvents = function(p_week) {
 		success : function(response) {
 			alert(response);
 		},
-		error : function(request, textStatus, errorThrown) {
-			alert("error: " + textStatus);
-		},
-		complete : function(request, textStatus) {
-			alert("complete - " + textStatus);
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("Something really bad happened " + textStatus);
+			alert(jqXHR.responseText);
 		}
 	});
-	
-	return "";
+
+	var event = {
+		title : "TEST",
+		start : "2015-06-06T00:00:00Z",
+		end : "2015-06-01T14:00:00Z"
+	};
+
+	var eventStart = new Date(event.start);
+	var eventEnd = new Date(event.end);
+
+	// Calculate left
+	var eventDayNumber = eventStart.getDay();
+	var dayWidth = $(".claFullHour:nth-child(2)").width() / 10;
+	var left = $(".claTimeFrame > td").width();
+
+	if (eventDayNumber === 0) {
+		left += dayWidth * 7;
+	} else {
+		left += dayWidth * (eventDayNumber - 1);
+	}
+
+	// Calculate height
+	var height = 60;
+	var totalMinutes = 0;
+
+	var eventStartHour = eventStart.getHours();
+	var eventEndHour = eventEnd.getHours();
+
+	var eventStartMinute = eventStart.getMinutes();
+	var eventEndMinute = eventEnd.getMinutes();
+
+	if (eventEndMinute > eventStartMinute) {
+		totalMinutes = ((eventEndHour - eventStartHour) * 60)
+				+ (eventEndMinute - eventStartMinute);
+	}
+
+	var modHeight = totalMinutes % 30;
+	for (var i = 0; i <= totalMinutes - modHeight; i += 30) {
+		height += 13;
+	}
+
+	height += ((modHeight / 30) * 100);
+
+	// Calculate top
+	var top = 76;
+
+	var startHour = eventStart.getHours();
+	var startMinute = eventStart.getMinutes();
+	// alert("startHour: " + startHour + "\nstartMinute: " + startMinute);
+
+	var startMinutes = (startHour * 60) + startMinute;
+	var modTop = startMinutes % 30;
+
+	for (var i = 0; i < startMinutes - modTop; i += 30) {
+		top += 13;
+	}
+
+	top += ((modTop / 30) * 100);
+
+	$("#calendar").append(
+			"<div class='claEvent' style='height: " + height + "px;left: "
+					+ left + "px; top: " + top + "px;'></div>");
 };
 
 /**
