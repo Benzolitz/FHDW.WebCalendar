@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Random;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -13,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.*;
+
 import java.lang.reflect.Type;
+
 import Model.Calendar.Event.Event;
 
 @WebServlet ("/CalendarController")
@@ -66,7 +69,11 @@ public class CalendarController extends HttpServlet
 		{
 			// TODO: Event Daten holen.
 			Collection <Event> eventCollection = new ArrayList <Event>();
-			eventCollection.add(getTestEvent());
+			eventCollection.add(getTestEvent(1, 12, 30, 13, 50));
+			eventCollection.add(getTestEvent(2, 0, 11, 4, 20));
+			eventCollection.add(getTestEvent(3, 2, 15, 22, 10));
+			eventCollection.add(getTestEvent(4, 23, 00, 23, 56));
+			eventCollection.add(getTestEvent(1, 15, 44, 15, 55));
 			
 			Type type = new TypeToken <Collection <Event>>()
 			{}.getType();
@@ -80,19 +87,24 @@ public class CalendarController extends HttpServlet
 		response.getWriter().print(output);
 	}
 	
-	private Event getTestEvent()
+	private Event getTestEvent(int p_day, int p_startHour, int p_startMinute, int p_endHour, int p_endMinute)
 	{
 		Event event = new Event();
 		
 		Calendar calStart = Calendar.getInstance();
-		calStart.set(2015, 6, 1, 0, 33);
+		calStart.set(2015, 6, p_day, p_startHour, p_startMinute);
 		event.SetStartTime(calStart);
 		
 		Calendar calEnd = Calendar.getInstance();
-		calEnd.set(2015, 6, 1, 1, 20);
+		calEnd.set(2015, 6, p_day, p_endHour, p_endMinute);
 		event.SetEndTime(calEnd);
 		
 		event.SetTitle("TEST");
+		
+
+	    Random rand = new Random();
+		
+		event.SetId(rand.nextInt(100));
 		
 		return event;
 	}

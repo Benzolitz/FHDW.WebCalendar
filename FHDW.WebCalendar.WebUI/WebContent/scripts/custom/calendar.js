@@ -199,23 +199,33 @@ var getTimeRows = function()
 		{
 			var columnClass = "";
 			var columnValue = "";
+			var columnId = "";
 			if (Number.isInteger(i))
 			{
 				if (j === 0)
 				{
 					columnClass = "claFullHour claTimeColumn";
 					columnValue = i;
+					if (i === 0)
+					{
+						columnId = "timeWidthIndicator";
+					}
 				}
 				else
 				{
 					columnClass = "claFullHour";
+					if (i === 0 && j === 1)
+					{
+
+						columnId = "dayWidthIndicator";
+					}
 				}
 			}
 			else
 			{
 				columnClass = "claHalfHour";
 			}
-			timeRows += "<td class='" + columnClass + "'>" + columnValue + "</td>";
+			timeRows += "<td id='" + columnId + "' class='" + columnClass + "'>" + columnValue + "</td>";
 		}
 
 		timeRows += "</tr>";
@@ -247,9 +257,9 @@ var showUserEvents = function(p_week)
 		var eventList = response;
 		for (var i = 0; i < eventList.length; i++)
 		{
-
-			var start = eventList[i].startTime;
-			var end = eventList[i].endTime;
+			var event = eventList[i];
+			var start = event.startTime;
+			var end = event.endTime;
 			var eventStart = new Date(start.year, start.month - 1, start.dayOfMonth, start.hourOfDay, start.minute, 0);
 			var eventEnd = new Date(end.year, end.month - 1, end.dayOfMonth, end.hourOfDay, end.minute, 0);
 
@@ -257,7 +267,7 @@ var showUserEvents = function(p_week)
 			var eventMarginTop = getTopMargin(eventStart.getHours(), eventStart.getMinutes());
 			var eventHeight = getEventHeight(eventStart.getHours(), eventStart.getMinutes(), eventEnd.getHours(), eventEnd.getMinutes());
 
-			$("#calendar").append("<div class='claEvent' style='height: " + eventHeight + "px;left: " + eventMarginLeft + "px; top: " + eventMarginTop + "px;'>" + eventList[i].title + "</div>");
+			$("#calendar").append("<div class='claEvent' style='height: " + eventHeight + "px;left: " + eventMarginLeft + "px; top: " + eventMarginTop + "px;'><a onClick='openEventWindow(" + event.id + ")'>" + event.title + "</a></div>");
 
 		}
 	},
@@ -270,12 +280,12 @@ var showUserEvents = function(p_week)
 
 var getLeftMargin = function(p_eventDayNumber)
 {
-	var dayWidth = $(".claFullHour:nth-child(2)").width() / 10;
-	var left = $(".claTimeFrame > td").width();
+	var dayWidth = $(".claFullHour:nth-child(2)").width();
+	var left = $(".claTimeColumn").width() + 15;
 
 	left += p_eventDayNumber === 0 ? dayWidth * 7 : dayWidth * (p_eventDayNumber - 1);
 
-	return left + 50;
+	return left;
 };
 
 var getTopMargin = function(p_eventStartHour, p_eventStartMinute)
@@ -378,22 +388,13 @@ var Logout = function()
 };
 
 /**
- * Zeige eine leere Termineingabe.
- */
-var newEvent = function()
-{
-	openEventWindow(-1);
-};
-
-/**
  * PopUp Fenster für eine Termineingabe
  * 
  * @param p_eventId
  */
 var openEventWindow = function(p_eventId)
 {
-	// TODO: WENN p_eventId != -1 DANN Event Informationen abfragen.
 	settings = "width=750,height=500,top=20,left=20,scrollbars=no,location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=no,dependent=no";
-	win = window.open("http://localhost:8080/FHDW.WebCalendar.WebUI/Event.jsp", "", settings);
+	win = window.open("http://localhost:8080/FHDW.WebCalendar.WebUI/Event.jsp?id=" + p_eventId, "", settings);
 	win.focus();
 };

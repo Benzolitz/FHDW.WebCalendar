@@ -70,7 +70,7 @@
 				<input id="txtSearchBox" type="text" placeholder="Suche" />
 			</div>
 			<div id="divNewEvent">
-				<input id="btnNewEvent" type="button" value="Neuer Termin" onClick="newEvent()" />
+				<input id="btnNewEvent" type="button" value="Neuer Termin" onClick="openEventWindow(-1)" />
 			</div>
 			<div id="divArrows">
 				<input id="btnLastWeek" type="button" value="&uarr;" onClick="getLastWeek()" />

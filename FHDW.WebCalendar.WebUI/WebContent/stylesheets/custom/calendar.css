@@ -147,6 +147,7 @@ td {
 	padding: 5px;
 	text-align: center;
 	font-size: 16px;
+	overflow: hidden;
 	/* top: 150px;
 	height: 150px;
 	 left: 35px; */
