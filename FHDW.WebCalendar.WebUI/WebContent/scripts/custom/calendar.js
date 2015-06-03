@@ -1,4 +1,5 @@
-$(document).ready(function() {
+$(document).ready(function()
+{
 	{
 		buildUserCalendar(-1, new Date().getFullYear());
 	}
@@ -10,7 +11,8 @@ $(document).ready(function() {
  * @param p_week
  * @param p_year
  */
-var buildUserCalendar = function(p_week, p_year) {
+var buildUserCalendar = function(p_week, p_year)
+{
 	var week = checkWeek(p_week);
 	$("#hidCurrentWeek").val(week);
 	$("#hidCurrentYear").val(p_year);
@@ -25,7 +27,8 @@ var buildUserCalendar = function(p_week, p_year) {
  * @param p_week
  * @return Gibt eine Kalenderwoche zurück.
  */
-var checkWeek = function(p_week) {
+var checkWeek = function(p_week)
+{
 	return p_week === -1 ? new Date().getWeekNumber() : p_week;
 };
 
@@ -35,12 +38,12 @@ var checkWeek = function(p_week) {
  * @source http://stackoverflow.com/a/6117889
  * @return Gibt die aktuelle Kalenderwoche zurück.
  */
-Date.prototype.getWeekNumber = function() {
+Date.prototype.getWeekNumber = function()
+{
 	var date = new Date(+this);
 	date.setHours(0, 0, 0);
 	date.setDate(date.getDate() + 4 - (date.getDay() || 7));
-	return Math
-			.ceil((((date - new Date(date.getFullYear(), 0, 1)) / 8.64e7) + 1) / 7);
+	return Math.ceil((((date - new Date(date.getFullYear(), 0, 1)) / 8.64e7) + 1) / 7);
 };
 
 /**
@@ -50,7 +53,8 @@ Date.prototype.getWeekNumber = function() {
  * @param p_year
  * @return Gibt eine aufgebaute Tabelle zurück
  */
-var buildCalendar = function(p_week, p_year) {
+var buildCalendar = function(p_week, p_year)
+{
 	var table = "<table id='tabCalendar'>";
 
 	table += getTableHead(p_week, p_year);
@@ -68,16 +72,20 @@ var buildCalendar = function(p_week, p_year) {
  * @param p_year
  * @return Gibt einen aufgebauten Kalenderkopf zurück.
  */
-var getTableHead = function(p_week, p_year) {
+var getTableHead = function(p_week, p_year)
+{
 	var firstDayOfWeek = getDateOfISOWeek(p_week, p_year);
 	var tableHead = "<thead><tr>";
 
-	for (var i = 0; i <= 7; i++) {
-		if (i == 0) {
+	for (var i = 0; i <= 7; i++)
+	{
+		if (i == 0)
+		{
 			tableHead += "<th id='tdTime'></th>";
-		} else {
-			tableHead += "<th class='claHead'>"
-					+ getDate(firstDayOfWeek, i - 1) + "</th>";
+		}
+		else
+		{
+			tableHead += "<th class='claHead'>" + getDate(firstDayOfWeek, i - 1) + "</th>";
 		}
 	}
 
@@ -94,13 +102,17 @@ var getTableHead = function(p_week, p_year) {
  * @param p_year
  * @return Erster Tag der angegebenen Kalenderwoche.
  */
-function getDateOfISOWeek(p_week, p_year) {
+function getDateOfISOWeek(p_week, p_year)
+{
 	var simple = new Date(p_year, 0, 1 + (p_week - 1) * 7);
 	var dow = simple.getDay();
 	var ISOweekStart = simple;
-	if (dow <= 4) {
+	if (dow <= 4)
+	{
 		ISOweekStart.setDate(simple.getDate() - simple.getDay() + 1);
-	} else {
+	}
+	else
+	{
 		ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
 	}
 	return ISOweekStart;
@@ -113,20 +125,22 @@ function getDateOfISOWeek(p_week, p_year) {
  * @param p_additionalDays
  * @return Formatiertes Datum - "ddd. dd.MM.yyyy"
  */
-var getDate = function(p_firstDayOfWeek, p_additionalDays) {
-	var currentDate = new Date(p_firstDayOfWeek.getTime()
-			+ (p_additionalDays * 24 * 60 * 60 * 1000));
+var getDate = function(p_firstDayOfWeek, p_additionalDays)
+{
+	var currentDate = new Date(p_firstDayOfWeek.getTime() + (p_additionalDays * 24 * 60 * 60 * 1000));
 
 	var weekDay = currentDate.getDay();
 	var weekDays = new Array("So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa.")
 
 	var day = currentDate.getDate();
-	if (day < 10) {
+	if (day < 10)
+	{
 		day = "0" + day
 	}
 
 	var month = currentDate.getMonth() + 1;
-	if (month < 10) {
+	if (month < 10)
+	{
 		month = "0" + month
 	}
 
@@ -140,7 +154,8 @@ var getDate = function(p_firstDayOfWeek, p_additionalDays) {
  * 
  * @return Aufgabauter Body der Tabelle.
  */
-var getTableBody = function() {
+var getTableBody = function()
+{
 	var tableBody = "<tbody>";
 
 	tableBody += getAllDayRow();
@@ -155,10 +170,12 @@ var getTableBody = function() {
  * 
  * @return Tabellenreihe für ganztägige Termine.
  */
-var getAllDayRow = function() {
+var getAllDayRow = function()
+{
 	var allDay = "<tr id='trAllDay'>";
 
-	for (var i = 0; i <= 7; i++) {
+	for (var i = 0; i <= 7; i++)
+	{
 		allDay += "<td class='claAllDay'></td>";
 	}
 
@@ -171,26 +188,34 @@ var getAllDayRow = function() {
  * 
  * @return Tabellenreihe im halben stunden Zyklus.
  */
-var getTimeRows = function() {
+var getTimeRows = function()
+{
 	var timeRows = "";
-	for (var i = 0; i < 24; i = i + 0.5) {
+	for (var i = 0; i < 24; i = i + 0.5)
+	{
 		timeRows += "<tr class='claTimeFrame'>";
 
-		for (var j = 0; j <= 7; j++) {
+		for (var j = 0; j <= 7; j++)
+		{
 			var columnClass = "";
 			var columnValue = "";
-			if (Number.isInteger(i)) {
-				if (j === 0) {
+			if (Number.isInteger(i))
+			{
+				if (j === 0)
+				{
 					columnClass = "claFullHour claTimeColumn";
 					columnValue = i;
-				} else {
+				}
+				else
+				{
 					columnClass = "claFullHour";
 				}
-			} else {
+			}
+			else
+			{
 				columnClass = "claHalfHour";
 			}
-			timeRows += "<td class='" + columnClass + "'>" + columnValue
-					+ "</td>";
+			timeRows += "<td class='" + columnClass + "'>" + columnValue + "</td>";
 		}
 
 		timeRows += "</tr>";
@@ -204,100 +229,112 @@ var getTimeRows = function() {
  * 
  * @return Termine des Benutzers.
  */
-var showUserEvents = function(p_week) {
+var showUserEvents = function(p_week)
+{
+	$.ajax(
+	{
+	type : "POST",
+	url : "CalendarController",
+	dataType : "json",
+	data :
+	{
+	action : "getEvents",
+	week : p_week,
+	userid : $("#hidUserId").val()
+	},
+	success : function(response)
+	{
+		var eventList = response;
+		for (var i = 0; i < eventList.length; i++)
+		{
 
-	$.ajax({
-		type : "POST",
-		url : "CalendarController",
-		dataType : "json",
-		data : {
-			action : "getEvents",
-			week : p_week,
-			userid : $("#hidUserId").val()
-		},
-		success : function(response) {
-			alert(response);
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			alert("Something really bad happened " + textStatus);
-			alert(jqXHR.responseText);
+			var start = eventList[i].startTime;
+			var end = eventList[i].endTime;
+			var eventStart = new Date(start.year, start.month - 1, start.dayOfMonth, start.hourOfDay, start.minute, 0);
+			var eventEnd = new Date(end.year, end.month - 1, end.dayOfMonth, end.hourOfDay, end.minute, 0);
+
+			var eventMarginLeft = getLeftMargin(eventStart.getDay());
+			var eventMarginTop = getTopMargin(eventStart.getHours(), eventStart.getMinutes());
+			var eventHeight = getEventHeight(eventStart.getHours(), eventStart.getMinutes(), eventEnd.getHours(), eventEnd.getMinutes());
+
+			$("#calendar").append("<div class='claEvent' style='height: " + eventHeight + "px;left: " + eventMarginLeft + "px; top: " + eventMarginTop + "px;'>" + eventList[i].title + "</div>");
+
 		}
+	},
+	error : function(jqXHR, textStatus, errorThrown)
+	{
+		alert(jqXHR.responseText);
+	}
 	});
+};
 
-	var event = {
-		title : "TEST",
-		start : "2015-06-06T00:00:00Z",
-		end : "2015-06-01T14:00:00Z"
-	};
-
-	var eventStart = new Date(event.start);
-	var eventEnd = new Date(event.end);
-
-	// Calculate left
-	var eventDayNumber = eventStart.getDay();
+var getLeftMargin = function(p_eventDayNumber)
+{
 	var dayWidth = $(".claFullHour:nth-child(2)").width() / 10;
 	var left = $(".claTimeFrame > td").width();
 
-	if (eventDayNumber === 0) {
-		left += dayWidth * 7;
-	} else {
-		left += dayWidth * (eventDayNumber - 1);
+	left += p_eventDayNumber === 0 ? dayWidth * 7 : dayWidth * (p_eventDayNumber - 1);
+
+	return left + 50;
+};
+
+var getTopMargin = function(p_eventStartHour, p_eventStartMinute)
+{
+	var top = 76; // 76px is the height of the headers.
+
+	var startMinutes = (p_eventStartHour * 60) + p_eventStartMinute;
+	var modTop = startMinutes % 30;
+
+	for (var i = 0; i < startMinutes - modTop; i += 30)
+	{
+		top += 14;
 	}
 
-	// Calculate height
-	var height = 60;
+	top += 14 * (modTop / 30);
+
+	return top;
+};
+
+var getEventHeight = function(p_eventStartHour, p_eventStartMinute, p_eventEndHour, p_eventEndMinute)
+{
+	var height = 0;
 	var totalMinutes = 0;
 
-	var eventStartHour = eventStart.getHours();
-	var eventEndHour = eventEnd.getHours();
-
-	var eventStartMinute = eventStart.getMinutes();
-	var eventEndMinute = eventEnd.getMinutes();
-
-	if (eventEndMinute > eventStartMinute) {
-		totalMinutes = ((eventEndHour - eventStartHour) * 60)
-				+ (eventEndMinute - eventStartMinute);
+	if (p_eventEndMinute >= p_eventStartMinute)
+	{
+		totalMinutes = ((p_eventEndHour - p_eventStartHour) * 60) + (p_eventEndMinute - p_eventStartMinute);
+	}
+	else
+	{
+		totalMinutes = ((p_eventEndHour - p_eventStartHour) * 60) - (p_eventStartMinute - p_eventEndMinute);
 	}
 
 	var modHeight = totalMinutes % 30;
-	for (var i = 0; i <= totalMinutes - modHeight; i += 30) {
-		height += 13;
+	for (var i = 0; i < totalMinutes - modHeight; i += 30)
+	{
+		height += 14;
 	}
 
-	height += ((modHeight / 30) * 100);
+	height += 14 * (modHeight / 30);
 
-	// Calculate top
-	var top = 76;
-
-	var startHour = eventStart.getHours();
-	var startMinute = eventStart.getMinutes();
-	// alert("startHour: " + startHour + "\nstartMinute: " + startMinute);
-
-	var startMinutes = (startHour * 60) + startMinute;
-	var modTop = startMinutes % 30;
-
-	for (var i = 0; i < startMinutes - modTop; i += 30) {
-		top += 13;
-	}
-
-	top += ((modTop / 30) * 100);
-
-	$("#calendar").append(
-			"<div class='claEvent' style='height: " + height + "px;left: "
-					+ left + "px; top: " + top + "px;'></div>");
+	return height;
 };
 
 /**
  * Gehe eine Woche zurück.
  */
-var getLastWeek = function() {
+var getLastWeek = function()
+{
 	var currentWeek = parseInt($("#hidCurrentWeek").val());
 	var currentYear = parseInt($("#hidCurrentYear").val());
 
-	if (currentWeek <= 1) {
+	if (currentWeek <= 1)
+	{
 		currentYear--;
 		currentWeek = 53;
-	} else {
+	}
+	else
+	{
 		currentWeek--;
 	}
 	buildUserCalendar(currentWeek, currentYear);
@@ -306,14 +343,18 @@ var getLastWeek = function() {
 /**
  * Gehe zur nächsten Woche.
  */
-var getNextWeek = function() {
+var getNextWeek = function()
+{
 	var currentWeek = parseInt($("#hidCurrentWeek").val());
 	var currentYear = parseInt($("#hidCurrentYear").val());
 
-	if (currentWeek >= 53) {
+	if (currentWeek >= 53)
+	{
 		currentYear++;
 		currentWeek = 1;
-	} else {
+	}
+	else
+	{
 		currentWeek++;
 	}
 
@@ -323,20 +364,24 @@ var getNextWeek = function() {
 /**
  * Melde den Benutzer ab.
  */
-var Logout = function() {
-	$.ajax({
-		type : "POST",
-		url : "CalendarController",
-		data : {
-			action : "logout"
-		}
+var Logout = function()
+{
+	$.ajax(
+	{
+	type : "POST",
+	url : "CalendarController",
+	data :
+	{
+		action : "logout"
+	}
 	});
 };
 
 /**
  * Zeige eine leere Termineingabe.
  */
-var newEvent = function() {
+var newEvent = function()
+{
 	openEventWindow(-1);
 };
 
@@ -345,10 +390,10 @@ var newEvent = function() {
  * 
  * @param p_eventId
  */
-var openEventWindow = function(p_eventId) {
+var openEventWindow = function(p_eventId)
+{
 	// TODO: WENN p_eventId != -1 DANN Event Informationen abfragen.
 	settings = "width=750,height=500,top=20,left=20,scrollbars=no,location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=no,dependent=no";
-	win = window.open("http://localhost:8080/FHDW.WebCalendar.WebUI/Event.jsp",
-			"", settings);
+	win = window.open("http://localhost:8080/FHDW.WebCalendar.WebUI/Event.jsp", "", settings);
 	win.focus();
 };

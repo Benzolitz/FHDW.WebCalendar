@@ -68,7 +68,8 @@ public class CalendarController extends HttpServlet
 			Collection <Event> eventCollection = new ArrayList <Event>();
 			eventCollection.add(getTestEvent());
 			
-			Type type = new TypeToken<Collection <Event>> (){}.getType();
+			Type type = new TypeToken <Collection <Event>>()
+			{}.getType();
 			
 			output = new Gson().toJson(eventCollection, type);
 		}
@@ -83,13 +84,13 @@ public class CalendarController extends HttpServlet
 	{
 		Event event = new Event();
 		
-		Calendar cal = Calendar.getInstance();
+		Calendar calStart = Calendar.getInstance();
+		calStart.set(2015, 6, 1, 0, 33);
+		event.SetStartTime(calStart);
 		
-		cal.set(2015, 06, 01, 00, 00);
-		event.SetEndTime(cal);
-		
-		cal.set(2015, 06, 14, 00, 00);
-		event.SetStartTime(cal);
+		Calendar calEnd = Calendar.getInstance();
+		calEnd.set(2015, 6, 1, 1, 20);
+		event.SetEndTime(calEnd);
 		
 		event.SetTitle("TEST");
 		
