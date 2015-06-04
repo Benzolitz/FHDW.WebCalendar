@@ -139,7 +139,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return userPassword;
 	}
 	
-	//TODO: DomainModel anstatt Strings zurückgeben
 	@Override
 	public Collection<SecurityQuestion> GetAllSecurityQuestions() throws SQLException
 	{
@@ -273,6 +272,8 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		Collection<EventCalendarView> events;
 		EventCalendarView event;
 		Collection<String> categories;
+		java.util.Calendar calStart = java.util.Calendar.getInstance();
+		java.util.Calendar calEnd = java.util.Calendar.getInstance();
 		String sql;
 		ResultSet rs;
 		
@@ -285,8 +286,10 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		{
 			event = new EventCalendarView();
 			event.SetId(rs.getInt(1));
-			event.SetStartTime(rs.getDate(2));
-			event.SetEndTime(rs.getDate(3));
+			calStart.setTime(rs.getDate(2));
+			event.SetStartTime(calStart);
+			calEnd.setTime(rs.getDate(3));
+			event.SetEndTime(calEnd);
 			event.SetTitle(rs.getString(4));
 			event.SetLocation(rs.getString(5));
 			event.SetCalendarId(rs.getInt(6));
@@ -306,12 +309,14 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return events;
 	}
 
-	//TODO: Im EventDomain CreatorID anstatt Creator.
 	@Override
 	public Event GetEventDetailed(int p_eventId) throws SQLException
 	{
 		Collection<String> optionalUser = new ArrayList<String>();
 		Collection<String> requiredUser = new ArrayList<String>();
+		java.util.Calendar calStart = java.util.Calendar.getInstance();
+		java.util.Calendar calEnd = java.util.Calendar.getInstance();
+		java.util.Calendar calCreationTime = java.util.Calendar.getInstance();
 		Event event;
 		String sql;
 		ResultSet rs;
@@ -320,12 +325,15 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		rs = stmt.executeQuery(sql);
 		rs.next();
 		event = new Event();
-		event.SetStartTime(rs.getDate(1));
-		event.SetEndTime(rs.getDate(2));
+		calStart.setTime(rs.getDate(1));
+		event.SetStartTime(calStart);
+		calEnd.setTime(rs.getDate(2));
+		event.SetEndTime(calEnd);
 		event.SetTitle(rs.getString(3));
 		event.SetLocation(rs.getString(4));
-		//event.SetCreatorId(rs.getInt(5));
-		event.SetCreationTime(rs.getDate(6));
+		event.SetCreatorId(rs.getInt(5));
+		calCreationTime.setTime(rs.getDate(6));
+		event.SetCreationTime(calCreationTime);
 		event.SetMessage(rs.getString(7));
 		event.SetCalendarId(rs.getInt(8));
 		
@@ -345,12 +353,12 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 	
 	@Override
-	public void SaveEvent(String p_title, String p_location, Date p_starttime, Date p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId) throws SQLException
+	public void SaveEvent(String p_title, String p_location, java.util.Calendar p_starttime, java.util.Calendar p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId) throws SQLException
 	{
 		String sql;
 		ResultSet rs;
 		
-		sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME(), %d);", p_title, p_location, p_starttime, p_endtime, p_message, p_creatorId, sdf.format(new Date()), p_calendarId);
+		sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME(), %d);", p_title, p_location, sdf.format(p_starttime), sdf.format(p_endtime), p_message, p_creatorId, sdf.format(new Date()), p_calendarId);
 		stmt.executeUpdate(sql);
 		
 		sql = String.format("SELECT LAST_INSERT_ID();");
@@ -391,7 +399,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 
 	@Override
-	public void UpdateEvent(int p_eventId, String p_title, String p_location, Date p_starttime, Date p_endtime, String p_message, Collection<String> p_categories) throws SQLException
+	public void UpdateEvent(int p_eventId, String p_title, String p_location, java.util.Calendar p_starttime, java.util.Calendar p_endtime, String p_message, Collection<String> p_categories) throws SQLException
 	{
 		String sql;
 		

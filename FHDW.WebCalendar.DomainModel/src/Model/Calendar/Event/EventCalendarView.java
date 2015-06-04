@@ -1,4 +1,5 @@
 package Model.Calendar.Event;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -7,8 +8,8 @@ import Model.BaseObject;
 public class EventCalendarView extends BaseObject
 {
 	private String title;
-	private Date startTime;
-	private Date endTime;
+	private Calendar startTime;
+	private Calendar endTime;
 	private String location;
 	private Collection<String> category;
 	private boolean required;
@@ -25,22 +26,22 @@ public class EventCalendarView extends BaseObject
 		return title;
 	}
 	
-	public void SetStartTime(Date p_starTime)
+	public void SetStartTime(Calendar p_starTime)
 	{
 		startTime = p_starTime;
 	}
 	
-	public Date GetStartTime()
+	public Calendar GetStartTime()
 	{
 		return startTime;
 	}
 	
-	public void SetEndTime(Date p_endTime)
+	public void SetEndTime(Calendar p_endTime)
 	{
 		endTime = p_endTime;
 	}
 	
-	public Date GetEndTime()
+	public Calendar GetEndTime()
 	{
 		return endTime;
 	}

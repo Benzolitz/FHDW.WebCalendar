@@ -12,7 +12,7 @@ public class Event extends BaseObject
 	private Calendar startTime;
 	private Calendar endTime;
 	private String location;
-	private User creator;
+	private int creatorId;
 	private Calendar creationTime;
 	private Collection<String> category;
 	private String message;
@@ -61,14 +61,14 @@ public class Event extends BaseObject
 		return location;
 	}
 	
-	public void SetCreator(User p_creator)
+	public void SetCreatorId(int p_creatorId)
 	{
-		creator = p_creator;
+		creatorId = p_creatorId;
 	}
 	
-	public User GetCreator()
+	public int GetCreatorId()
 	{
-		return creator;
+		return creatorId;
 	}
 	
 	public void SetCreationTime(Calendar p_creationTime)
