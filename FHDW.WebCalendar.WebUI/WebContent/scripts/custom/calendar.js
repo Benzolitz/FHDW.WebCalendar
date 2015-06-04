@@ -1,3 +1,5 @@
+var currentDayWidth;
+
 $(document).ready(function() {
   {
     buildUserCalendar(-1, new Date().getFullYear());
@@ -5,19 +7,20 @@ $(document).ready(function() {
   }
 });
 
-var resizingCorrection = function() {
-  var currentDayWidth = $(".claFullHour:nth-child(2)").width() * 0.9;
-  $(".claEvent").each(function() {
+var setCurrentDayWidth = function() {
+  currentDayWidth = $("#calendar > #tabCalendar > thead > tr > .claHead").width();
+};
 
+var resizingCorrection = function() {
+  $(".claEvent").each(function() {
     var left = $(this).css("left");
     var leftNum = parseInt(left.replace("px", ""))
 
-    var blub = leftNum / currentDayWidth;
-    var dayNumber = Math.floor(blub) + 1;
+    var dayNumber = Math.floor(leftNum / currentDayWidth) + 1;
     $(this).css("width", getEventWidth(dayNumber));
-    ;
     $(this).css("left", getLeftMargin(dayNumber));
   });
+  setCurrentDayWidth();
 };
 
 /**
@@ -255,6 +258,7 @@ var showUserEvents = function(p_week) {
                         + eventMarginTop + "px;'>" + event.title + "</a>");
 
       }
+      setCurrentDayWidth();
       checkEventCollisions();
     },
     error: function(jqXHR, textStatus, errorThrown) {
