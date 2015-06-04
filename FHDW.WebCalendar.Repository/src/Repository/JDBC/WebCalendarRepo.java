@@ -139,7 +139,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return userPassword;
 	}
 	
-	//TODO: DomainModel anstatt Strings zurückgeben
 	@Override
 	public Collection<SecurityQuestion> GetAllSecurityQuestions() throws SQLException
 	{
@@ -310,7 +309,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return events;
 	}
 
-	//TODO: Im EventDomain CreatorID anstatt Creator.
 	@Override
 	public Event GetEventDetailed(int p_eventId) throws SQLException
 	{
@@ -333,7 +331,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		event.SetEndTime(calEnd);
 		event.SetTitle(rs.getString(3));
 		event.SetLocation(rs.getString(4));
-		//event.SetCreatorId(rs.getInt(5));
+		event.SetCreatorId(rs.getInt(5));
 		calCreationTime.setTime(rs.getDate(6));
 		event.SetCreationTime(calCreationTime);
 		event.SetMessage(rs.getString(7));
