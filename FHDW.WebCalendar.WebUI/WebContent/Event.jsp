@@ -89,10 +89,13 @@
 			</div>
 			<div id="divButtons">
 				<div class="claCenterDiv">
+					<input id="btnFile" class="claButtonDefault claEventButtons" type="Button" value="Anh&auml;nge" />
+				</div>
+				<div class="claCenterDiv">
 					<input id="btnSubmit" class="claButtonDefault claEventButtons" type="Submit" value="Speichern" />
 				</div>
 				<div class="claCenterDiv">
-					<input id="btnFile" class="claButtonDefault claEventButtons" type="Button" value="Anh&auml;nge" />
+					<input id="btnDelete" class="claButtonDefault claEventButtons" type="Button" value="L&ouml;schen" />
 				</div>
 			</div>
 			<div id="divEventComment">

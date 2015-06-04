@@ -57,6 +57,7 @@
 
 
 <script src="scripts/framework/jquery-1.11.2.min.js"></script>
+<script src="scripts/framework/jquery-collision.min.js"></script>
 <script src="scripts/custom/calendar.js"></script>
 
 </head>

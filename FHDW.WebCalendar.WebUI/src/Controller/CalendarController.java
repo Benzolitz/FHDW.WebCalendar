@@ -24,6 +24,11 @@ public class CalendarController extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException
 	{
 		String action = request.getParameter("action");
@@ -69,11 +74,16 @@ public class CalendarController extends HttpServlet
 		{
 			// TODO: Event Daten holen.
 			Collection <Event> eventCollection = new ArrayList <Event>();
-			eventCollection.add(getTestEvent(1, 12, 30, 13, 50));
-			eventCollection.add(getTestEvent(2, 0, 11, 4, 20));
-			eventCollection.add(getTestEvent(3, 2, 15, 22, 10));
-			eventCollection.add(getTestEvent(4, 23, 00, 23, 56));
-			eventCollection.add(getTestEvent(1, 15, 44, 15, 55));
+			eventCollection.add(getTestEvent(1, 10, 00, 14, 10));
+			eventCollection.add(getTestEvent(1, 14, 00, 15, 00));
+			
+			eventCollection.add(getTestEvent(2, 11, 00, 13, 00));
+			eventCollection.add(getTestEvent(3, 13, 00, 15, 00));
+			eventCollection.add(getTestEvent(4, 8, 00, 16, 00));
+			eventCollection.add(getTestEvent(4, 11, 00, 15, 00));
+			eventCollection.add(getTestEvent(5, 10, 00, 12, 00));
+			eventCollection.add(getTestEvent(6, 10, 00, 12, 00));
+			eventCollection.add(getTestEvent(7, 13, 00, 14, 00));
 			
 			Type type = new TypeToken <Collection <Event>>()
 			{}.getType();
@@ -101,8 +111,7 @@ public class CalendarController extends HttpServlet
 		
 		event.SetTitle("TEST");
 		
-
-	    Random rand = new Random();
+		Random rand = new Random();
 		
 		event.SetId(rand.nextInt(100));
 		
