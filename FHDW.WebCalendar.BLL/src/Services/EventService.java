@@ -25,18 +25,11 @@ public class EventService extends BaseService
 					isCalendarExisting = true;
 				}
 			}
-			// TODO: Prüfen ob der Calender Existiert
-			// Prüfen ob der Benutzer existiert
 			
 			if (!isCalendarExisting) {
 				throw new NotFound("Das Event konnte nicht erstellt werden da der Kalender nicht existiert");
 			}
-			
-			boolean isUserExisting = true;
-			if (!isUserExisting) {
-				//TODO: Was passiert wenn die BenutzerId nicht korrekt war
-			}
-			
+						
 			GetRepo().SaveEvent(event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(), event.GetCreatorId(), event.GetCreatorId());
 			return true;
 		}
