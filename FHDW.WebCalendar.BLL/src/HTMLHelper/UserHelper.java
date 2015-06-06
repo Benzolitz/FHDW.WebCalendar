@@ -7,7 +7,7 @@ import Model.User.UserSecurity;
 /**
  * @author Frederik Heinrichs
  *
- * Helper für die überprüfung eingebener Daten für User objekte
+ * Helper für die überprüfung eingebener Daten eines User Models
  * 
  * @see User
  * @see UserSecurity
@@ -15,29 +15,24 @@ import Model.User.UserSecurity;
 public class UserHelper
 {	
 	/**
-	 * TODO: Kommentar schreiben
+	 * 
 	 * @param p_user
+	 * 
 	 * @return
+	 * 
 	 * @throws IOException 
 	 */
 	public static boolean checkUserData(User p_user) throws IOException {
 		UserHelper.checkUserPassword(p_user.GetUserSecurity().GetPassword());
 		UserHelper.checkUserName(p_user.GetUsername());
-
+		UserHelper.checkUserMail(p_user.GetEMail());
 		
-		if (!UserHelper.checkUserMail(p_user.GetEMail())) {
-			return false;
-		}
-		
-		if (!UserHelper.checkPhonenNumber(p_user.GetPhonenumber())) {
-			return false;
-		}
-				
 		return true;
 	}
 	
 	/**
 	 * Überprüft die Syntax eines Passwords<br>
+	 * 1. Das password darf nicht leer oder null sein
 	 * 
 	 * @param p_password
 	 * 
@@ -51,16 +46,54 @@ public class UserHelper
 	
 	/**
 	 * Überprüft die Syntax eines Benutzernamen<br>
+	 * 1. Der Benutzername darf nicht leer oder null sein<br>
 	 * 
 	 * @param p_username
 	 * 
-	 * @throws IOException IOException wenn der eingebene user_name leer war
+	 * @throws IOException wenn der eingebene user_name leer war
 	 */
 	public static void checkUserName(String p_username) throws IOException {
 		if (p_username == null || p_username.isEmpty()) {
 			throw new IOException("Der Eingebenen Benutzername ist leer");
 		} 	
 	}
+	
+	
+	/**
+	 * Überprüft die Syntax der E-Mailadresse<br>
+	 * 1. Die E-Mailadresse darf nicht leer oder null sein<br>
+	 * 2. Die E-mailadresse muss ein @ und einen . enthalten<br>
+	 * 3. Es müssen zeichen vor dem @ Zeichen stehen
+	 * 4. Es müssen zeichen vor dem Punkt stehen
+	 * @param p_mailadress
+	 * 
+	 * @throws IOException <br>
+	 * 1. Die Eingegebene E-Mailadresse ist leer<br>
+	 * 2. Die Eingegebene E-Mailadresse war nicht korrekt
+	 */
+	public static void checkUserMail(String p_mailadress) throws IOException {		
+		p_mailadress.trim();
+		int at, dot, len;
+		len = p_mailadress.length();
+		at = p_mailadress.indexOf('@');
+		dot = p_mailadress.lastIndexOf('.');
+		
+		// p_mailadress nicht angegeben oder nur Leerzeichen, oder kein @ bzw .
+		if ( (len == 0) || (at == -1) || (dot == -1) ) {
+			throw new IOException("Die Eingegebene E-Mailadresse ist leer");
+		}
+		
+		// keine EMailadresse vor @ Zeichen oder . vor &		
+		if ( (at == 0) || (dot < at) )
+			throw new IOException("Die Eingegebene E-Mailadresse nicht korrekt");
+		
+		 // Mindestens zwei Zeichen für die Endung
+		if (! (dot+2 < len)) {
+			throw new IOException("Die Eingegebene E-Mailadresse war nicht korrekt");
+		} 
+	}
+	
+
 	
 	/**
 	 * Überprüft die Syntax der Vor- und Nachnamen<br>
@@ -82,20 +115,6 @@ public class UserHelper
 		}	
 	}
 	
-	/**
-	 * TODO: Regeln aufstellen
-	 * @param p_mailadress
-	 * @return
-	 */
-	public static boolean checkUserMail(String p_mailadress) {
-		if (p_mailadress.isEmpty()) {
-			return false;
-		} else {
-			// TODO: Gibt es Regeln die beim Password eingehalten werden müssen?
-			
-			return true;
-		}	
-	}
 	
 	/**
 	 * TODO: Regeln aufstellen

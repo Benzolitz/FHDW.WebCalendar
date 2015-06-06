@@ -11,5 +11,10 @@ public class DatabaseException extends BaseServiceException
 	public DatabaseException(String p_getMessage)
 	{
 		super(p_getMessage);
+	}
+
+	public DatabaseException(String p_message, Throwable p_cause)
+	{
+		super(p_message,p_cause);
 	}		
 }

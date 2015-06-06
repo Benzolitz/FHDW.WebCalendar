@@ -2,6 +2,7 @@ package Services;
 
 import java.sql.SQLException;
 
+import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
 import HTMLHelper.UserHelper;
@@ -23,35 +24,71 @@ public class UserService extends BaseService
 	}
 		
 	/**
-	 * Überprüfe den Eingebenen Benutzernamen und lade die BenutzerId zu einem Benutzernamen
+	 * Überprüfe den Eingebenen Benutzernamen oder die E-mailadresse <br> 
+	 * und lade die passwende BenutzerId aus der Datenbank
 	 * 
-	 * @param p_username
+	 * @param p_usernameOrEmail
 	 * 
 	 * @return userId
 	 * 
-	 * @throws IOException wenn der eingebene Benutzername nicht den Regeln entspricht
+	 * @throws IOException wenn der Benutzername falsch eingegeben wurde
 	 * @throws NotFound wenn keine BenutzerId gefunden wurde
+	 * @throws DatabaseException wenn ein unbekannter Fehler in der Datenbank aufgetaucht ist
 	 * 
 	 * @see UserHelper#checkUserName(String)
 	 */
-	public int GetUserId(String p_username) throws IOException, NotFound {
-		UserHelper.checkUserName(p_username);// throws IOExceptions		
+	public int GetUserId(String p_usernameOrEmail) throws IOException, NotFound, DatabaseException {
 		
-		int reuslt_userID = -1;
+		if (!p_usernameOrEmail.contains("@")) {
+			UserHelper.checkUserName(p_usernameOrEmail);// throws IOExceptions
+		} else {
+			UserHelper.checkUserMail(p_usernameOrEmail);
+		}
+		
+		try {
+			Integer reuslt_userID = GetRepo().GetUserId(p_usernameOrEmail); // throws SQLException
+			
+			if (reuslt_userID == null || reuslt_userID <= 0) {
+				throw new NotFound("Benutzer wurde nicht gefunden");
+			} 	
+			
+			return reuslt_userID;	
+		}
+		catch (SQLException e) {
+			throw new DatabaseException("Ein unbekannter Fehler ist aufgetreten", e);
+		}		
+	}
+
+	/**
+	 * Lade das Password zu einem Benutzer
+	 * 
+	 * @param p_userId
+	 * @param p_password
+	 * 
+	 * @return Password - kann nicht null und nicht leer sein
+	 * 
+	 * @throws NotFound wenn das password für den Benutzer leer ist oder wenn es keinen Benutzer mit der ID gibt
+	 * @throws DatabaseException wenn ein unbekannter Fehler in der Datenbank aufgetaucht ist
+	 */
+	public String GetUserPassword(int p_userId) throws NotFound, DatabaseException {		
 		try
 		{
-			reuslt_userID = GetRepo().GetUserId(p_username);
+			String result_userPw = GetRepo().GetUserPassword(p_userId);
+			
+			if (result_userPw == null) {
+				throw new NotFound("Es wurde kein Benutzer mit der ID: " + p_userId + " gefunden!");
+			} else if (result_userPw.isEmpty()) {
+				throw new NotFound("Es wurde kein Password zu dem Benutzer gefunden!");	
+			}
+			
+			return result_userPw;
 		}
-		catch (SQLException e)
+		catch (SQLException esql)
 		{
-			e.printStackTrace();
-		}//TODO: Was ist wenn der User nicht vorhanden ist? Kann die DB da nicht schon vorgefertigte Exceptions werfen? NotFound!		
-		if (reuslt_userID <= 0) {
-			throw new NotFound("Benutzer wurde nicht gefunden");
-		} else {
-			return reuslt_userID;
+			throw new DatabaseException("Ein unbekannter Fehler ist aufgetreten", esql);
 		}
 	}
+	
 	
 	/**
 	 * Lade den Benutzer passend zur Id
@@ -65,34 +102,6 @@ public class UserService extends BaseService
 		//TODO: GetuserInfo gibts im Repo noch nicht!
 		
 		return new User();
-	}
-	
-	/**
-	 * Lade das Password zu einem Benutzer
-	 * 
-	 * @param p_userId
-	 * @param p_password
-	 * 
-	 * @return Password
-	 * 
-	 * @throws NotFound wenn das password für den Benutzer leer ist
-	 */
-	public String GetUserPassword(int p_userId) throws NotFound {		
-		String result_userPw = "";
-		try
-		{
-			result_userPw = GetRepo().GetUserPassword(p_userId);
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		
-		if (result_userPw.isEmpty()) {
-			throw new NotFound("Es wurde kein Password zu dem Benutzer gefunden!");
-		} else {
-			return result_userPw;
-		}
 	}
 	
 }

@@ -73,12 +73,12 @@ public class RegistrationService extends BaseService
 	 * @throws DatabaseException
 	 * @throws NotFound
 	 * 
-	 * @see LoginService#checkUserPassword(int, String)
+	 * @see LoginService#CheckUserPassword(int, String)
 	 * @see RegistrationService#checkSecurityAnswer(int, String)
 	 */
-	public boolean changeUserPasword(int p_userId, String p_oldPassword, String p_newPassword, String p_securityAnswer) throws NotFound, IOException {	
+	public boolean changeUserPasword(int p_userId, String p_oldPassword, String p_newPassword, String p_securityAnswer) throws NotFound, IOException, DatabaseException {	
 		// Check old userpassword (SecurityCheck)
-		if (new LoginService().checkUserPassword(p_userId, p_oldPassword)){// throws NotFound, IOException
+		if (new LoginService().CheckUserPassword(p_userId, p_oldPassword)){// throws NotFound, IOException
 			throw new IOException("Das Eingebene Password war nicht korrekt");
 		} 
 		
