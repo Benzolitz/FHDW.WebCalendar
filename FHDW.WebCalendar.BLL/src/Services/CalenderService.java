@@ -156,7 +156,7 @@ public class CalenderService extends BaseService
 	 * 
 	 * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank entstanden ist
 	 */
-	private Collection<Calendar> GetAllUserCalendar(int p_userId) throws DatabaseException {
+	public Collection<Calendar> GetAllUserCalendar(int p_userId) throws DatabaseException {
 		Collection<Calendar> result_userCalendar = new ArrayList <Calendar>();
 		try
 		{

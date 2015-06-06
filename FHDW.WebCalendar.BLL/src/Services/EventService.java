@@ -1,8 +1,11 @@
 package Services;
 
 import java.sql.SQLException;
+import java.util.Collection;
 
+import Exceptions.DatabaseException;
 import Exceptions.IOException;
+import Exceptions.NotFound;
 import HTMLHelper.EventHelper;
 import Model.Calendar.Calendar;
 import Model.Calendar.Event.Event;
@@ -10,62 +13,96 @@ import Model.Calendar.Event.Event;
 public class EventService extends BaseService
 {	
 
-	public int createEvent(Event event) throws IOException {
-		EventHelper.checkEventData(event);
+	public boolean createEvent(Event event) throws IOException, DatabaseException, NotFound {
+		EventHelper.checkEventData(event); // throws IOException
+		
 		try
 		{
-			GetRepo().SaveEvent(event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(), event.GetCalendarId(), event.GetCalendarId());
+			boolean isCalendarExisting = false;
+			Collection<Calendar>  userCalendar = new CalenderService().GetAllUserCalendar(event.GetCreatorId());
+			for (Calendar calendar : userCalendar) {
+				if (event.GetCalendarId() == calendar.GetId()) {
+					isCalendarExisting = true;
+				}
+			}
+			// TODO: Prüfen ob der Calender Existiert
+			// Prüfen ob der Benutzer existiert
+			
+			if (isCalendarExisting) {
+				throw new NotFound("Das Event konnte nicht erstellt werden da der Kalender nicht existiert");
+			}
+			
+			boolean isUserExisting = true;
+			if (!isUserExisting) {
+				//TODO: Was passiert wenn die BenutzerId nicht korrekt war
+			}
+			
+			GetRepo().SaveEvent(event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(), event.GetCreatorId(), event.GetCreatorId());
+			return true;
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			// TODO: SQLException Loggen
+			// TODO: Fehlermeldung Benutzerfreundlich durchreichen
+			throw new DatabaseException(e.getMessage(), e);
 		}
-		// TODO: Was ist wenn das gleiche Event schon exisitiert???
-		// TODO: Was ist wenn das Event nicht gespeichert werden konnte???
-		// TODO: Wie ist das mit nem Rückgabe wert z.B. die Id des Events damit man damit später weiter arbeiten kann
-		return 0;
 	}
 	
-	public boolean changeEvent(Event event) throws IOException {
+	public boolean changeEvent(Event event) throws IOException, DatabaseException, NotFound {
 		EventHelper.checkEventData(event);
 		try
 		{
+			GetEvent(event.GetId()); // throws NotFound
+			//TODO: Was is wenn das Update nicht funktioniert hat, ein boolean als Rückgabe wert wäre von vorteil
 			GetRepo().UpdateEvent(event.GetId(), event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory());
+			return true;
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			// TODO: SQLException Loggen
+			// TODO: Fehlermeldung Benutzerfreundlich durchreichen
+			throw new DatabaseException(e.getMessage(), e);
 		}	
-		//TODO: Was is wenn das Update nicht funktioniert hat, ein boolean als Rückgabe wert wäre von vorteil
-		return true;
 	}
 	
-	public boolean removeEvent(int p_eventId) {
+	public boolean removeEvent(int p_eventId) throws DatabaseException {
 		try
 		{
+			GetEvent(p_eventId); // Throws NotFound
+			//TODO: Was is wenn das Update nicht funktioniert hat, ein boolean als Rückgabe wert wäre von vorteil
 			GetRepo().DeleteEvent(p_eventId);
+			return true;
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			// TODO: SQLException Loggen
+			// TODO: Fehlermeldung Benutzerfreundlich durchreichen
+			throw new DatabaseException(e.getMessage(), e);
 		}
-		//TODO: boolean als Rückgabe wert ob das geklappt hat wäre von Vorteil!
-		return true;
+		catch (NotFound e)
+		{
+			// TODO: NotFound sollte trotzdem geloggt werden
+			// Event existiert nicht mehr
+			return true;
+		}
 	}
 	
-	public Event getEvent(int p_eventId, Calendar calendar) {
+	public Event GetEvent(int p_eventId) throws NotFound, DatabaseException {
 		//TODO:wäre es nicht Sinnvoller hier immer calendar id und userId mit angeben zu müssen?
 		try
 		{
-			GetRepo().GetEventDetailed(p_eventId);
+			Event result_Event = GetRepo().GetEventDetailed(p_eventId); 
+			if (result_Event == null) {
+				throw new NotFound("Das Event mit der ID: " + p_eventId + "Existiert nicht");
+			}
+			return result_Event;
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			// TODO: SQLException Loggen
+			// TODO: Fehlermeldung Benutzerfreundlich durchreichen
+			throw new DatabaseException(e.getMessage(), e);
 		}
-		//TODO: Ein Rückgabewert wäre von vorteil!
-		return new Event();
 	}
 
-	
 }

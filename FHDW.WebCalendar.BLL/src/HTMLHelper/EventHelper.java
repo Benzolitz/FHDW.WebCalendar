@@ -15,15 +15,15 @@ import Model.Calendar.Event.Event;
 public class EventHelper
 {	
 	public static void checkEventData(Event event) throws IOException { 
-		throw new IOException("");	
+		//throw new IOException("");	
 	}
 	
 	public static void checkTitle(String p_title) throws IOException {
-		throw new IOException("");	
+		//throw new IOException("");	
 	}
 	
 	public static void checkDateTime(Date p_dateTime) throws IOException {
-		throw new IOException("");	
+		//throw new IOException("");	
 	}
 
 }
