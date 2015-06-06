@@ -48,7 +48,7 @@ public class RegistrationService extends BaseService
 	 * @see UserHelper#checkUserData(User)
 	 * @see RegistrationService#DoesUserAlreadyExist(User)
 	 */
-	public int RegsiterNewUser(User p_user) throws IOException, DatabaseException, AlreadyExist {	
+	public int RegisterNewUser(User p_user) throws IOException, DatabaseException, AlreadyExist {	
 		UserHelper.checkUserData(p_user); // throws IOException		
 		try
 		{
