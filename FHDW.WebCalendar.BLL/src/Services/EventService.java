@@ -28,7 +28,7 @@ public class EventService extends BaseService
 			// TODO: Prüfen ob der Calender Existiert
 			// Prüfen ob der Benutzer existiert
 			
-			if (isCalendarExisting) {
+			if (!isCalendarExisting) {
 				throw new NotFound("Das Event konnte nicht erstellt werden da der Kalender nicht existiert");
 			}
 			
