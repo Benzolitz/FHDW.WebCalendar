@@ -16,26 +16,11 @@ import Repository.JDBC.WebCalendarRepo;
  * @see UserService
  */
 public class LoginService extends BaseService
-{
-	private UserService userService;
-	
+{	
 	public LoginService() {
 		//nothing to init
 	}
-	
-	
-	/**
-	 * @return the userService
-	 */
-	public UserService GetUserService()
-	{
-		if (this.userService == null) {
-			this.userService = new UserService();
-		}
-		return this.userService;
-	}
-	
-	
+
 	/**
 	 * Lade den passenden Benutzer zu einem Benutzernamen oder einer E-Mailadresse <br>
 	 * und vergleiche das eingebene Password mit dem aus der Datenbank

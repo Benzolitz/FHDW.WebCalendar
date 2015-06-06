@@ -12,7 +12,22 @@ import Repository.JDBC.WebCalendarRepo;
 public abstract class BaseService {
 
 	public static WebCalendarRepo repo;
-
+	private UserService userService;
+		
+	/**
+	 * Singelton für den privaten Userservice
+	 * 
+	 * @return the userService
+	 */
+	public UserService GetUserService()
+	{
+		if (this.userService == null) {
+			this.userService = new UserService();
+		}
+		return this.userService;
+	}
+	
+	
 	/**
 	 * Singelton wür das Repository
 	 * 
