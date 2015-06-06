@@ -24,6 +24,8 @@ import Repository.JDBC.WebCalendarRepo;
 public class RegistrationService extends BaseService
 {	
 
+	private static final String DEFAULT_CALENDARNAME = "DEFAULT";
+	
 	public RegistrationService() {
 		// nothing to init
 	}
@@ -57,7 +59,9 @@ public class RegistrationService extends BaseService
 					p_user.GetUserSecurity().GetSecurityQuestionId(), p_user.GetUserSecurity().GetSecurityAnswer());
 			
 			if (reuslt_userID == null || reuslt_userID <= 0) {
-				throw new DatabaseException("Benutzer wurde nicht gefunden");
+				throw new DatabaseException("Benutzer konnte nicht erstellt werden");
+			} else {	
+				new CalenderService().createCalendar(reuslt_userID, RegistrationService.DEFAULT_CALENDARNAME);	
 			}
 			
 			return reuslt_userID;

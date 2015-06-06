@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import Exceptions.DatabaseException;
 import Model.Calendar.Calendar;
 import Model.Calendar.Event.Event;
 import Model.Calendar.Event.EventCalendarView;
@@ -18,6 +19,26 @@ public class CalenderService extends BaseService
 	public CalenderService () {
 		// nothing to init
 	}
+	
+	
+	public int createCalendar(int p_userId, String p_calenderName) throws DatabaseException {	
+		try
+		{
+			Integer result_calenderId = GetRepo().CreateNewCalendar(p_userId, p_calenderName);
+			
+			if (result_calenderId == null || result_calenderId <= 0) {
+				//TODO: Benutzer wieder löschen, da dieser hier ja bereits angelegt wurde?
+				throw new DatabaseException("Kalender für den Benutzer mit der Id: " + p_userId + "konnte nicht erstellt werden");
+			}
+			
+			return result_calenderId;
+		}
+		catch (SQLException e)
+		{
+			throw new DatabaseException(e.getMessage(), e);
+		}
+	}
+	
 	
 		
 	public Calendar getCalendar(int p_userId) {
