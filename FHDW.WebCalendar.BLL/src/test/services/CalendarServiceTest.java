@@ -23,7 +23,7 @@ public class CalendarServiceTest
 	/**
 	 * @return the calenderServic
 	 */
-	public CalenderService GetCalenderServic()
+	public CalenderService GetCalenderService()
 	{
 		if (this.calenderService == null) {
 			this.calenderService = new CalenderService();
@@ -38,11 +38,11 @@ public class CalendarServiceTest
 		{
 			boolean userIdTrue = false;
 			int calendarId;
-			if ((calendarId = GetCalenderServic().CreateCalendar(this.USERIDTRUE, this.CALENDARNAMETRUE)) > 0) {
+			if ((calendarId = GetCalenderService().CreateCalendar(this.USERIDTRUE, this.CALENDARNAMETRUE)) > 0) {
 				userIdTrue = true;
 			}
 			assertTrue(userIdTrue);	
-			assertTrue(GetCalenderServic().deleteCalendar(calendarId));	
+			assertTrue(GetCalenderService().deleteCalendar(calendarId));	
 		}
 		catch (DatabaseException e)
 		{
@@ -60,7 +60,7 @@ public class CalendarServiceTest
 		try
 		{
 			boolean userIdTrue = false;
-			if (GetCalenderServic().CreateCalendar(this.USERIDFALSE, this.CALENDARNAMETRUE) > 0) {
+			if (GetCalenderService().CreateCalendar(this.USERIDFALSE, this.CALENDARNAMETRUE) > 0) {
 				userIdTrue = true;
 			}
 			assertFalse(userIdTrue);	
@@ -80,7 +80,7 @@ public class CalendarServiceTest
 	{
 		try
 		{
-			assertFalse(GetCalenderServic().deleteCalendar(this.CALENDERIDFALSE));
+			assertFalse(GetCalenderService().deleteCalendar(this.CALENDERIDFALSE));
 		}
 		catch (DatabaseException e)
 		{
@@ -94,7 +94,7 @@ public class CalendarServiceTest
 		try
 		{
 			boolean userIdTrue = false;
-			if (GetCalenderServic().CreateCalendar(this.USERIDTRUE, "") > 0) {
+			if (GetCalenderService().CreateCalendar(this.USERIDTRUE, "") > 0) {
 				userIdTrue = true;
 			}
 			assertFalse(userIdTrue);
@@ -114,7 +114,7 @@ public class CalendarServiceTest
 	{
 		try
 		{
-			Collection<EventCalendarView> events = GetCalenderServic().GetAllEvents(this.USERIDTRUE);
+			Collection<EventCalendarView> events = GetCalenderService().GetAllEvents(this.USERIDTRUE);
 		    assertNotNull(events);
 		}
 		catch (DatabaseException e)
@@ -128,7 +128,7 @@ public class CalendarServiceTest
 	{
 		try
 		{
-			Collection<EventCalendarView> events = GetCalenderServic().GetAllEvents(this.USERIDFALSE);
+			Collection<EventCalendarView> events = GetCalenderService().GetAllEvents(this.USERIDFALSE);
 		    assertNotNull(events);
 		}
 		catch (DatabaseException e)
