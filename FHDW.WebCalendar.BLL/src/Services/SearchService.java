@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import Model.Calendar.Calendar;
+import Exceptions.DatabaseException;
 import Model.Calendar.Event.EventCalendarView;
 
 /**
@@ -23,11 +23,12 @@ public class SearchService extends BaseService
 	 * @param searchString
 	 * 
 	 * @return
+	 * @throws DatabaseException 
 	 */
-	public List<EventCalendarView> searchEvents(Calendar p_calendar, String p_searchString) {
+	public List<EventCalendarView> searchEvents(int p_userId, String p_searchString) throws DatabaseException {
 		CalenderService calendarService = new CalenderService();
 		List<EventCalendarView> result = new ArrayList<EventCalendarView>();
-		Collection<EventCalendarView> events = calendarService.getAllEvents(p_calendar);
+		Collection<EventCalendarView> events = calendarService.GetAllEvents(p_userId);
 		
 		boolean found = false;
 		for(EventCalendarView event : events) {
