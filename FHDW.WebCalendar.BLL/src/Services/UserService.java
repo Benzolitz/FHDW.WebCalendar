@@ -50,7 +50,7 @@ public class UserService extends BaseService
 			
 			if (reuslt_userID == null || reuslt_userID <= 0) {
 				throw new NotFound("Benutzer wurde nicht gefunden");
-			} 	
+			}
 			
 			return reuslt_userID;	
 		}

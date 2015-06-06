@@ -3,6 +3,7 @@ package Services;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import Exceptions.AlreadyExist;
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
@@ -22,81 +23,86 @@ import Repository.JDBC.WebCalendarRepo;
  */
 public class RegistrationService extends BaseService
 {	
+
 	public RegistrationService() {
 		// nothing to init
 	}
 	
 	
 	/**
-	 * Überprüfe die eingebenen Benutzerdaten und erstelle diesen dann in der Datenbank
-	 * Desweiteren wird ein Default Kalendar für jeden Benutzer erstellt
+	 * 1. Überprüft die eingebenen Benutzerdaten <br>
+	 * 2. Überprüft ob der Benutzer mit dem Namen oder der E-Mailadresse bereits existiert<br>
+	 * 3. Erstellt den benutzer in der Datenbank<br>
+	 * 4. Desweiteren wird ein Default Kalendar für jeden Benutzer erstellt
 	 * 
 	 * @param p_user
 	 * 
 	 * @return die generierte user_id
 	 * 
-	 * @throws Exception Wenn ein ubekannter Fehler in der Datenbank entstanden ist 
 	 * @throws IOException wenn die eingebenen Benutzerdaten nicht korrekt waren
+	 * @throws DatabaseException Wenn ein ubekannter Fehler in der Datenbank entstanden ist 
+	 * @throws AlreadyExist Wenn der Benutzer mit dem Namen oder E-Mailadresse bereits existiert
 	 * 
 	 * @see UserHelper#checkUserData(User)
+	 * @see RegistrationService#DoesUserAlreadyExist(User)
 	 */
-	public int RegsiterNewUser(User p_user) throws Exception, IOException {	
-		UserHelper.checkUserData(p_user); // throws IOException
-		
-		//TODO: Warum nicht den User als übergabe parameter im WebRepo?	
-		int result_userid = GetRepo().RegistrateNewUser(p_user.GetUsername(), p_user.GetEMail(), p_user.GetUserSecurity().GetPassword(), 
-				p_user.GetFirstname(), p_user.GetLastname(), p_user.GetPhonenumber(), 
-				p_user.GetUserSecurity().GetSecurityQuestionId(), p_user.GetUserSecurity().GetSecurityAnswer());
-		 //TODO: Was ist wenn der Benutzer bereits existiert?? ne passende Exception wie AlreadyExist wäre Sinnvoll!
-		if (result_userid <= 0) {
-			throw new Exception("Es ist ein Fehler aufgetreten beim speichern des benutzers aufgetreten");
-		} else {
-			// Calendar
-			GetRepo().CreateNewCalendar(result_userid, CalenderService.DEFAULT_CALENDARNAME);
+	public int RegsiterNewUser(User p_user) throws IOException, DatabaseException, AlreadyExist {	
+		UserHelper.checkUserData(p_user); // throws IOException		
+		try
+		{
+			DoesUserAlreadyExist(p_user); // throws AlreadyExist
 			
-			return result_userid;
+			Integer reuslt_userID = GetRepo().RegistrateNewUser(p_user.GetUsername(), p_user.GetEMail(), p_user.GetUserSecurity().GetPassword(), 
+					p_user.GetFirstname(), p_user.GetLastname(), p_user.GetPhonenumber(), 
+					p_user.GetUserSecurity().GetSecurityQuestionId(), p_user.GetUserSecurity().GetSecurityAnswer());
+			
+			if (reuslt_userID == null || reuslt_userID <= 0) {
+				throw new DatabaseException("Benutzer wurde nicht gefunden");
+			}
+			
+			return reuslt_userID;
+		}
+		catch (SQLException e)
+		{
+			throw new DatabaseException(e.getMessage(), e);
 		}
 	}
 	
 	/**
-	 * Überprüft ob das neue password korrekt eingebenen wurde (SecurityCheck) <br>
-	 * und ob das alte Password mit dem aus der Datenbank übereinstimmt
+	 * Überprüft ob der Benutzer mit der E-Mailadresse oder dem Benutzernamen schon exisitiert
 	 * 
-	 * @param p_userId
-	 * @param p_oldPassword
-	 * @param p_newPassword
-	 * @param p_securityAnswer
+	 * @param p_user
 	 * 
-	 * @return true <br>
-	 * 		   false
+	 * @return false wenn der Benutzer nicht existiert
 	 * 
-	 * @throws DatabaseException
-	 * @throws NotFound
-	 * 
-	 * @see LoginService#CheckUserPassword(int, String)
-	 * @see RegistrationService#checkSecurityAnswer(int, String)
+	 * @throws IOException wenn der Benutzername falsch geschrieben ist
+	 * @throws DatabaseException wenn ein unbekannter Fehler in der Datenbank unterlaufen ist
+	 * @throws AlreadyExist wenn der Benutzer bereits existiert
 	 */
-	public boolean changeUserPasword(int p_userId, String p_oldPassword, String p_newPassword, String p_securityAnswer) throws NotFound, IOException, DatabaseException {	
-		// Check old userpassword (SecurityCheck)
-		if (new LoginService().CheckUserPassword(p_userId, p_oldPassword)){// throws NotFound, IOException
-			throw new IOException("Das Eingebene Password war nicht korrekt");
-		} 
+	private boolean DoesUserAlreadyExist(User p_user) throws IOException, DatabaseException, AlreadyExist {
+		//Überprüfe ob es schon einen Benutzer mit dem Namen gibt
+		try
+		{
+			GetUserService().GetUserId(p_user.GetUsername());
+			throw new AlreadyExist("Der Benutzername: " + p_user.GetUsername() + " existiert bereits");
+		}
+		catch (NotFound nf)
+		{
+			// User does not exist
+		}
 		
-		// Check securityAnswer (SecurityCheck)
-		if(checkSecurityAnswer(p_userId, p_securityAnswer)) { // throws NotFound
-			try
-			{
-				GetRepo().ResetPassword(p_userId, p_newPassword);
-			}
-			catch (SQLException e)
-			{
-				e.printStackTrace();
-			}
-			// TODO: ein return wert wäre gut boolean damit ich prüfen kann ob es geklappt hat oder nicht
-			return true;		
-		} else {
-			return false;
-		}	
+		//Überprüfe ob es schon einen Benutzer mit der E-Mailadresse gibt
+		try
+		{
+			GetUserService().GetUserId(p_user.GetEMail());
+			throw new AlreadyExist("Die E-Mailadresse : " + p_user.GetEMail() + " existiert bereits");
+		}
+		catch (NotFound nf)
+		{
+			// User does not exist
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -123,39 +129,5 @@ public class RegistrationService extends BaseService
 			return result_securityQuestions;
 		}
 	}
-	
-	
-	/**
-	 * Überprüft eine Eingebene SecurityAnswer eines Benutzers mit der aus der Datenbank<br>
-	 * Groß und Kleinschreibung wird nicht beachtet!
-	 * 
-	 * @param p_userId
-	 * @param p_securityAnswer
-	 * 
-	 * @return true wenn die eingebene antwort korrekt war<br>
-	 *         false wenn die eingebene antwort nicht korrekt war
-	 * 
-	 * @throws NotFound wenn keine Benutzerantwort in der Datenbank gefunden werden konnte
-	 */
-	private boolean checkSecurityAnswer(int p_userId, String p_securityAnswer) throws NotFound {
-		String user_answer = "";
-		try
-		{
-			user_answer = GetRepo().GetSecurityAnswer(p_userId);
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		if (user_answer.isEmpty()) {
-			throw new NotFound("Es wurde keine Benutzerantwort in der Datenbank gefunden");
-		} else {		
-			if (user_answer.equalsIgnoreCase(p_securityAnswer)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-	}
-	
+
 }
