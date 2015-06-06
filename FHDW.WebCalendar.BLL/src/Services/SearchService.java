@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import Exceptions.DatabaseException;
+import Exceptions.NotFound;
 import Model.Calendar.Event.EventCalendarView;
 
 /**
@@ -24,8 +25,9 @@ public class SearchService extends BaseService
 	 * 
 	 * @return
 	 * @throws DatabaseException 
+	 * @throws NotFound 
 	 */
-	public List<EventCalendarView> searchEvents(int p_userId, String p_searchString) throws DatabaseException {
+	public List<EventCalendarView> searchEvents(int p_userId, String p_searchString) throws DatabaseException, NotFound {
 		CalenderService calendarService = new CalenderService();
 		List<EventCalendarView> result = new ArrayList<EventCalendarView>();
 		Collection<EventCalendarView> events = calendarService.GetAllEvents(p_userId);
