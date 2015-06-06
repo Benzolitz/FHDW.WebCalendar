@@ -6,7 +6,6 @@ import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
 import HTMLHelper.UserHelper;
-import Model.User.User;
 import Repository.JDBC.WebCalendarRepo;
 
 /**
@@ -87,21 +86,6 @@ public class UserService extends BaseService
 		{
 			throw new DatabaseException("Ein unbekannter Fehler ist aufgetreten", esql);
 		}
-	}
-	
-	
-	/**
-	 * Lade den Benutzer passend zur Id
-	 * 
-	 * @param p_userId
-	 * 
-	 * @return User
-	 */
-	public User GetUser(int p_userId) {
-	
-		//TODO: GetuserInfo gibts im Repo noch nicht!
-		
-		return new User();
 	}
 	
 }
