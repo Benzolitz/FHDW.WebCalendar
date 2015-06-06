@@ -7,6 +7,7 @@ import java.util.Date;
 
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
+import Exceptions.NotFound;
 import HTMLHelper.CalendarHelper;
 import Model.Calendar.Calendar;
 import Model.Calendar.Event.EventCalendarView;
@@ -94,10 +95,11 @@ public class CalenderService extends BaseService
 	 * !!WICHTIG:  Liste kann leer, aber nicht null sein!!
 	 * 
 	 * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank entstanden ist
+	 * @throws NotFound wirft einen Fehler wenn der Benutzer nicht exisitiert
 	 * 
 	 * @see CalenderService#GetAllEvents(int)
 	 */
-	public Collection<EventCalendarView> GetEventsFromTo(int p_userId, Date p_DateFrom, Date p_DateTo) throws DatabaseException {
+	public Collection<EventCalendarView> GetEventsFromTo(int p_userId, Date p_DateFrom, Date p_DateTo) throws DatabaseException, NotFound {
 		Collection<EventCalendarView> result_events = new ArrayList <EventCalendarView>();
 		Collection<EventCalendarView> allEvents = GetAllEvents(p_userId);
 		
@@ -124,10 +126,11 @@ public class CalenderService extends BaseService
 	 * !!WICHTIG:  Liste kann leer, aber nicht null sein!!
 	 * 
 	 * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank entstanden ist
+	 * @throws NotFound wirft einen Fehler wenn der Benutzer nicht exisitiert
 	 * 
 	 * @see EventCalendarView
 	 */
-	public Collection<EventCalendarView> GetAllEvents(int p_userId) throws DatabaseException {
+	public Collection<EventCalendarView> GetAllEvents(int p_userId) throws DatabaseException, NotFound {
 		Collection<Calendar> userCalendar = GetAllUserCalendar(p_userId); // throws DatabaseException
 		Collection <EventCalendarView> result_events = new ArrayList<EventCalendarView>();
 		for (Calendar c : userCalendar) {
@@ -155,8 +158,14 @@ public class CalenderService extends BaseService
 	 * !!WICHTIG: Liste kann leer, aber nicht null sein!!
 	 * 
 	 * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank entstanden ist
+	 * @throws NotFound wirft einen Fehler wenn der Benutzer nicht exisitiert
 	 */
-	public Collection<Calendar> GetAllUserCalendar(int p_userId) throws DatabaseException {
+	public Collection<Calendar> GetAllUserCalendar(int p_userId) throws DatabaseException, NotFound {
+		boolean isUserExisting = true;
+		if (!isUserExisting) {
+			throw new NotFound("Der Benutzer existiert nicht");
+		}
+		
 		Collection<Calendar> result_userCalendar = new ArrayList <Calendar>();
 		try
 		{

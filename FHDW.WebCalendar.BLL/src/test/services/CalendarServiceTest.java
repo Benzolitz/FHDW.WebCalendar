@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
+import Exceptions.NotFound;
 import Model.Calendar.Event.EventCalendarView;
 import Services.CalenderService;
 
@@ -121,6 +122,10 @@ public class CalendarServiceTest
 		{
 			fail(e.getMessage() + "\n" + e.getStackTrace());
 		}
+		catch (NotFound e)
+		{
+			fail(e.getMessage() + "\n" + e.getStackTrace());
+		}
 	}
 	
 	@Test
@@ -132,6 +137,10 @@ public class CalendarServiceTest
 		    assertNotNull(events);
 		}
 		catch (DatabaseException e)
+		{
+			
+		}
+		catch (NotFound e)
 		{
 			fail(e.getMessage() + "\n" + e.getStackTrace());
 		}
