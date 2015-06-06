@@ -8,7 +8,6 @@ import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
 import Services.LoginService;
-import Services.UserService;
 
 public class LoginServiceTest extends LoginService
 {
