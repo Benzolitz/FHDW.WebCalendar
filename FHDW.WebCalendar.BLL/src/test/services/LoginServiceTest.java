@@ -9,7 +9,7 @@ import Exceptions.IOException;
 import Exceptions.NotFound;
 import Services.LoginService;
 
-public class LoginServiceTest extends LoginService
+public class LoginServiceTest
 {
 	
 	private static LoginService loginService;
