@@ -93,7 +93,21 @@ public class UserHelper
 		} 
 	}
 	
-
+	/**
+	 * TODO: Regeln aufstellen
+	 * @param p_mailadress
+	 * @return
+	 */
+	public static boolean checkPhonenNumber(String p_mailadress) {
+		if (p_mailadress.isEmpty()) {
+			
+			return false;
+		} else {
+			// TODO: Gibt es Regeln die beim Password eingehalten werden müssen?
+			
+			return true;
+		}	
+	}
 	
 	/**
 	 * Überprüft die Syntax der Vor- und Nachnamen<br>
@@ -107,23 +121,6 @@ public class UserHelper
 	 */
 	public static boolean checkName(String p_firstOrLastname) {
 		if (p_firstOrLastname.isEmpty()) {
-			return false;
-		} else {
-			// TODO: Gibt es Regeln die beim Password eingehalten werden müssen?
-			
-			return true;
-		}	
-	}
-	
-	
-	/**
-	 * TODO: Regeln aufstellen
-	 * @param p_mailadress
-	 * @return
-	 */
-	public static boolean checkPhonenNumber(String p_mailadress) {
-		if (p_mailadress.isEmpty()) {
-			
 			return false;
 		} else {
 			// TODO: Gibt es Regeln die beim Password eingehalten werden müssen?
