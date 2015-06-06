@@ -112,25 +112,25 @@ public class RegistrationService extends BaseService
 	/**
 	 * Lade alle SecurityQuestions aus der Datenbank
 	 * 
-	 * @return Collection mit allen SecurityQuestions aus der Datenbank
+	 * @return Collection mit allen SecurityQuestions aus der Datenbank (Kann nicht leer oder null sein!)
 	 * 
-	 * @throws NotFound wenn keine SecurityQeustions gefunden werden konnten
+	 * @throws NotFound wenn keine SecurityQeustions gefunden werden konnten (Die Liste leer der null ist)
 	 */
-	public Collection<SecurityQuestion> getAlLSecurityQuestions() throws DatabaseException, NotFound {
+	public Collection<SecurityQuestion> GetAlLSecurityQuestions() throws DatabaseException, NotFound {
 		Collection <SecurityQuestion> result_securityQuestions = null;
 		try
 		{
 			result_securityQuestions = GetRepo().GetAllSecurityQuestions();
+			
+			if (result_securityQuestions == null || result_securityQuestions.isEmpty()) {
+				throw new NotFound("Es wurden keine SecurityQeustions gefunden");
+			} else {
+				return result_securityQuestions;
+			}
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
-		}
-		
-		if (result_securityQuestions == null || result_securityQuestions.isEmpty()) {
-			throw new NotFound("Es wurden keine SecurityQeustions gefunden");
-		} else {
-			return result_securityQuestions;
+			throw new DatabaseException(e.getMessage(), e);
 		}
 	}
 

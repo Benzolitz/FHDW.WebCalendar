@@ -2,11 +2,15 @@ package test.services;
 
 import static org.junit.Assert.*;
 
+import java.util.Collection;
+
 import org.junit.Test;
 
 import Exceptions.AlreadyExist;
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
+import Exceptions.NotFound;
+import Model.SecurityQuestion.SecurityQuestion;
 import Model.User.User;
 import Model.User.UserSecurity;
 import Services.RegistrationService;
@@ -64,7 +68,7 @@ public class RegistrationServiceTest
 		user.SetEMail("Email1@Mail.de");
 		return user;
 	}
-		
+			
 	
 	@Test
 	public void RegistrateNewUser()
@@ -124,6 +128,25 @@ public class RegistrationServiceTest
 			fail(e.getMessage() + "\n" + e.getStackTrace());	
 		}
 		catch (AlreadyExist e)
+		{
+			fail(e.getMessage() + "\n" + e.getStackTrace());
+		}
+	}
+	
+	@Test
+	public void GetAllSecurityQuestionsTest() {
+		
+		try
+		{
+			Collection<SecurityQuestion> dbCollection = GetRegistrationService().GetAlLSecurityQuestions();
+		    assertNotNull(dbCollection);
+		    assertEquals(6, dbCollection.size());
+		}
+		catch (DatabaseException e)
+		{
+			fail(e.getMessage() + "\n" + e.getStackTrace());
+		}
+		catch (NotFound e)
 		{
 			fail(e.getMessage() + "\n" + e.getStackTrace());
 		}
