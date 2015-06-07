@@ -267,7 +267,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 		
 	@Override
-	public Collection<EventCalendarView> GetEventsForUser(int p_calendarId, int p_userId, java.util.Calendar p_from, java.util.Calendar p_to) throws SQLException
+	public Collection<EventCalendarView> GetEventsForUser(int p_calendarId, int p_userId, String p_from, String p_to) throws SQLException
 	{
 		Collection<EventCalendarView> events;
 		EventCalendarView event;
@@ -276,7 +276,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		String sql;
 		ResultSet rs;
 		
-		sql = String.format("SELECT Event.ID, Event.StartTime, Event.EndTime, Event.Title FROM Event JOIN EventUser ON Event.ID = EventUser.EventID JOIN User ON EventUser.UserID = User.ID WHERE User.ID = '%d' AND Event.CalendarID = %d AND (Event.StartTime BETWEEN '%s' AND '%s');", p_userId, p_calendarId, sdf.format(p_from), sdf.format(p_to));
+		sql = String.format("SELECT Event.ID, Event.StartTime, Event.EndTime, Event.Title FROM Event JOIN EventUser ON Event.ID = EventUser.EventID JOIN User ON EventUser.UserID = User.ID WHERE User.ID = '%d' AND Event.CalendarID = %d AND (Event.StartTime BETWEEN '%s' AND '%s');", p_userId, p_calendarId, p_from, p_to);
 		rs = stmt.executeQuery(sql);
 		
 		events = new ArrayList<EventCalendarView>();
@@ -340,15 +340,12 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 	
 	@Override
-	public void SaveEvent(String p_title, String p_location, java.util.Calendar p_starttime, java.util.Calendar p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId) throws SQLException
+	public void SaveEvent(String p_title, String p_location, String p_starttime, String p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId) throws SQLException
 	{
 		String sql;
 		ResultSet rs;
 		
-		sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME(), %d);", p_title, p_location, 
-				sdf.format(p_starttime), 
-				sdf.format(p_endtime),
-				p_message, p_creatorId, sdf.format(new Date()), p_calendarId);
+		sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME(), %d);", p_title, p_location, p_starttime, p_endtime, p_message, p_creatorId, sdf.format(new Date()), p_calendarId);
 		stmt.executeUpdate(sql);
 		
 		sql = String.format("SELECT LAST_INSERT_ID();");
@@ -389,11 +386,11 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 
 	@Override
-	public void UpdateEvent(int p_eventId, String p_title, String p_location, java.util.Calendar p_starttime, java.util.Calendar p_endtime, String p_message, Collection<String> p_categories) throws SQLException
+	public void UpdateEvent(int p_eventId, String p_title, String p_location, String p_starttime, String p_endtime, String p_message, Collection<String> p_categories) throws SQLException
 	{
 		String sql;
 		
-		sql = String.format("UPDATE Event SET Title='%s', Location='%s', StartTime='%s', EndTime='%s', Message='%s' WHERE ID=%d;", p_title, p_location, sdf.format(p_starttime), sdf.format(p_endtime), p_message, p_eventId);
+		sql = String.format("UPDATE Event SET Title='%s', Location='%s', StartTime='%s', EndTime='%s', Message='%s' WHERE ID=%d;", p_title, p_location, p_starttime, p_endtime, p_message, p_eventId);
 		stmt.executeUpdate(sql);
 		
 		sql = String.format("DELETE FROM Category WHERE EventID = %d;", p_eventId);
