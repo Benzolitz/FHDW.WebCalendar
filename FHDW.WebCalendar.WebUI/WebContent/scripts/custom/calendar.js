@@ -414,5 +414,5 @@ var Logout = function() {
  * @param p_eventId
  */
 var openEventWindow = function(p_eventId) {
-  window.open("Event.jsp?id=" + p_eventId + "&userId=" + $("#ckiUserId").val(), "", "width=775,height=525").focus();
+  window.open("Event.jsp?id=" + p_eventId + "&userId=" + $("#ckiUserId").val() + "&calendarId=" + $('input[name=Calendar]:checked').attr("id"), "", "width=775,height=525").focus();
 };

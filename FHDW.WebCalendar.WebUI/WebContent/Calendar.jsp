@@ -92,7 +92,7 @@
 
 				        out.write("<br /><input " + checked + " type='radio' id='"
 				                + cal.GetId() + "' name='Calendar' value='"
-				                + cal.GetName() + "'><label for='" + cal.GetId() + "'>"
+				                + cal.GetName() + "'><label for='" + cal.GetId() + "'> "
 				                + cal.GetName() + "</label>");
 				        firstCal = false;
 
