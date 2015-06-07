@@ -9,13 +9,18 @@ import Exceptions.IOException;
 import Exceptions.NotFound;
 import Services.PasswordResetService;
 
+/**
+ * @author Frederik Heinrichs
+ * Testklasse für den PasswordResetService
+ */
 public class PasswordResetServiceTest
 {
 	
 	public PasswordResetService resetService;
 	public final int USERID = 1;
-	public final String USERPASSWORDOLD = "pass1";
+	public final String USERPASSWORDNEWFALSEIO = "";
 	public final String USERPASSWORDNEW = "NEWPW";
+	public final String USERPASSWORDOLD = "pass1";
 	public final String USERANSWERTRUE = "HUND";
 	public final String USERANSWERFALSE = "AKK";
 	
@@ -31,13 +36,35 @@ public class PasswordResetServiceTest
 		return this.resetService;
 	}
 	
+	
 	@Test
-	public void resetPasswordWithNonCorrectAnswer()
+	public void checkAnswerTrue()
 	{
 		try
 		{
-			if (GetResetService().changeUserPasword(this.USERID, this.USERPASSWORDOLD, this.USERPASSWORDNEW, this.USERANSWERFALSE)) {
-				fail("Faschle Benutzer antwort sollte eigentlich Falsch sein");
+			if (GetResetService().checkSecurityAnswer(this.USERID, this.USERANSWERTRUE)) {
+				return;
+			} else {
+				fail("Die Benutzer Antwort sollte korrekt sein! Datenbank überprüfen!");
+			}
+		}
+		catch (NotFound e)
+		{
+			fail(e.getMessage() + "\n" + e.getStackTrace());
+		}
+		catch (DatabaseException e)
+		{
+			fail(e.getMessage() + "\n" + e.getStackTrace());
+		}		
+	}
+	
+	@Test
+	public void checkAnswerFalse()
+	{
+		try
+		{
+			if (GetResetService().checkSecurityAnswer(this.USERID, this.USERANSWERFALSE)) {
+				fail("Die Benutzer Antwort sollte falsch sein! Datenbank überprüfen!");
 			} else {
 				return;
 			}
@@ -46,9 +73,23 @@ public class PasswordResetServiceTest
 		{
 			fail(e.getMessage() + "\n" + e.getStackTrace());
 		}
-		catch (IOException e)
+		catch (DatabaseException e)
 		{
 			fail(e.getMessage() + "\n" + e.getStackTrace());
+		}		
+	}
+	
+	@Test
+	public void GetSecurityQuestion()
+	{		
+		try
+		{
+			String question = GetResetService().GetUserSecurityQuestion(this.USERID);
+			if (question != null && !question.isEmpty()) {
+				return;
+			} else {
+				fail("Es sollte eigentliche eine SecurityQuestion vorhanden sein! Datenbank überprüfen!");
+			}	
 		}
 		catch (DatabaseException e)
 		{
@@ -57,32 +98,50 @@ public class PasswordResetServiceTest
 	}
 	
 	@Test
-	public void resetPasswordWithCorrectAnswer()
+	public void changePasswordTrue()
 	{
 		try
 		{
 			// Passowrd änder
-			if (GetResetService().changeUserPasword(this.USERID, this.USERPASSWORDOLD, this.USERPASSWORDNEW, this.USERANSWERTRUE)) {
+			if (GetResetService().changeUserPasword(this.USERID, this.USERPASSWORDNEW)) {
 				// Password wuieder zurück ändern
-				if (GetResetService().changeUserPasword(this.USERID, this.USERPASSWORDNEW, this.USERPASSWORDOLD, this.USERANSWERTRUE)) {
+				
+				if (GetResetService().changeUserPasword(this.USERID, this.USERPASSWORDOLD)) {
 					return;
-				} 	
+				}
+				
 			} 
-			
-			fail("Wrong User Answer");	
 		}
-		catch (NotFound e)
+		catch (DatabaseException e)
 		{
 			fail(e.getMessage() + "\n" + e.getStackTrace());
 		}
 		catch (IOException e)
 		{
 			fail(e.getMessage() + "\n" + e.getStackTrace());
+		} 
+		fail("Something went wrong");
+	}
+	
+	@Test
+	public void changePasswordFalseIO()
+	{
+		try
+		{
+			// Passowrd änder
+			if (GetResetService().changeUserPasword(this.USERID, this.USERPASSWORDNEWFALSEIO)) {
+				// Password wuieder zurück ändern
+				fail("Das Password hätte falsch sein müssen");		
+			} 
 		}
 		catch (DatabaseException e)
 		{
 			fail(e.getMessage() + "\n" + e.getStackTrace());
 		}
+		catch (IOException e)
+		{
+			// Erwartet
+		} 	
 	}
 	
 }
