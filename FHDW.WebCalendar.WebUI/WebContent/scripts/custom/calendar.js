@@ -1,4 +1,4 @@
-var currentDayWidth;
+var dayColumnWidthArray = [];
 
 $(document).ready(function() {
   {
@@ -7,20 +7,35 @@ $(document).ready(function() {
   }
 });
 
-var setCurrentDayWidth = function() {
-  currentDayWidth = $("#calendar > #tabCalendar > thead > tr > .claHead").width();
+var setDayColumnWidthArray = function() {
+  dayColumnWidthArray = [];
+  $("#calendar > #tabCalendar > thead > tr > .claHead").each(function() {
+    dayColumnWidthArray.push($(this).width() + 1);
+  });
 };
 
 var resizingCorrection = function() {
-  $(".claEvent").each(function() {
-    var left = $(this).css("left");
-    var leftNum = parseInt(left.replace("px", ""))
+  $(".claEvent").each(
+          function() {
+            var left = $(this).css("left");
+            var leftNum = parseInt(left.replace("px", ""))
+                    - ($(".claTimeColumn").width() + 14);
 
-    var dayNumber = Math.floor(leftNum / currentDayWidth) + 1;
-    $(this).css("width", getEventWidth(dayNumber));
-    $(this).css("left", getLeftMargin(dayNumber));
-  });
-  setCurrentDayWidth();
+            var dayWidth = getDayWidthAverage();
+
+            var dayNumber = Math.floor(leftNum / dayWidth);
+            $(this).css("width", dayColumnWidthArray[dayNumber] * 0.9);
+            $(this).css("left", getLeftMargin(dayNumber));
+          });
+  setDayColumnWidthArray();
+};
+
+var getDayWidthAverage = function() {
+  var sum = 0;
+  for (var i = 0; i < dayColumnWidthArray.length; i++) {
+    sum += dayColumnWidthArray[0];
+  }
+  return sum / dayColumnWidthArray.length;
 };
 
 /**
@@ -35,6 +50,7 @@ var buildUserCalendar = function(p_week, p_year) {
   $("#hidCurrentYear").val(p_year);
 
   buildCalendar(week, p_year);
+  setDayColumnWidthArray();
   showUserEvents(week, p_year);
 };
 
@@ -95,8 +111,8 @@ var getTableHead = function(p_week, p_year) {
     if (i == 0) {
       tableHead += "<th id='tdTime'></th>";
     } else {
-      tableHead += "<th class='claHead'>" + getDate(firstDayOfWeek, i - 1)
-              + "</th>";
+      tableHead += "<th id='head" + getDay(i) + "' class='claHead'>"
+              + getDate(firstDayOfWeek, i - 1) + "</th>";
     }
   }
 
@@ -104,6 +120,25 @@ var getTableHead = function(p_week, p_year) {
   return tableHead;
 
 };
+
+var getDay = function(p_dayNumber) {
+  switch (p_dayNumber) {
+  case 1:
+    return "Monday";
+  case 2:
+    return "Tuesday";
+  case 3:
+    return "Wednesday";
+  case 4:
+    return "Thursday";
+  case 5:
+    return "Friday";
+  case 6:
+    return "Saturday";
+  case 7:
+    return "Sunday";
+  }
+}
 
 /**
  * Hole den ersten Tag einer Kalenderwoche.
@@ -223,48 +258,54 @@ var getTimeRows = function() {
  * @return Termine des Benutzers.
  */
 var showUserEvents = function(p_week) {
-  $.ajax({
-    type: "POST",
-    url: "CalendarController",
-    dataType: "json",
-    data: {
-      action: "getEvents",
-      week: p_week,
-      userid: $("#hidUserId").val()
-    },
-    success: function(response) {
-      var eventList = response;
-      for (var i = 0; i < eventList.length; i++) {
-        var event = eventList[i];
-        var start = event.startTime;
-        var end = event.endTime;
-        var eventStart = new Date(start.year, start.month - 1,
-                start.dayOfMonth, start.hourOfDay, start.minute, 0);
-        var eventEnd = new Date(end.year, end.month - 1, end.dayOfMonth,
-                end.hourOfDay, end.minute, 0);
+  $
+          .ajax({
+            type: "POST",
+            url: "CalendarController",
+            dataType: "json",
+            data: {
+              action: "getEvents",
+              startTime: $("#headMonday").text().substring(5, 15),
+              endTime: $("#headSunday").text().substring(5, 15),
+              userid: $("#ckiUserId").val()
+            },
+            success: function(response) {
+              var eventList = response;
+              for (var i = 0; i < eventList.length; i++) {
+                var event = eventList[i];
+                var start = event.startTime;
+                var end = event.endTime;
+                var eventStart = new Date(start.year, start.month - 1,
+                        start.dayOfMonth, start.hourOfDay, start.minute, 0);
+                var eventEnd = new Date(end.year, end.month - 1,
+                        end.dayOfMonth, end.hourOfDay, end.minute, 0);
 
-        var eventMarginLeft = getLeftMargin(eventStart.getDay());
-        var eventMarginTop = getTopMargin(eventStart.getHours(), eventStart
-                .getMinutes());
-        var eventHeight = getEventHeight(eventStart.getHours(), eventStart
-                .getMinutes(), eventEnd.getHours(), eventEnd.getMinutes());
-        var eventWidth = getEventWidth(eventStart.getDay());
+                var dayNumber = eventStart.getDay() === 0 ? 6 : eventStart
+                        .getDay() - 1;
+                var eventMarginLeft = getLeftMargin(dayNumber);
+                var eventMarginTop = getTopMargin(eventStart.getHours(),
+                        eventStart.getMinutes());
+                var eventHeight = getEventHeight(eventStart.getHours(),
+                        eventStart.getMinutes(), eventEnd.getHours(), eventEnd
+                                .getMinutes());
 
-        $("#calendar").append(
-                "<a href='#' onClick='openEventWindow(" + event.id + ")' id='"
-                        + event.id + "' class='claEvent' style='width: "
-                        + eventWidth + "px; height: " + eventHeight
-                        + "px;left: " + eventMarginLeft + "px; top: "
-                        + eventMarginTop + "px;'>" + event.title + "</a>");
+                $("#calendar").append(
+                        "<a href='#' onClick='openEventWindow(" + event.id
+                                + ")' id='" + event.id
+                                + "' class='claEvent' style='width: "
+                                + dayColumnWidthArray[dayNumber] * 0.9
+                                + "px; height: " + eventHeight + "px;left: "
+                                + eventMarginLeft + "px; top: "
+                                + eventMarginTop + "px;'>" + event.title
+                                + "</a>");
 
-      }
-      setCurrentDayWidth();
-      checkEventCollisions();
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      alert(jqXHR.responseText);
-    }
-  });
+              }
+              checkEventCollisions();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              alert(jqXHR.responseText);
+            }
+          });
 };
 
 var checkEventCollisions = function() {
@@ -277,33 +318,19 @@ var checkEventCollisions = function() {
 };
 
 var getLeftMargin = function(p_eventDayNumber) {
-  var dayNumber = p_eventDayNumber === 0 ? 8 : p_eventDayNumber + 1;
-  var dayWidth = $(".claFullHour:nth-child(" + dayNumber + ")").width();
   var left = $(".claTimeColumn").width() + 14;
 
-  left += p_eventDayNumber === 0 ? dayWidth * 6 : dayWidth
-          * (p_eventDayNumber - 1);
-
-  left += getBorderCorrection(p_eventDayNumber);
+  left += getDayWidth(p_eventDayNumber);
 
   return left;
 };
 
-var getBorderCorrection = function(p_eventDayNumber) {
-  switch (p_eventDayNumber) {
-  case 3:
-    return 1;
-  case 4:
-    return 1;
-  case 5:
-    return 2;
-  case 6:
-    return 3;
-  case 0:
-    return 3;
-  default:
-    return 0;
+var getDayWidth = function(p_eventDayNumber) {
+  var width = 0;
+  for (var i = 0; i < p_eventDayNumber; i++) {
+    width += dayColumnWidthArray[i];
   }
+  return width;
 };
 
 var getTopMargin = function(p_eventStartHour, p_eventStartMinute) {
@@ -333,11 +360,6 @@ var getEventHeight = function(p_eventStartHour, p_eventStartMinute,
   height += 14 * ((totalMinutes % 30) / 30);
 
   return height;
-};
-
-var getEventWidth = function(p_eventDayNumber) {
-  var dayNumber = p_eventDayNumber === 0 ? 8 : p_eventDayNumber + 1;
-  return $(".claFullHour:nth-child(" + dayNumber + ")").width() * 0.9;
 };
 
 /**
@@ -392,9 +414,5 @@ var Logout = function() {
  * @param p_eventId
  */
 var openEventWindow = function(p_eventId) {
-  settings = "width=775,height=525,top=20,left=20,scrollbars=no,location=no,directories=no,status=no,menubar=no,toolbar=no,resizable=no,dependent=no";
-  win = window.open(
-          "http://localhost:8080/FHDW.WebCalendar.WebUI/Event.jsp?id="
-                  + p_eventId, "", settings);
-  win.focus();
+  window.open("Event.jsp?id=" + p_eventId, "", "width=775,height=525").focus();
 };
