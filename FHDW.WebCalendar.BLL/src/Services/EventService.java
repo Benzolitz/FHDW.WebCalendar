@@ -25,12 +25,13 @@ public class EventService extends BaseService
 					isCalendarExisting = true;
 				}
 			}
+
 			
 			if (!isCalendarExisting) {
 				throw new NotFound("Das Event konnte nicht erstellt werden da der Kalender nicht existiert");
 			}
-						
-			GetRepo().SaveEvent(event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(), event.GetCreatorId(), event.GetCreatorId());
+	
+			GetRepo().SaveEvent(event.GetTitle(), event.GetLocation(), "start", "ende", event.GetMessage(), event.GetCategory(),event.GetCreatorId(),event.GetCalendarId(), null, null);
 			return true;
 		}
 		catch (SQLException e)
@@ -47,7 +48,8 @@ public class EventService extends BaseService
 		{
 			GetEvent(event.GetId()); // throws NotFound
 			//TODO: Was is wenn das Update nicht funktioniert hat, ein boolean als Rückgabe wert wäre von vorteil
-			GetRepo().UpdateEvent(event.GetId(), event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory());
+			GetRepo().UpdateEvent(event.GetId(), event.GetTitle(), event.GetLocation(), "start", "ende", event.GetMessage(), event.GetCategory(), null, null);
+
 			return true;
 		}
 		catch (SQLException e)

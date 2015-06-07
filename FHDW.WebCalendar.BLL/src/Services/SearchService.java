@@ -32,24 +32,26 @@ public class SearchService extends BaseService
 		List<EventCalendarView> result = new ArrayList<EventCalendarView>();
 		Collection<EventCalendarView> events = calendarService.GetAllEvents(p_userId);
 		
-		boolean found = false;
-		for(EventCalendarView event : events) {
-			
-			if (event.GetTitle().contains(p_searchString)) {
-				found = true;
-			} else if(event.GetLocation().contains(p_searchString)) {
-				found = true;
-			}
-			
-			for (String category : event.GetCategory()) {
-				if (category.contains(p_searchString)) {
-					found = true;
-				}
-			}
-			if (found) {
-				result.add(event);
-			}
-		}
+//		
+//		
+//		boolean found = false;
+//		for(EventCalendarView event : events) {
+//			
+//			if (event.GetTitle().contains(p_searchString)) {
+//				found = true;
+//			} else if(event.GetLocation().contains(p_searchString)) {
+//				found = true;
+//			}
+//			
+//			for (String category : event.GetCategory()) {
+//				if (category.contains(p_searchString)) {
+//					found = true;
+//				}
+//			}
+//			if (found) {
+//				result.add(event);
+//			}
+//		}
 		return result;
 	}
 }

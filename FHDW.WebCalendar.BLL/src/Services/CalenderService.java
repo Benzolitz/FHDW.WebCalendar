@@ -134,16 +134,17 @@ public class CalenderService extends BaseService
 		Collection<Calendar> userCalendar = GetAllUserCalendar(p_userId); // throws DatabaseException
 		Collection <EventCalendarView> result_events = new ArrayList<EventCalendarView>();
 		for (Calendar c : userCalendar) {
-			try
-			{
-				result_events.addAll(GetRepo().GetEventsForUser(c.GetId(), p_userId));
-			}
-			catch (SQLException e)
-			{
-				// TODO: SQLException Loggen
-				// TODO: Fehlermeldung Benutzerfreundlich durchreichen
-				throw new DatabaseException(e.getMessage(), e);
-			}
+//			try
+//			{
+//				GetRepo().GetEventsForUser(c.GetId(), p_userId, p_from, p_to);
+//				result_events.addAll(GetRepo().GetEventsForUser(c.GetId(), p_userId));
+//			}
+//			catch (SQLException e)
+//			{
+//				// TODO: SQLException Loggen
+//				// TODO: Fehlermeldung Benutzerfreundlich durchreichen
+//				throw new DatabaseException(e.getMessage(), e);
+//			}
 		}
 		
 		return result_events;		
