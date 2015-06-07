@@ -35,10 +35,10 @@ public class SearchService extends BaseService
 		
 		// Setze den SuchZeitram von 1.1.2000 - 31.12.2050
 		Calendar DateFrom = Calendar.getInstance();
-		DateFrom.setTime(new Date(2000, 1, 1));
+		DateFrom.set(1990, 1, 1, 0, 0);
 		
 		Calendar DateTo = Calendar.getInstance();
-		DateFrom.setTime(new Date(2050, 12, 31));
+		DateFrom.set(2050, 1, 1, 0, 0);;
 		
 		Collection<EventCalendarView> events = calendarService.GetEventsFromTo(p_userId, DateFrom, DateTo);
 		
