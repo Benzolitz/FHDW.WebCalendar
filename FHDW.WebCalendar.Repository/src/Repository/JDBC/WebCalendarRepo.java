@@ -271,13 +271,12 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	{
 		Collection<EventCalendarView> events;
 		EventCalendarView event;
-		Collection<String> categories;
 		java.util.Calendar calStart = java.util.Calendar.getInstance();
 		java.util.Calendar calEnd = java.util.Calendar.getInstance();
 		String sql;
 		ResultSet rs;
 		
-		sql = String.format("SELECT Event.ID, Event.StartTime, Event.EndTime, Event.Title, Event.Location, Event.CalendarID, EventUser.Required FROM Event JOIN EventUser ON Event.ID = EventUser.EventID JOIN User ON EventUser.UserID = User.ID WHERE User.ID = '%d' AND Event.CalendarID = %d AND (Event.StartTime BETWEEN '%s' AND '%s');", p_userId, p_calendarId, sdf.format(p_from), sdf.format(p_to));
+		sql = String.format("SELECT Event.ID, Event.StartTime, Event.EndTime, Event.Title FROM Event JOIN EventUser ON Event.ID = EventUser.EventID JOIN User ON EventUser.UserID = User.ID WHERE User.ID = '%d' AND Event.CalendarID = %d AND (Event.StartTime BETWEEN '%s' AND '%s');", p_userId, p_calendarId, sdf.format(p_from), sdf.format(p_to));
 		rs = stmt.executeQuery(sql);
 		
 		events = new ArrayList<EventCalendarView>();
@@ -291,19 +290,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 			calEnd.setTime(rs.getDate(3));
 			event.SetEndTime(calEnd);
 			event.SetTitle(rs.getString(4));
-			event.SetLocation(rs.getString(5));
-			event.SetCalendarId(rs.getInt(6));
-			event.SetRequired(rs.getBoolean(7));
 			events.add(event);
-		}
-		for (EventCalendarView e : events)
-		{
-			categories = new ArrayList<String>();
-			sql = String.format("SELECT Category.Name FROM Category JOIN Event ON Category.EventID = Event.ID WHERE Event.ID = %d;", e.GetId());
-			rs = stmt.executeQuery(sql);
-			while (rs.next())
-				categories.add(rs.getString(1));
-			e.SetCategory(categories);
 		}
 	
 		return events;
@@ -358,7 +345,10 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		String sql;
 		ResultSet rs;
 		
-		sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME(), %d);", p_title, p_location, sdf.format(p_starttime), sdf.format(p_endtime), p_message, p_creatorId, sdf.format(new Date()), p_calendarId);
+		sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME(), %d);", p_title, p_location, 
+				sdf.format(p_starttime), 
+				sdf.format(p_endtime),
+				p_message, p_creatorId, sdf.format(new Date()), p_calendarId);
 		stmt.executeUpdate(sql);
 		
 		sql = String.format("SELECT LAST_INSERT_ID();");
