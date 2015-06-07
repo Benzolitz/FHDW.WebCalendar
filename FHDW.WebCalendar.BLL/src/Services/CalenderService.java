@@ -3,12 +3,12 @@ package Services;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
 import HTMLHelper.CalendarHelper;
+import HTMLHelper.EventHelper;
 import Model.Calendar.Calendar;
 import Model.Calendar.Event.EventCalendarView;
 
@@ -39,7 +39,7 @@ public class CalenderService extends BaseService
 	 * 
 	 * @see CalendarHelper#checkCalendarName(String)
 	 */
-	public int CreateCalendar(int p_userId, String p_calenderName) throws DatabaseException, IOException {	
+	protected int CreateCalendar(int p_userId, String p_calenderName) throws DatabaseException, IOException {	
 		CalendarHelper.checkCalendarName(p_calenderName); // throws IOException
 		try
 		{
@@ -69,7 +69,7 @@ public class CalenderService extends BaseService
 	 * 
 	 * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank entstanden ist
 	 */
-	public boolean deleteCalendar(int p_calendarId) throws DatabaseException {
+	protected boolean deleteCalendar(int p_calendarId) throws DatabaseException {
 		try
 		{
 			GetRepo().DeleteCalendar(p_calendarId);
@@ -99,56 +99,29 @@ public class CalenderService extends BaseService
 	 * 
 	 * @see CalenderService#GetAllEvents(int)
 	 */
-	public Collection<EventCalendarView> GetEventsFromTo(int p_userId, Date p_DateFrom, Date p_DateTo) throws DatabaseException, NotFound {
-		Collection<EventCalendarView> result_events = new ArrayList <EventCalendarView>();
-		Collection<EventCalendarView> allEvents = GetAllEvents(p_userId);
-		
-		for (EventCalendarView event : allEvents) {
-			if (event.GetStartTime().getTime().before(p_DateFrom) 
-					|| event.GetStartTime().getTime().after(p_DateTo)) {
-				continue;
+	public Collection<EventCalendarView> GetEventsFromTo(int p_userId, java.util.Calendar p_DateFrom, java.util.Calendar p_DateTo) throws DatabaseException, NotFound {
+		Collection<EventCalendarView> result_events = new ArrayList <EventCalendarView>();	
+		Collection<Calendar> userCalendar = GetAllUserCalendar(p_userId); // throws DatabaseException
+
+		for (Calendar c : userCalendar) {
+			Collection <EventCalendarView> calendarEvents;
+			try
+			{
+				calendarEvents = GetRepo().GetEventsForUser(c.GetId(), p_userId, EventHelper.formatDateTime(p_DateFrom), EventHelper.formatDateTime(p_DateTo));
+				
+				if (calendarEvents != null && !calendarEvents.isEmpty()) {
+					result_events.addAll(calendarEvents);
+				}
 			}
-			result_events.add(event);
-		}
-		
+			catch (SQLException e)
+			{
+				// TODO: SQLException Loggen
+				// TODO: Fehlermeldung Benutzerfreundlich durchreichen
+				throw new DatabaseException("Ein unbekannter Fehler ist aufgetreten", e);
+			}
+		}	
 		return result_events;
 	}	
-
-
-
-	/**
-	 * 1. Ermittelt alle Kalender zu einem Benutzer <br>
-	 * 2. Ermittelt zu jedem Kalender alle Termine
-	 * 
-	 * @param p_userId
-	 * 
-	 * @return Liste aller Events zu einem Benutzer<br>
-	 * !!WICHTIG:  Liste kann leer, aber nicht null sein!!
-	 * 
-	 * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank entstanden ist
-	 * @throws NotFound wirft einen Fehler wenn der Benutzer nicht exisitiert
-	 * 
-	 * @see EventCalendarView
-	 */
-	public Collection<EventCalendarView> GetAllEvents(int p_userId) throws DatabaseException, NotFound {
-		Collection<Calendar> userCalendar = GetAllUserCalendar(p_userId); // throws DatabaseException
-		Collection <EventCalendarView> result_events = new ArrayList<EventCalendarView>();
-		for (Calendar c : userCalendar) {
-//			try
-//			{
-//				GetRepo().GetEventsForUser(c.GetId(), p_userId, p_from, p_to);
-//				result_events.addAll(GetRepo().GetEventsForUser(c.GetId(), p_userId));
-//			}
-//			catch (SQLException e)
-//			{
-//				// TODO: SQLException Loggen
-//				// TODO: Fehlermeldung Benutzerfreundlich durchreichen
-//				throw new DatabaseException(e.getMessage(), e);
-//			}
-		}
-		
-		return result_events;		
-	}
 	
 	/**
 	 * Läd eine Liste aller Kalender, eines Benutzers, aus der Datenbank
@@ -161,12 +134,7 @@ public class CalenderService extends BaseService
 	 * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank entstanden ist
 	 * @throws NotFound wirft einen Fehler wenn der Benutzer nicht exisitiert
 	 */
-	public Collection<Calendar> GetAllUserCalendar(int p_userId) throws DatabaseException, NotFound {
-		boolean isUserExisting = true;
-		if (!isUserExisting) {
-			throw new NotFound("Der Benutzer existiert nicht");
-		}
-		
+	public Collection<Calendar> GetAllUserCalendar(int p_userId) throws DatabaseException, NotFound {		
 		Collection<Calendar> result_userCalendar = new ArrayList <Calendar>();
 		try
 		{
