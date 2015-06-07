@@ -340,7 +340,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 	
 	@Override
-	public void SaveEvent(String p_title, String p_location, String p_starttime, String p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId) throws SQLException
+	public void SaveEvent(String p_title, String p_location, String p_starttime, String p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId, Collection<Integer> requiredUserId, Collection<Integer> optionalUserId) throws SQLException
 	{
 		String sql;
 		ResultSet rs;
@@ -356,6 +356,17 @@ public class WebCalendarRepo implements IWebCalendarRepo
 			sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, rs.getInt(1));
 			stmt.executeUpdate(sql);
 		}
+		for (Integer id : optionalUserId)
+		{
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, )", rs.getInt(1), id, 0);
+			stmt.executeUpdate(sql);
+		}
+		for (Integer id : requiredUserId)
+		{
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, )", rs.getInt(1), id, 1);
+			stmt.executeUpdate(sql);
+		}
+		
 	}
 	
 	@Override
@@ -386,7 +397,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 
 	@Override
-	public void UpdateEvent(int p_eventId, String p_title, String p_location, String p_starttime, String p_endtime, String p_message, Collection<String> p_categories) throws SQLException
+	public void UpdateEvent(int p_eventId, String p_title, String p_location, String p_starttime, String p_endtime, String p_message, Collection<String> p_categories, Collection<Integer> requiredUserId, Collection<Integer> optionalUserId) throws SQLException
 	{
 		String sql;
 		
@@ -396,9 +407,22 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		sql = String.format("DELETE FROM Category WHERE EventID = %d;", p_eventId);
 		stmt.executeUpdate(sql);
 		
+		sql = String.format("DELETE FROM EventUser WHERE EventID = %d;", p_eventId);
+		stmt.executeUpdate(sql);
+		
 		for (String category : p_categories)
 		{
 			sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, p_eventId);
+			stmt.executeUpdate(sql);
+		}
+		for (Integer id : optionalUserId)
+		{
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, )", p_eventId, id, 0);
+			stmt.executeUpdate(sql);
+		}
+		for (Integer id : requiredUserId)
+		{
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, )", p_eventId, id, 1);
 			stmt.executeUpdate(sql);
 		}
 	}

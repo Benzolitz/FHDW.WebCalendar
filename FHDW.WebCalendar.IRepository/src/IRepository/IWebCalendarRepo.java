@@ -110,7 +110,7 @@ public interface IWebCalendarRepo
 	 * @param p_creatorId
 	 * @param p_calendarId
 	 */
-	void SaveEvent(String p_title, String p_location, String p_starttime, String p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId) throws SQLException;
+	void SaveEvent(String p_title, String p_location, String p_starttime, String p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId, Collection<Integer> requiredUserId, Collection<Integer> optionalUserId) throws SQLException;
 
 	/**
 	 * Löscht einen vorhandenen Termin.
@@ -140,6 +140,6 @@ public interface IWebCalendarRepo
 	 * @param p_message
 	 * @param p_categories
 	 */
-	void UpdateEvent(int p_eventId, String p_title, String p_location, String p_starttime, String p_endtime, String p_message, Collection<String> p_categories) throws SQLException;
+	void UpdateEvent(int p_eventId, String p_title, String p_location, String p_starttime, String p_endtime, String p_message, Collection<String> p_categories, Collection<Integer> requiredUserId, Collection<Integer> optionalUserId) throws SQLException;
 	
 }
