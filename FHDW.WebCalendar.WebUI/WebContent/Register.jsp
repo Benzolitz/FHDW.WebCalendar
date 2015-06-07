@@ -60,7 +60,7 @@
 					<select id="selSecurityQuestion" name="selSecurityQuestion">
 						<%
 							RegistrationService registrationService = new RegistrationService();
-							Collection <SecurityQuestion> questions = registrationService.getAlLSecurityQuestions();
+							Collection <SecurityQuestion> questions = registrationService.GetAlLSecurityQuestions();
 							
 							int i = 0;
 							String options = "";

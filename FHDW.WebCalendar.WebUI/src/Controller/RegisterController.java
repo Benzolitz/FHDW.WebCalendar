@@ -37,8 +37,8 @@ public class RegisterController extends HttpServlet
 			
 			UserSecurity userSecurity = new UserSecurity();
 			userSecurity.SetPassword(p_request.getParameter("txtPassword"));
-			userSecurity.SetSecurityQuestionId(1);
-			userSecurity.SetSecurityQuestion(p_request.getParameter("selSecurityQuestion"));
+			userSecurity.SetSecurityQuestionId(Integer.parseInt(p_request.getParameter("selSecurityQuestion")));
+			userSecurity.SetSecurityQuestion("");
 			userSecurity.SetSecurityAnswer(p_request.getParameter("txtUserSecurityAnswer"));
 			user.SetUserSecurity(userSecurity);
 			registrationService.RegisterNewUser(user);
