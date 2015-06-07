@@ -91,7 +91,7 @@ public interface IWebCalendarRepo
 	 * @param p_userId
 	 * @return
 	 */
-	Collection<EventCalendarView> GetEventsForUser(int p_calendarId, int p_userId) throws SQLException; 
+	Collection<EventCalendarView> GetEventsForUser(int p_calendarId, int p_userId, java.util.Calendar p_from, java.util.Calendar p_to) throws SQLException; 
 	
 	/**
 	 * Gibt zu einem bestimmten Termin alle Informationen wieder.

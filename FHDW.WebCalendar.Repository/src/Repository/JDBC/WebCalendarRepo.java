@@ -267,7 +267,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 		
 	@Override
-	public Collection<EventCalendarView> GetEventsForUser(int p_calendarId, int p_userId) throws SQLException
+	public Collection<EventCalendarView> GetEventsForUser(int p_calendarId, int p_userId, java.util.Calendar p_from, java.util.Calendar p_to) throws SQLException
 	{
 		Collection<EventCalendarView> events;
 		EventCalendarView event;
@@ -277,7 +277,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		String sql;
 		ResultSet rs;
 		
-		sql = String.format("SELECT Event.ID, Event.StartTime, Event.EndTime, Event.Title, Event.Location, Event.CalendarID, EventUser.Required FROM Event JOIN EventUser ON Event.ID = EventUser.EventID JOIN User ON EventUser.UserID = User.ID WHERE User.ID = '%d' AND Event.CalendarID = %d;", p_userId, p_calendarId);
+		sql = String.format("SELECT Event.ID, Event.StartTime, Event.EndTime, Event.Title, Event.Location, Event.CalendarID, EventUser.Required FROM Event JOIN EventUser ON Event.ID = EventUser.EventID JOIN User ON EventUser.UserID = User.ID WHERE User.ID = '%d' AND Event.CalendarID = %d AND (Event.StartTime BETWEEN '%s' AND '%s');", p_userId, p_calendarId, sdf.format(p_from), sdf.format(p_to));
 		rs = stmt.executeQuery(sql);
 		
 		events = new ArrayList<EventCalendarView>();
