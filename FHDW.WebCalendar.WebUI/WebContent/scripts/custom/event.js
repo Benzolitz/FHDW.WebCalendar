@@ -4,10 +4,10 @@ $(document).ready(function() {
   $("#txaEventComment").keyup(countKeysLeft());
 
   $(document).on('click', '#startClock', function() {
-    NewCal("txtEventStart", "ddmmyyyy", true, 24);
+    NewCal("txtEventStart", "ddmmyyyy", true, 24)
   });
   $(document).on('click', '#endClock', function() {
-    NewCal("txtEventEnd", "ddmmyyyy", true, 24);
+    NewCal("txtEventEnd", "ddmmyyyy", true, 24)
   });
 });
 
@@ -16,29 +16,68 @@ var getEventData = function() {
 
   if (parameters.id != -1) {
 
-    $.ajax({
-      type: "POST",
-      url: "EventController",
-      dataType: "json",
-      data: {
-        action: "getEventData",
-        eventId: parameters.id
-      },
-      success: function(response) {
-        $("#txtEventTitle").val(response.title);
+    $
+            .ajax({
+              type: "POST",
+              url: "EventController",
+              dataType: "json",
+              data: {
+                action: "getEventData",
+                eventId: parameters.id
+              },
+              success: function(response) {
+                var parameters = getURLParameters();
+                $("#txtEventTitle").val(
+                        response.title === null ? "" : response.title);
 
-        $("#txtEventCategory").val(response.category.join(", "));
-        $("#txtEventStart").val(buildDateTime(response.startTime));
-        $("#txtEventEnd").val(buildDateTime(response.endTime));
-        $("#txtEventLocation").val(response.location);
+                $("#txtEventCategory").val(
+                        response.category === null ? "" : response.category
+                                .join(", "));
+                $("#txtEventStart").val(
+                        response.startTime === null ? ""
+                                : buildDateTime(response.startTime));
+                $("#txtEventEnd").val(
+                        response.endTime === null ? ""
+                                : buildDateTime(response.endTime));
+                $("#txtEventLocation").val(
+                        response.location === null ? "" : response.location);
 
-        $("#txtEventRequiredGuests").val(response.requiredUser.join(", "));
-        $("#txtEventOptionalGuests").val(response.optionalUser.join(", "));
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        alert(jqXHR.responseText);
-      }
-    });
+                var required = "";
+                if (response.requiredUser != null) {
+
+                  for (var i = 0; response.requiredUser.length; i++) {
+
+                    if (required === "") {
+                      required = response.requiredUser[i];
+                    } else {
+                      required += ", " + response.requiredUser[i];
+                    }
+                  }
+                }
+
+                $("#txtEventRequiredGuests").val(
+                        response.requiredUser === null ? ""
+                                : response.requiredUser.join(", "));
+
+                var optional = "";
+                if (response.optionalUser != null) {
+                  response.optionalUser.each(function() {
+                    if (optional === "") {
+                      optional = $(this);
+                    } else {
+                      optional += ", " + $(this);
+                    }
+                  });
+                }
+
+                $("#txtEventOptionalGuests").val(
+                        response.optionalUser === null ? ""
+                                : response.optionalUser.join(", "));
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText);
+              }
+            });
   }
 };
 
@@ -89,13 +128,24 @@ var addFileToEvent = function() {
 };
 
 var saveEvent = function() {
+  var parameters = getURLParameters();
   $.ajax({
     type: "POST",
     url: "EventController",
     dataType: "json",
     data: {
       action: "saveEvent",
+      eventId: parameters.Id,
+      userId: parameters.userId,
+      calendarId: parameters.calendarId,
       title: $("#txtEventTitle").val(),
+      categories: $("#txtEventCategory").val(),
+      eventStart: $("#txtEventStart").val(),
+      eventEnd: $("#txtEventEnd").val(),
+      location: $("#txtEventLocation").val(),
+      requiredGuests: $("#txtEventRequiredGuests").val(),
+      optionalGuests: $("#txtEventOptionalGuests").val(),
+      comment: $("#txaEventComment").text()
     },
     success: function(response) {
     },
@@ -106,7 +156,8 @@ var saveEvent = function() {
 };
 
 var deleteEvent = function() {
-  var parameters = getURLPa rameters();
+  var parameters = getURLPa
+  rameters();
 
   if (parameters.id != -1) {
 

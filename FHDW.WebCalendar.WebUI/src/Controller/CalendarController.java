@@ -88,7 +88,7 @@ public class CalendarController extends HttpServlet
 			Calendar calEnd = Calendar.getInstance();
 			calEnd.setTime(sdf.parse(p_endTime));
 			
-			Collection <EventCalendarView> view = calendarService.GetEventsFromTo(Integer.parseInt(p_userId), calStart.getTime(), calEnd.getTime());
+			Collection <EventCalendarView> view = calendarService.GetEventsFromTo(Integer.parseInt(p_userId), calStart, calEnd);
 			
 			Type type = new TypeToken <Collection <EventCalendarView>>()
 			{}.getType();
