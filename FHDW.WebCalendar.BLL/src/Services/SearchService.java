@@ -29,7 +29,7 @@ public class SearchService extends BaseService
 	 * @throws NotFound 
 	 */
 	public Collection<EventCalendarView> searchEvents(int p_userId, String p_searchString) throws DatabaseException, NotFound {
-		CalenderService calendarService = new CalenderService();
+		CalendarService calendarService = new CalendarService();
 		
 		// Setze den SuchZeitram von 1.1.2000 - 31.12.2050
 		java.util.Calendar DateFrom = java.util.Calendar.getInstance();
@@ -52,9 +52,7 @@ public class SearchService extends BaseService
 			}
 			catch (SQLException e)
 			{
-				// TODO: SQLException Loggen
-				// TODO: Fehlermeldung Benutzerfreundlich durchreichen
-				throw new DatabaseException("Ein unbekannter Fehler ist aufgetreten", e);
+				throw new DatabaseException(e);
 			}
 		}
 

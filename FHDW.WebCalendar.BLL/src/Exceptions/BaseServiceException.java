@@ -18,5 +18,6 @@ public abstract class BaseServiceException extends Exception
 	
 	public BaseServiceException(String p_message, Throwable p_cause) {
 		super(p_message,p_cause);
-	}	
+	}
+	
 }

@@ -59,16 +59,16 @@ public class RegistrationService extends BaseService
 					p_user.GetUserSecurity().GetSecurityQuestionId(), p_user.GetUserSecurity().GetSecurityAnswer());
 			
 			if (reuslt_userID == null || reuslt_userID <= 0) {
-				throw new DatabaseException("Benutzer konnte nicht erstellt werden");
+				throw new DatabaseException();
 			} else {	
-				new CalenderService().CreateCalendar(reuslt_userID, RegistrationService.DEFAULT_CALENDARNAME); // throws IO Exception, DatabseException
+				new CalendarService().CreateCalendar(reuslt_userID, RegistrationService.DEFAULT_CALENDARNAME); // throws IO Exception, DatabseException
 			}
 			
 			return reuslt_userID;
 		}
 		catch (SQLException e)
 		{
-			throw new DatabaseException(e.getMessage(), e);
+			throw new DatabaseException(e);
 		}
 	}
 	
@@ -130,7 +130,7 @@ public class RegistrationService extends BaseService
 		}
 		catch (SQLException e)
 		{
-			throw new DatabaseException(e.getMessage(), e);
+			throw new DatabaseException(e);
 		}
 	}
 

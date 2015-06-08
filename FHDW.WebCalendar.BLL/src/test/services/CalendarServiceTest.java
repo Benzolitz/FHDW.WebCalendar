@@ -10,12 +10,12 @@ import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
 import Model.Calendar.Event.EventCalendarView;
-import Services.CalenderService;
+import Services.CalendarService;
 
 public class CalendarServiceTest
 {
 		
-	private CalenderService calenderService;
+	private CalendarService calenderService;
 	private final int USERIDTRUE = 1;
 	private final int USERIDFALSE = 1337;
 	private final int CALENDERIDFALSE = 1337;
@@ -24,10 +24,10 @@ public class CalendarServiceTest
 	/**
 	 * @return the calenderServic
 	 */
-	public CalenderService GetCalenderService()
+	public CalendarService GetCalenderService()
 	{
 		if (this.calenderService == null) {
-			this.calenderService = new CalenderService();
+			this.calenderService = new CalendarService();
 		}
 		return calenderService;
 	}

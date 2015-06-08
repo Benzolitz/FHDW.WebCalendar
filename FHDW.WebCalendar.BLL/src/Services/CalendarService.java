@@ -15,11 +15,11 @@ import Model.Calendar.Event.EventCalendarView;
  * @author Frederik Heinrichs
  * Buiniss Logik für die Anzeige eines Kalenders
  */
-public class CalenderService extends BaseService 
+public class CalendarService extends BaseService 
 {
 	static final String DEFAULT_CALENDARNAME = "DEFAULT";
 	
-	public CalenderService () {
+	public CalendarService () {
 		// nothing to init
 	}
 	
@@ -37,23 +37,21 @@ public class CalenderService extends BaseService
 	 * 
 	 * @see CalendarHelper#checkCalendarName(String)
 	 */
-	protected int CreateCalendar(int p_userId, String p_calenderName) throws DatabaseException, IOException {	
+	public int CreateCalendar(int p_userId, String p_calenderName) throws DatabaseException, IOException {	
 		CalendarHelper.checkCalendarName(p_calenderName); // throws IOException
 		try
 		{
 			Integer result_calenderId = GetRepo().CreateNewCalendar(p_userId, p_calenderName);
 			
 			if (result_calenderId == null || result_calenderId <= 0) {
-				return -1;
+				throw new DatabaseException();
 			}
 			
 			return result_calenderId;
 		}
 		catch (SQLException e)
 		{
-			// TODO: SQLException Loggen
-			// TODO: Fehlermeldung Benutzerfreundlich durchreichen
-			throw new DatabaseException(e.getMessage(), e);
+			throw new DatabaseException(e);
 		}
 	}
 	
@@ -66,7 +64,7 @@ public class CalenderService extends BaseService
 	 * 
 	 * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank entstanden ist
 	 */
-	protected boolean deleteCalendar(int p_calendarId) throws DatabaseException {
+	public boolean deleteCalendar(int p_calendarId) throws DatabaseException {
 		try
 		{
 			GetRepo().DeleteCalendar(p_calendarId);
@@ -74,9 +72,7 @@ public class CalenderService extends BaseService
 		}
 		catch (SQLException e)
 		{
-			// TODO: SQLException Loggen
-			// TODO: Fehlermeldung Benutzerfreundlich durchreichen
-			throw new DatabaseException(e.getMessage(), e);
+			throw new DatabaseException(e);
 		}
 	}
 	
@@ -94,7 +90,7 @@ public class CalenderService extends BaseService
 	 * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank entstanden ist
 	 * @throws NotFound wirft einen Fehler wenn der Benutzer nicht exisitiert
 	 * 
-	 * @see CalenderService#GetAllEvents(int)
+	 * @see CalendarService#GetAllEvents(int)
 	 */
 	public Collection<EventCalendarView> GetEventsFromTo(int p_userId, int p_calendarId, java.util.Calendar p_DateFrom, java.util.Calendar p_DateTo) throws DatabaseException, NotFound {
 		Collection<EventCalendarView> result_events = new ArrayList <EventCalendarView>();	
@@ -105,9 +101,7 @@ public class CalenderService extends BaseService
 		}
 		catch (SQLException e)
 		{
-			// TODO: SQLException Loggen
-			// TODO: Fehlermeldung Benutzerfreundlich durchreichen
-			throw new DatabaseException("Ein unbekannter Fehler ist aufgetreten", e);
+			throw new DatabaseException(e);
 		}
 	}	
 	
@@ -131,9 +125,7 @@ public class CalenderService extends BaseService
 		}
 		catch (SQLException e)
 		{
-			// TODO: SQLException Loggen
-			// TODO: Fehlermeldung Benutzerfreundlich durchreichen
-			throw new DatabaseException("Ein unbekannter Fehler ist aufgetreten", e);
+			throw new DatabaseException(e);
 		}
 	}
 }
