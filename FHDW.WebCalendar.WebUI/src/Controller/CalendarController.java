@@ -18,6 +18,7 @@ import com.google.gson.reflect.*;
 
 import java.lang.reflect.Type;
 
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 import Exception.ExceptionController;
 import Model.Calendar.Event.Event;
 import Services.*;
@@ -27,10 +28,12 @@ public class CalendarController extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 	private CalendarService calendarService;
+	private SearchService searchService;
 	
 	public CalendarController()
 	{
 		calendarService = new CalendarService();
+		searchService = new SearchService();
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -53,8 +56,31 @@ public class CalendarController extends HttpServlet
 			case "createnewcalendar" :
 				CreateNewCalendar(response, request);
 				break;
+			case "searchevent" :
+				SearchEvent(response, request);
+				break;
 			default :
 				break;
+		}
+	}
+	
+	private void SearchEvent(HttpServletResponse p_response, HttpServletRequest p_request)
+	{
+		try
+		{
+			String userId = p_request.getParameter("User");
+			String searchString = p_request.getParameter("SearchString");
+			
+			Collection<Event> searchResultSet = searchService.searchEvents(Integer.parseInt(userId), searchString);
+
+			Type type = new TypeToken <Collection <Event>>()
+			{}.getType();
+			
+			p_response.getWriter().print(new Gson().toJson(searchResultSet, type));
+		}
+		catch (Exception e)
+		{
+			String test = e.getMessage();
 		}
 	}
 	
@@ -62,7 +88,7 @@ public class CalendarController extends HttpServlet
 	{
 		try
 		{
-			p_response.getWriter().write(calendarService.CreateCalendar(Integer.parseInt(p_request.getParameter("userId")), p_request.getParameter("calendarName")));
+			p_response.getWriter().print(calendarService.CreateCalendar(Integer.parseInt(p_request.getParameter("userId")), p_request.getParameter("calendarName")));
 		}
 		catch (Exception e)
 		{
@@ -82,14 +108,15 @@ public class CalendarController extends HttpServlet
 			Calendar calEnd = Calendar.getInstance();
 			calEnd.setTime(sdf.parse(p_request.getParameter("endTime")));
 			
-			Collection <Event> view = calendarService.GetEventsFromTo(Integer.parseInt(p_request.getParameter("userid")), Integer.parseInt(p_request.getParameter("calendarId")), calStart, calEnd);
+			String user = p_request.getParameter("userid");
+			String calendar = p_request.getParameter("calendarId");
+			
+			Collection <Event> view = calendarService.GetEventsFromTo(Integer.parseInt(user), Integer.parseInt(calendar), calStart, calEnd);
 			
 			Type type = new TypeToken <Collection <Event>>()
 			{}.getType();
 			
-			
-			Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-			p_response.getWriter().print(gson.toJson(view, type));
+			p_response.getWriter().print(new Gson().toJson(view, type));
 		}
 		catch (Exception e)
 		{

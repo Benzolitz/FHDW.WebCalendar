@@ -5,13 +5,23 @@ $(document).ready(function() {
     buildUserCalendar(-1, new Date().getFullYear());
     $(window).resize(resizingCorrection);
 
-    $("input[name=Calendar]:radio").change(function() {
-      var currentWeek = parseInt($("#hidCurrentWeek").val());
-      var currentYear = parseInt($("#hidCurrentYear").val());
-      buildUserCalendar(currentWeek, currentYear);
+    $("input[name=Calendar]:radio").change(changeCalendar);
+
+    $('#txtSearchBox').keydown(function(e) {
+      if (e.keyCode == 13) {
+        startSearch();
+      }
     });
+    $("#divSearchResults").hide();
   }
 });
+
+var changeCalendar = function()
+{
+  var currentWeek = parseInt($("#hidCurrentWeek").val());
+  var currentYear = parseInt($("#hidCurrentYear").val());
+  buildUserCalendar(currentWeek, currentYear);
+};
 
 var setDayColumnWidthArray = function() {
   dayColumnWidthArray = [];
@@ -284,8 +294,8 @@ var showUserEvents = function(p_week) {
                 var end = event.endTime;
                 var eventStart = new Date(start.year, start.month,
                         start.dayOfMonth, start.hourOfDay, start.minute, 0);
-                var eventEnd = new Date(end.year, end.month,
-                        end.dayOfMonth, end.hourOfDay, end.minute, 0);
+                var eventEnd = new Date(end.year, end.month, end.dayOfMonth,
+                        end.hourOfDay, end.minute, 0);
 
                 var dayNumber = eventStart.getDay() === 0 ? 6 : eventStart
                         .getDay() - 1;
@@ -310,8 +320,6 @@ var showUserEvents = function(p_week) {
               checkEventCollisions();
             },
             error: function(jqXHR, textStatus, errorThrown) {
-              alert(errorThrown
-                      + ": Der Kalendar konnte nicht angezeigt werden!");
             }
           });
 };
@@ -455,12 +463,78 @@ var saveNewCalendar = function() {
                       + $("#txtNewCalendarName").val() + "'><label for='"
                       + response + "'> " + $("#txtNewCalendarName").val()
                       + "</label></div>");
+
+      $("#" + response).change(changeCalendar);
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      // alert(errorThrown + ": Es konnte kein neuer Kalender erstellt
-      // werden!");
     }
   });
   $("#divNewCalendar").css("display", "none");
 
+};
+
+var startSearch = function() {
+  $("#divSearchResults").text("");
+  $
+          .ajax({
+            type: "POST",
+            url: "CalendarController",
+            dataType: "json",
+            data: {
+              action: "SearchEvent",
+              User: $("#ckiUserId").val(),
+              SearchString: $("#txtSearchBox").val()
+            },
+            success: function(response) {
+              var searchResults = response;
+
+              if (searchResults.length === 0) {
+                $("#divSearchResults").text(
+                        "Es konnten keine Ergebnisse gefunden werden!");
+              } else {
+                results = "";
+                for (var i = 0; i < searchResults.length; i++) {
+                  var event = searchResults[i];
+                  results += "<div class='claSearchResult'><a href='#' onClick='openEventWindow("
+                          + event.id
+                          + ")'>"
+                          + formatSearchDate(event.startTime, event.endTime)
+                          + ": " + event.title + "</a></div>";
+                }
+                $("#divSearchResults").html(results);
+
+              }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+              $("#divSearchResults").text(
+                      "Es konnten keine Ergebnisse gefunden werden!");
+            }
+          });
+
+  $("#divSearchResults").toggle();
+};
+
+var formatSearchDate = function(p_start, p_end) {
+  var day = p_start.dayOfMonth;
+  day = day < 10 ? "0" + day : day;
+
+  var month = p_start.month + 1;
+  month = month < 10 ? "0" + month : month;
+
+  var year = p_start.year;
+
+  var startHour = p_start.hourOfDay;
+  startHour = startHour < 10 ? "0" + startHour : startHour;
+
+  var startMinute = p_start.minute;
+  startMinute = startMinute < 10 ? "0" + startMinute : startMinute;
+
+  var endHour = p_end.hourOfDay;
+  endHour = endHour < 10 ? "0" + endHour : endHour;
+
+  var endMinute = p_end.minute;
+  endMinute = endMinute < 10 ? "0" + endMinute : endMinute;
+
+  return day + "." + month + "." + year + " " + startHour + ":" + startMinute
+          + " - " + endHour + ":" + endMinute;
 };

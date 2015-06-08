@@ -200,3 +200,24 @@ td {
 	background-color: #FFF;
 	display: none;
 }
+
+#divSearchResults {
+	z-index: 999;
+	position: absolute;
+	background: #eee;
+	padding: 2px;
+	border: 1px solid #CCC;
+	display: block;
+	width: 194px;
+	margin-top: 1px;
+	-webkit-box-shadow: inset 0px 0px 23px -1px rgba(124, 124, 128, 0.38);
+	-moz-box-shadow: inset 0px 0px 23px -1px rgba(124, 124, 128, 0.38);
+	box-shadow: inset 0px 0px 23px -1px rgba(124, 124, 128, 0.38);
+}
+
+.claSearchResult {
+	overflow: hidden;
+	width: 100%;
+	height: auto;
+	font-size: 11px;
+}

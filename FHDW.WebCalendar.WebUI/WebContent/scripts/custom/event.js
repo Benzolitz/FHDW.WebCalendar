@@ -70,11 +70,10 @@ var getEventData = function() {
                 }
 
                 $("#txtEventOptionalGuests").val(optional);
-                
+
                 $("#txaEventComment").val(unescape(response.message));
               },
               error: function(jqXHR, textStatus, errorThrown) {
-                alert(errorThrown.message);
               }
             });
   }
@@ -82,7 +81,8 @@ var getEventData = function() {
 
 var buildDateTime = function(time) {
   var day = time.dayOfMonth < 10 ? "0" + time.dayOfMonth : time.dayOfMonth;
-  var month = time.month < 10 ? "0" + time.month : time.month;
+  var month = time.month + 1;
+  month = month < 10 ? "0" + month : month;
   var year = time.year;
 
   var hour = time.hourOfDay < 10 ? "0" + time.hourOfDay : time.hourOfDay;
@@ -147,11 +147,9 @@ var saveEvent = function() {
       EventComment: $("#txaEventComment").val()
     },
     success: function(response) {
-      alert(response);
-      window.close();
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      alert(errorThrown.message);
+      window.close();
     }
   });
 };
@@ -171,11 +169,9 @@ var deleteEvent = function() {
         calendarId: parameters.calendar
       },
       success: function(response) {
-        alert(response);
         window.close();
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        alert(errorThrown.message);
       }
     });
   }

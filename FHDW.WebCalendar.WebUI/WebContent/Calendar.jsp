@@ -71,6 +71,7 @@
 			<div id="divSearchBox">
 				<input id="txtSearchBox" type="text" placeholder="Suche" />
 			</div>
+			<div id="divSearchResults"></div>
 			<div id="divNewEvent">
 				<input id="btnNewEvent" type="button" value="Neuer Termin" onClick="openEventWindow(-1)" />
 			</div>
@@ -79,32 +80,35 @@
 				<br />
 				<input id="btnNextWeek" type="button" value="&darr;" onClick="getNextWeek()" />
 			</div>
-			<div id="divCalendarSelection">
-				<input type="button" id="btnCreateNewCalendar" class="claButtonDefault" value="Neuer Kalender" onClick="showCalendarCreation()" />
-				<%
-				    if (userId != null)
-				    {
-				        Services.CalendarService calendarService = new Services.CalendarService();
+			<form>
+				<div id="divCalendarSelection">
+					<input type="button" id="btnCreateNewCalendar" class="claButtonDefault" value="Neuer Kalender" onClick="showCalendarCreation()" />
 
-				        Collection<Model.Calendar.Calendar> userCalendar = calendarService
-				                .GetAllUserCalendar(Integer.parseInt(userId));
+					<%
+					    if (userId != null)
+					    {
+					        Services.CalendarService calendarService = new Services.CalendarService();
 
-				        boolean firstCal = true;
-				        for (Model.Calendar.Calendar cal : userCalendar)
-				        {
-				            String checked = firstCal ? "checked='checked'" : "";
+					        Collection<Model.Calendar.Calendar> userCalendar = calendarService
+					                .GetAllUserCalendar(Integer.parseInt(userId));
 
-				            out.write("<div class='claCalendarSelection'><input "
-				                    + checked + " type='radio' id='" + cal.GetId()
-				                    + "' name='Calendar' value='" + cal.GetName()
-				                    + "'><label for='" + cal.GetId() + "'> "
-				                    + cal.GetName() + "</label></div>");
-				            firstCal = false;
+					        boolean firstCal = true;
+					        for (Model.Calendar.Calendar cal : userCalendar)
+					        {
+					            String checked = firstCal ? "checked='checked'" : "";
 
-				        }
-				    }
-				%>
-			</div>
+					            out.write("<div class='claCalendarSelection'><input "
+					                    + checked + " type='radio' id='" + cal.GetId()
+					                    + "' name='Calendar' value='" + cal.GetName()
+					                    + "'><label for='" + cal.GetId() + "'> "
+					                    + cal.GetName() + "</label></div>");
+					            firstCal = false;
+
+					        }
+					    }
+					%>
+				</div>
+			</form>
 			<input id="ckiUserId" type="hidden" value="<%=userId%>" />
 			<input id="hidCurrentWeek" type="hidden" />
 			<input id="hidCurrentYear" type="hidden" />

@@ -93,9 +93,9 @@
 
 		</div>
 		<div id="divButtons">
-			<div class="claCenterDiv">
+			<!--<div class="claCenterDiv">
 				<input id="btnFile" class="claButtonDefault claEventButtons" type="Button" value="Anh&auml;nge" onClick="addFileToEvent()" />
-			</div>
+			</div>-->
 			<div class="claCenterDiv">
 				<input id="btnSubmit" class="claButtonDefault claEventButtons" type="Button" value="Speichern" onClick="saveEvent()" />
 			</div>
