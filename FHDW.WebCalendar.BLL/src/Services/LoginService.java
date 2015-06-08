@@ -38,12 +38,21 @@ public class LoginService extends BaseService
 	 *  @see LoginService#CheckUserPassword(int, String)
 	 *  @see UserHelper#checkUserName(String)
 	 */
-	public int CheckLoginData(String p_usernameOrEMail, String p_password) throws IOException, NotFound, DatabaseException {		
+	public int CheckLoginData(String p_usernameOrEMail, String p_password) throws NotFound, DatabaseException, IOException {		
 		//Check userName
-		int userId = GetUserService().GetUserId(p_usernameOrEMail); // throws IOException, Notfound
-		
-		//Check UserPassword
-		return CheckUserPassword(userId, p_password) ? userId : -1; // throws IOExceptions
+		int userId;
+		try
+		{
+			userId = GetUserService().GetUserId(p_usernameOrEMail);// throws IOException, Notfound
+			
+			//Check UserPassword
+			return CheckUserPassword(userId, p_password) ? userId : -1; // throws IOExceptions
+		}
+		catch (IOException e)
+		{
+			throw new IOException("Benutzername oder Password falsch!");
+		} 
+
 	}
 	
 	/**
