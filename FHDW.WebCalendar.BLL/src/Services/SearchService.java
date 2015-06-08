@@ -29,8 +29,6 @@ public class SearchService extends BaseService
 	 * @throws NotFound 
 	 */
 	public Collection<Event> searchEvents(int p_userId, String p_searchString) throws DatabaseException, NotFound {
-		CalendarService calendarService = new CalendarService();
-		
 		// Setze den SuchZeitram von 1.1.2000 - 31.12.2050
 		java.util.Calendar DateFrom = java.util.Calendar.getInstance();
 		DateFrom.set(1990, 1, 1, 0, 0);		
@@ -38,16 +36,31 @@ public class SearchService extends BaseService
 		DateFrom.set(2050, 1, 1, 0, 0);;
 		
 		Collection<Event> result_events = new ArrayList <Event>();	
-		Collection<Calendar> userCalendar = calendarService.GetAllUserCalendar(p_userId); // throws DatabaseException
+		Collection<Calendar> userCalendar = GetCalendarService().GetAllUserCalendar(p_userId); // throws DatabaseException
 		
 		for (Calendar c : userCalendar) {
 			Collection <Event> calendarEvents;
 			try
 			{
 				calendarEvents = GetRepo().GetEventsForUser(c.GetId(), p_userId, DateFrom, DateTo);
+
 				
 				if (calendarEvents != null && !calendarEvents.isEmpty()) {
-					result_events.addAll(calendarEvents);
+					for(Event event : calendarEvents) {
+						boolean found = false;
+						if (event.GetTitle().contains(p_searchString)) {
+							found = true;
+						} 
+						
+						for (String category : event.GetCategory()) {
+							if (category.contains(p_searchString)) {
+								found = true;
+							}
+						}
+						if (found) {
+							result_events.add(event);
+						}
+					}
 				}
 			}
 			catch (SQLException e)
