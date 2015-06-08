@@ -116,7 +116,7 @@ public interface IWebCalendarRepo
 	 * Löscht einen vorhandenen Termin.
 	 * @param p_eventId
 	 */
-	void DeleteEvent(int p_eventId) throws SQLException;
+	void DeleteEvent(int p_eventId, int p_userId) throws SQLException;
 	
 	/**
 	 * Löscht einen vorhandenen Kalendar und die dazugehörigen Termine.

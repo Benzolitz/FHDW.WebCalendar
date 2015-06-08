@@ -338,6 +338,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		return event;
 	}
+	
 	//TODO: Remove Null-Checks
 	@Override
 	public void SaveEvent(String p_title, String p_location, java.util.Calendar p_starttime, java.util.Calendar p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId, Collection<Integer> requiredUserId, Collection<Integer> optionalUserId) throws SQLException
@@ -375,11 +376,18 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 	
 	@Override
-	public void DeleteEvent(int p_eventId) throws SQLException
+	public void DeleteEvent(int p_eventId, int p_userId) throws SQLException
 	{
 		String sql;
+		ResultSet rs;
 		
-		sql = String.format("DELETE FROM Event WHERE ID = %d;",p_eventId);
+		sql = String.format("SELECT 1 FROM Event WHERE ID = %d AND CreatorID = %d;", p_eventId, p_userId);
+		rs = stmt.executeQuery(sql);
+		
+		if(rs.next())
+			sql = String.format("DELETE FROM Event WHERE ID = %d;", p_eventId);
+		else
+			sql = String.format("DELETE FROM EventUser WHERE EventID = %d AND UserID = %d;", p_eventId, p_userId);
 		stmt.executeUpdate(sql);
 	}
 	
