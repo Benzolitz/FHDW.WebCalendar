@@ -292,9 +292,8 @@ function Calendar(pDate, pCtrl) {
   // Properties
 
   this.Date = pDate.getDate();// selected
-                                                                              // date
-  this.Month = pDate
-          .getMonth();
+  // date
+  this.Month = pDate.getMonth();
   ;// selected month number
   this.Year = pDate.getFullYear();// selected year in 4 digits
   this.Hours = pDate.getHours();
@@ -456,8 +455,13 @@ function IsLeapYear() {
 Calendar.prototype.IsLeapYear = IsLeapYear;
 
 function FormatDate(pDate) {
+
+  var day = pDate < 10 ? "0" + pDate : pDate;
+  var month = this.Month + 1;
+  month = month < 10 ? "0" + month : month;
+
   if (this.Format.toUpperCase() == "DDMMYYYY")
-    return (pDate + DateSeparator + (this.Month + 1) + DateSeparator + this.Year);
+    return (day + DateSeparator + month + DateSeparator + this.Year);
   else if (this.Format.toUpperCase() == "DDMMMYYYY")
     return (pDate + DateSeparator + this.GetMonthName(false) + DateSeparator + this.Year);
   else if (this.Format.toUpperCase() == "MMDDYYYY")

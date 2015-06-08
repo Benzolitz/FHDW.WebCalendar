@@ -74,7 +74,7 @@ public class CalendarController extends HttpServlet
 	{
 		try
 		{
-			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.GERMAN);
 			Calendar calStart = Calendar.getInstance();
 			calStart.setTime(sdf.parse(p_request.getParameter("startTime")));
 			

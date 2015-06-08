@@ -148,6 +148,7 @@ var saveEvent = function() {
       EventComment: $("#txaEventComment").val()
     },
     success: function(response) {
+      alert(response);
       window.close();
     },
     error: function(jqXHR, textStatus, errorThrown) {

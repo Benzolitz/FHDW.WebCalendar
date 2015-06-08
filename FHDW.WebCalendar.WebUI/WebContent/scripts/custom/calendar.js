@@ -271,8 +271,8 @@ var showUserEvents = function(p_week) {
             dataType: "json",
             data: {
               action: "getEvents",
-              startTime: $("#headMonday").text().substring(5, 15),
-              endTime: $("#headSunday").text().substring(5, 15),
+              startTime: $("#headMonday").text().substring(4, 15) + " 00:00:00",
+              endTime: $("#headSunday").text().substring(4, 15) + " 23:59:59",
               userid: $("#ckiUserId").val(),
               calendarId: $("input[name=Calendar]:checked").attr("id")
             },
@@ -457,7 +457,8 @@ var saveNewCalendar = function() {
                       + "</label></div>");
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      //alert(errorThrown + ": Es konnte kein neuer Kalender erstellt werden!");
+      // alert(errorThrown + ": Es konnte kein neuer Kalender erstellt
+      // werden!");
     }
   });
   $("#divNewCalendar").css("display", "none");

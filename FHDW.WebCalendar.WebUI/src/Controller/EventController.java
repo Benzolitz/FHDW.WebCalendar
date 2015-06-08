@@ -107,6 +107,8 @@ public class EventController extends HttpServlet
 			{
 				eventService.changeEvent(event);
 			}
+			
+			p_response.getWriter().write("SUCCESS!");
 		}
 		catch (Exception e)
 		{
