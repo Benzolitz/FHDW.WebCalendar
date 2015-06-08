@@ -350,6 +350,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		sql = String.format("SELECT LAST_INSERT_ID();");
 		rs = stmt.executeQuery(sql);
+		rs.next();
 		
 		for (String category : p_categories)
 		{
@@ -358,12 +359,12 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		}
 		for (Integer id : optionalUserId)
 		{
-			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, )", rs.getInt(1), id, 0);
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 0)", rs.getInt(1), id);
 			stmt.executeUpdate(sql);
 		}
 		for (Integer id : requiredUserId)
 		{
-			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, )", rs.getInt(1), id, 1);
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 1)", rs.getInt(1), id);
 			stmt.executeUpdate(sql);
 		}
 		
