@@ -456,14 +456,14 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		while (it.hasNext())
 		{
 			Map.Entry pair = (Map.Entry)it.next();
-			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required, CalendarID) VALUES (%d, %d, 0)", (Integer)pair.getKey(), (Integer)pair.getValue());
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required, CalendarID) VALUES (%d, %d, 0, %d)", p_eventId, (Integer)pair.getKey(), (Integer)pair.getValue());
 			stmt.executeUpdate(sql);
 		}
 		it = requiredUserId.entrySet().iterator();
 		while (it.hasNext())
 		{
 			Map.Entry pair = (Map.Entry)it.next();
-			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required, CalendarID) VALUES (%d, %d, 1)", (Integer)pair.getKey(), (Integer)pair.getValue());
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required, CalendarID) VALUES (%d, %d, 1, %d)", p_eventId, (Integer)pair.getKey(), (Integer)pair.getValue());
 			stmt.executeUpdate(sql);
 		}	
 	}
