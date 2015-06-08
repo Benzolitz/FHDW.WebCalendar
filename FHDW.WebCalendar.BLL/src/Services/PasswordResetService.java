@@ -1,6 +1,5 @@
 package Services;
 
-import java.sql.SQLException;
 
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
@@ -35,7 +34,7 @@ public class PasswordResetService extends BaseService
 			GetRepo().ResetPassword(p_userId, p_newPassword);
 			return true;
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DatabaseException(e);
 		}		
@@ -55,7 +54,7 @@ public class PasswordResetService extends BaseService
 		{
 			return GetRepo().GetSecurityQuestion(p_userId);
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DatabaseException(e);
 		}		
@@ -90,7 +89,7 @@ public class PasswordResetService extends BaseService
 				}
 			}
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DatabaseException(e);
 		}

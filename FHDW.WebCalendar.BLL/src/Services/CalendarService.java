@@ -1,6 +1,5 @@
 package Services;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -49,7 +48,7 @@ public class CalendarService extends BaseService
 			
 			return result_calenderId;
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DatabaseException(e);
 		}
@@ -70,7 +69,7 @@ public class CalendarService extends BaseService
 			GetRepo().DeleteCalendar(p_calendarId);
 			return true;
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DatabaseException(e);
 		}
@@ -99,7 +98,7 @@ public class CalendarService extends BaseService
 			
 			return result_events;
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DatabaseException(e);
 		}
@@ -123,7 +122,7 @@ public class CalendarService extends BaseService
 			result_userCalendar = GetRepo().GetAllUserCalendar(p_userId);
 			return result_userCalendar;	
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DatabaseException(e);
 		}

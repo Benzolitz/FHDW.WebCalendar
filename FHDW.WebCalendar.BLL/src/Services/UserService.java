@@ -1,7 +1,5 @@
 package Services;
 
-import java.sql.SQLException;
-
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
@@ -53,7 +51,7 @@ public class UserService extends BaseService
 			
 			return reuslt_userID;	
 		}
-		catch (SQLException e) {
+		catch (Exception e) {
 			throw new DatabaseException(e);
 		}		
 	}
@@ -82,7 +80,7 @@ public class UserService extends BaseService
 			
 			return result_userPw;
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DatabaseException(e);
 		}

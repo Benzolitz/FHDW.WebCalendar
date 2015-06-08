@@ -1,6 +1,5 @@
 package Services;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -45,12 +44,12 @@ public class SearchService extends BaseService
 			try
 			{
 				calendarEvents = GetRepo().GetEventsForUser(c.GetId(), p_userId, DateFrom, DateTo);
-				
+
 				if (calendarEvents != null && !calendarEvents.isEmpty()) {
 					result_events.addAll(calendarEvents);
 				}
 			}
-			catch (SQLException e)
+			catch (Exception e)
 			{
 				throw new DatabaseException(e);
 			}

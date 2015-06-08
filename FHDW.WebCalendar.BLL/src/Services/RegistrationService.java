@@ -1,6 +1,5 @@
 package Services;
 
-import java.sql.SQLException;
 import java.util.Collection;
 
 import Exceptions.AlreadyExist;
@@ -66,7 +65,7 @@ public class RegistrationService extends BaseService
 			
 			return reuslt_userID;
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DatabaseException(e);
 		}
@@ -128,7 +127,7 @@ public class RegistrationService extends BaseService
 				return result_securityQuestions;
 			}
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DatabaseException(e);
 		}

@@ -1,6 +1,5 @@
 package Services;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -22,7 +21,7 @@ public class EventService extends BaseService
 			GetRepo().SaveEvent(event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(),event.GetCreatorId(),event.GetCalendarId(), p_requiredUser, checkEventUserList(event.GetOptionalUser()));
 			return true;
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DatabaseException(e);
 		}
@@ -37,7 +36,7 @@ public class EventService extends BaseService
 			GetRepo().UpdateEvent(event.GetId(), event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(), p_requiredUser, checkEventUserList(event.GetOptionalUser()));		
 			return true;
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DatabaseException(e);
 		}	
@@ -51,16 +50,15 @@ public class EventService extends BaseService
 			GetRepo().DeleteEvent(p_eventId, p_userId);
 			return true;
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
+			if (e instanceof NotFound) {
+				// Event existiert nicht mehr
+				return true;
+			}
 			throw new DatabaseException(e);
 		}
-		catch (NotFound e)
-		{
-			// TODO: NotFound sollte trotzdem geloggt werden
-			// Event existiert nicht mehr
-			return true;
-		}
+
 	}
 	
 	public Event GetEvent(int p_eventId) throws NotFound, DatabaseException {
@@ -72,7 +70,7 @@ public class EventService extends BaseService
 			}
 			return result_Event;
 		}
-		catch (SQLException e)
+		catch (Exception e)
 		{
 			throw new DatabaseException(e);
 		}
