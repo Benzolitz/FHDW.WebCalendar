@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -285,9 +286,16 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		{
 			event = new EventCalendarView();
 			event.SetId(rs.getInt(1));
-			calStart.setTime(rs.getDate(2));
+			try
+			{
+				calStart.setTime(sdf.parse(rs.getString(2)));
+				calEnd.setTime(sdf.parse(rs.getString(3)));
+			} catch (ParseException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			event.SetStartTime(calStart);
-			calEnd.setTime(rs.getDate(3));
 			event.SetEndTime(calEnd);
 			event.SetTitle(rs.getString(4));
 			events.add(event);
