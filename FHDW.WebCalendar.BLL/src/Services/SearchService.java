@@ -3,7 +3,6 @@ package Services;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import Exceptions.DatabaseException;
@@ -40,7 +39,7 @@ public class SearchService extends BaseService
 		Calendar DateTo = Calendar.getInstance();
 		DateFrom.set(2050, 1, 1, 0, 0);;
 		
-		Collection<EventCalendarView> events = calendarService.GetEventsFromTo(p_userId, DateFrom, DateTo);
+		Collection<EventCalendarView> events = calendarService.GetEventsFromTo(0 , p_userId, DateFrom, DateTo);
 		
 		boolean found = false;
 		for(EventCalendarView event : events) {
