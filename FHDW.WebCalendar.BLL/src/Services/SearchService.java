@@ -1,13 +1,12 @@
 package Services;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
-import java.util.List;
 
 import Exceptions.DatabaseException;
 import Exceptions.NotFound;
+import Model.Calendar.Calendar;
 import Model.Calendar.Event.EventCalendarView;
 
 /**
@@ -29,35 +28,37 @@ public class SearchService extends BaseService
 	 * @throws DatabaseException 
 	 * @throws NotFound 
 	 */
-	public List<EventCalendarView> searchEvents(int p_userId, String p_searchString) throws DatabaseException, NotFound {
+	public Collection<EventCalendarView> searchEvents(int p_userId, String p_searchString) throws DatabaseException, NotFound {
 		CalenderService calendarService = new CalenderService();
-		List<EventCalendarView> result = new ArrayList<EventCalendarView>();
 		
 		// Setze den SuchZeitram von 1.1.2000 - 31.12.2050
-		Calendar DateFrom = Calendar.getInstance();
-		DateFrom.set(1990, 1, 1, 0, 0);
-		
-		Calendar DateTo = Calendar.getInstance();
+		java.util.Calendar DateFrom = java.util.Calendar.getInstance();
+		DateFrom.set(1990, 1, 1, 0, 0);		
+		java.util.Calendar DateTo = java.util.Calendar.getInstance();
 		DateFrom.set(2050, 1, 1, 0, 0);;
 		
-		Collection<EventCalendarView> events = calendarService.GetEventsFromTo(p_userId, DateFrom, DateTo);
+		Collection<EventCalendarView> result_events = new ArrayList <EventCalendarView>();	
+		Collection<Calendar> userCalendar = calendarService.GetAllUserCalendar(p_userId); // throws DatabaseException
 		
-		boolean found = false;
-		for(EventCalendarView event : events) {
-			
-			if (event.GetTitle().contains(p_searchString)) {
-				found = true;
+		for (Calendar c : userCalendar) {
+			Collection <EventCalendarView> calendarEvents;
+			try
+			{
+				calendarEvents = GetRepo().GetEventsForUser(c.GetId(), p_userId, DateFrom, DateTo);
+				
+				if (calendarEvents != null && !calendarEvents.isEmpty()) {
+					result_events.addAll(calendarEvents);
+				}
 			}
-			
-//			for (String category : event.GetCategory()) {
-//				if (category.contains(p_searchString)) {
-//					found = true;
-//				}
-//			}
-			if (found) {
-				result.add(event);
+			catch (SQLException e)
+			{
+				// TODO: SQLException Loggen
+				// TODO: Fehlermeldung Benutzerfreundlich durchreichen
+				throw new DatabaseException("Ein unbekannter Fehler ist aufgetreten", e);
 			}
 		}
-		return result;
+
+		return result_events;
 	}
+	
 }

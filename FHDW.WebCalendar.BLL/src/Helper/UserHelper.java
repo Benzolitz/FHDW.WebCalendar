@@ -1,4 +1,4 @@
-package HTMLHelper;
+package Helper;
 
 import Exceptions.IOException;
 import Model.User.User;

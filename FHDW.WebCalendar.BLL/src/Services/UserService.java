@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
-import HTMLHelper.UserHelper;
+import Helper.UserHelper;
 import Repository.JDBC.WebCalendarRepo;
 
 /**
@@ -48,7 +48,7 @@ public class UserService extends BaseService
 			Integer reuslt_userID = GetRepo().GetUserId(p_usernameOrEmail); // throws SQLException
 			
 			if (reuslt_userID == null || reuslt_userID <= 0) {
-				throw new NotFound("Benutzer wurde nicht gefunden");
+				throw new NotFound("Benutzer: " + p_usernameOrEmail + " wurde nicht gefunden");
 			}
 			
 			return reuslt_userID;	
