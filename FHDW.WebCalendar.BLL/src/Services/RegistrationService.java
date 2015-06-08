@@ -61,7 +61,7 @@ public class RegistrationService extends BaseService
 			if (reuslt_userID == null || reuslt_userID <= 0) {
 				throw new DatabaseException("Benutzer konnte nicht erstellt werden");
 			} else {	
-				new CalenderService().CreateCalendar(reuslt_userID, RegistrationService.DEFAULT_CALENDARNAME); // throws IO Exception, DatabseException
+				new CalendarService().CreateCalendar(reuslt_userID, RegistrationService.DEFAULT_CALENDARNAME); // throws IO Exception, DatabseException
 			}
 			
 			return reuslt_userID;

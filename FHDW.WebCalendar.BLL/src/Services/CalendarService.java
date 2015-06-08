@@ -15,11 +15,11 @@ import Model.Calendar.Event.EventCalendarView;
  * @author Frederik Heinrichs
  * Buiniss Logik für die Anzeige eines Kalenders
  */
-public class CalenderService extends BaseService 
+public class CalendarService extends BaseService 
 {
 	static final String DEFAULT_CALENDARNAME = "DEFAULT";
 	
-	public CalenderService () {
+	public CalendarService () {
 		// nothing to init
 	}
 	
@@ -94,7 +94,7 @@ public class CalenderService extends BaseService
 	 * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank entstanden ist
 	 * @throws NotFound wirft einen Fehler wenn der Benutzer nicht exisitiert
 	 * 
-	 * @see CalenderService#GetAllEvents(int)
+	 * @see CalendarService#GetAllEvents(int)
 	 */
 	public Collection<EventCalendarView> GetEventsFromTo(int p_userId, int p_calendarId, java.util.Calendar p_DateFrom, java.util.Calendar p_DateTo) throws DatabaseException, NotFound {
 		Collection<EventCalendarView> result_events = new ArrayList <EventCalendarView>();	
