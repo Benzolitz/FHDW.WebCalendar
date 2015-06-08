@@ -11,7 +11,7 @@ import java.util.Date;
 import org.junit.Test;
 
 import IRepository.IWebCalendarRepo;
-import Model.Calendar.Event.EventCalendarView;
+import Model.Calendar.Event.Event;
 import Model.SecurityQuestion.SecurityQuestion;
 import Repository.JDBC.WebCalendarRepo;
 
@@ -168,7 +168,7 @@ public class WebCalendarRepoTest
 	@Test
 	public void GetEventsForUserWithCorrectData()
 	{
-		Collection<EventCalendarView> result;
+		Collection<Event> result;
 		IWebCalendarRepo repo = new WebCalendarRepo();
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		java.util.Calendar from = java.util.Calendar.getInstance();
@@ -186,7 +186,7 @@ public class WebCalendarRepoTest
 		try
 		{
 			result = repo.GetEventsForUser(1, 1, from, to);
-			for (EventCalendarView eventCalendarView : result)
+			for (Event eventCalendarView : result)
 			{
 				System.out.println(eventCalendarView.GetStartTime().getTime());
 			}

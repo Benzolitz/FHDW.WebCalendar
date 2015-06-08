@@ -2,6 +2,8 @@ package Controller;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import Exception.ExceptionController;
@@ -62,7 +65,7 @@ public class EventController extends HttpServlet
 		try
 		{
 			if (eventService.removeEvent(Integer.parseInt(p_request.getParameter("eventId")), Integer.parseInt(p_request.getParameter("calendarId"))))
-			{	
+			{
 				p_response.getWriter().write("SUCCESS!");
 			}
 		}
@@ -121,6 +124,7 @@ public class EventController extends HttpServlet
 	{
 		try
 		{
+			
 			Event event = eventService.GetEvent(Integer.parseInt(p_request.getParameter("eventId")));
 			
 			if (event.GetCategory() == null)
@@ -131,6 +135,7 @@ public class EventController extends HttpServlet
 			Type type = new TypeToken <Event>()
 			{}.getType();
 			
+			p_response.setContentType("text/html; charset=UTF-8");
 			p_response.getWriter().print(new Gson().toJson(event, type));
 		}
 		catch (Exception e)

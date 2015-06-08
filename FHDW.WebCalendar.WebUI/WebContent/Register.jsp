@@ -2,16 +2,18 @@
 <%@page import="Services.RegistrationService, java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%
-	Cookie calendarCookie = null;
-	Cookie[] cookies = request.getCookies();
-	if (cookies != null)
-	{
-		for (Cookie cookie : cookies)
-		{
-			if (cookie.getName().equals("FHDW.WebCalendar")) calendarCookie = cookie;
-		}
-	}
-	if (calendarCookie != null) response.sendRedirect("Calendar.jsp");
+    Cookie calendarCookie = null;
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null)
+    {
+        for (Cookie cookie : cookies)
+        {
+            if (cookie.getName().equals("FHDW.WebCalendar"))
+                calendarCookie = cookie;
+        }
+    }
+    if (calendarCookie != null)
+        response.sendRedirect("Calendar.jsp");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -36,7 +38,8 @@
 		<div id="divContent">
 			<form name="frmLogin" method="post" action="RegisterController">
 				<div class="claCenterBoxDefault">
-					<input id="txtUsername" name="txtUsername" class="claTextDefault claUserData claRequiredField" type="text" value="<%=request.getParameter("username") == null ? "" : request.getParameter("username")%>" placeholder="Benutzername*" />
+					<input id="txtUsername" name="txtUsername" class="claTextDefault claUserData claRequiredField" type="text" value="<%=request.getParameter("username") == null ? "" : request
+                    .getParameter("username")%>" placeholder="Benutzername*" />
 				</div>
 				<div class="claCenterBoxDefault">
 					<input id="txtPassword" name="txtPassword" class="claTextDefault claUserData claRequiredField" type="password" placeholder="Passwort*" />
@@ -59,24 +62,17 @@
 				<div class="claCenterBoxDefault">
 					<select id="selSecurityQuestion" name="selSecurityQuestion">
 						<%
-							RegistrationService registrationService = new RegistrationService();
-							Collection <SecurityQuestion> questions = registrationService.GetAlLSecurityQuestions();
-							
-							int i = 0;
-							String options = "";
-							for (SecurityQuestion question : questions)
-							{
-								if (i == 0)
-								{
-									options += "<option value=\"0\" disabled selected>Sicherheitsfrage*</option>";
-									i ++ ;
-								}
-								else
-								{
-									options += String.format("<option value=\"%d\">%s</option>", question.GetId(), question.GetName());
-								}
-							}
-							out.print(options);
+						    out.print("<option value=\"0\" disabled selected>Sicherheitsfrage*</option>");
+						    RegistrationService registrationService = new RegistrationService();
+						    Collection<SecurityQuestion> questions = registrationService
+						            .GetAlLSecurityQuestions();
+
+						    for (SecurityQuestion question : questions)
+						    {
+						        out.print(String.format("<option value=\"%d\">%s</option>",
+						                question.GetId(), question.GetName()));
+
+						    }
 						%>
 					</select>
 				</div>

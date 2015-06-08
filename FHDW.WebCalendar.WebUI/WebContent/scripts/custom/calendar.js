@@ -282,9 +282,9 @@ var showUserEvents = function(p_week) {
                 var event = eventList[i];
                 var start = event.startTime;
                 var end = event.endTime;
-                var eventStart = new Date(start.year, start.month - 1,
+                var eventStart = new Date(start.year, start.month,
                         start.dayOfMonth, start.hourOfDay, start.minute, 0);
-                var eventEnd = new Date(end.year, end.month - 1,
+                var eventEnd = new Date(end.year, end.month,
                         end.dayOfMonth, end.hourOfDay, end.minute, 0);
 
                 var dayNumber = eventStart.getDay() === 0 ? 6 : eventStart

@@ -2,7 +2,6 @@ package Repository.JDBC;
 import java.sql.SQLException;
 
 import Model.Calendar.Calendar;
-import Model.Calendar.Event.EventCalendarView;
 
 public class TestConnection
 {

@@ -13,12 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.*;
 
 import java.lang.reflect.Type;
 
 import Exception.ExceptionController;
-import Model.Calendar.Event.EventCalendarView;
+import Model.Calendar.Event.Event;
 import Services.*;
 
 @WebServlet ("/CalendarController")
@@ -81,11 +82,14 @@ public class CalendarController extends HttpServlet
 			Calendar calEnd = Calendar.getInstance();
 			calEnd.setTime(sdf.parse(p_request.getParameter("endTime")));
 			
-			Collection <EventCalendarView> view = calendarService.GetEventsFromTo(Integer.parseInt(p_request.getParameter("userid")), Integer.parseInt(p_request.getParameter("calendarId")), calStart, calEnd);
+			Collection <Event> view = calendarService.GetEventsFromTo(Integer.parseInt(p_request.getParameter("userid")), Integer.parseInt(p_request.getParameter("calendarId")), calStart, calEnd);
 			
-			Type type = new TypeToken <Collection <EventCalendarView>>()
+			Type type = new TypeToken <Collection <Event>>()
 			{}.getType();
-			p_response.getWriter().print(new Gson().toJson(view, type));
+			
+			
+			Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+			p_response.getWriter().print(gson.toJson(view, type));
 		}
 		catch (Exception e)
 		{

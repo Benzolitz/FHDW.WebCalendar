@@ -45,7 +45,7 @@ var getEventData = function() {
                 var required = "";
                 if (response.requiredUser != null) {
 
-                  for (var i = 0; response.requiredUser.length; i++) {
+                  for (var i = 0; i < response.requiredUser.length; i++) {
 
                     if (required === "") {
                       required = response.requiredUser[i];
@@ -55,24 +55,23 @@ var getEventData = function() {
                   }
                 }
 
-                $("#txtEventRequiredGuests").val(
-                        response.requiredUser === null ? ""
-                                : response.requiredUser.join(", "));
+                $("#txtEventRequiredGuests").val(required);
 
                 var optional = "";
                 if (response.optionalUser != null) {
-                  response.optionalUser.each(function() {
+                  for (var i = 0; i < response.optionalUser.length; i++) {
+
                     if (optional === "") {
-                      optional = $(this);
+                      optional = response.optionalUser[i];
                     } else {
-                      optional += ", " + $(this);
+                      optional += ", " + response.optionalUser[i];
                     }
-                  });
+                  }
                 }
 
-                $("#txtEventOptionalGuests").val(
-                        response.optionalUser === null ? ""
-                                : response.optionalUser.join(", "));
+                $("#txtEventOptionalGuests").val(optional);
+                
+                $("#txaEventComment").val(unescape(response.message));
               },
               error: function(jqXHR, textStatus, errorThrown) {
                 alert(errorThrown.message);
