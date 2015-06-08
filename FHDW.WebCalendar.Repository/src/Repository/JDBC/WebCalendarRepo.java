@@ -345,7 +345,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		String sql;
 		ResultSet rs;
 		
-		sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME(), %d);", p_title, p_location, p_starttime, p_endtime, p_message, p_creatorId, sdf.format(new Date()), p_calendarId);
+		sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME(), %d);", p_title, p_location, p_starttime, p_endtime, p_message, p_creatorId, p_calendarId);
 		stmt.executeUpdate(sql);
 		
 		sql = String.format("SELECT LAST_INSERT_ID();");
