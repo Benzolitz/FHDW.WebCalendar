@@ -80,10 +80,11 @@
 				<input id="btnNextWeek" type="button" value="&darr;" onClick="getNextWeek()" />
 			</div>
 			<div id="divCalendarSelection">
+				<input type="button" id="btnCreateNewCalendar" class="claButtonDefault" value="Neuer Kalender" onClick="showCalendarCreation()" />
 				<%
 				    if (userId != null)
 				    {
-				        Services.CalenderService calendarService = new Services.CalenderService();
+				        Services.CalendarService calendarService = new Services.CalendarService();
 
 				        Collection<Model.Calendar.Calendar> userCalendar = calendarService
 				                .GetAllUserCalendar(Integer.parseInt(userId));
@@ -93,10 +94,11 @@
 				        {
 				            String checked = firstCal ? "checked='checked'" : "";
 
-				            out.write("<br /><input " + checked + " type='radio' id='"
-				                    + cal.GetId() + "' name='Calendar' value='"
-				                    + cal.GetName() + "'><label for='" + cal.GetId()
-				                    + "'> " + cal.GetName() + "</label>");
+				            out.write("<div class='claCalendarSelection'><input "
+				                    + checked + " type='radio' id='" + cal.GetId()
+				                    + "' name='Calendar' value='" + cal.GetName()
+				                    + "'><label for='" + cal.GetId() + "'> "
+				                    + cal.GetName() + "</label></div>");
 				            firstCal = false;
 
 				        }
@@ -108,6 +110,15 @@
 			<input id="hidCurrentYear" type="hidden" />
 		</div>
 		<div id="calendar"></div>
+	</div>
+	<div id="divNewCalendar">
+		Neuen Kalender erstellen
+		<br />
+		Name:
+		<input type="text" id="txtNewCalendarName" />
+		<br />
+		<input type="button" id="btnSaveNewCalendar" class="claButtonDefault" value="Speichern" onClick="saveNewCalendar()" />
+		<input type="button" id="btnAbortNewCalendarCreation" class="claButtonDefault" value="Abbrechen" onClick="abortCalendarCreation()" />
 	</div>
 </body>
 </html>

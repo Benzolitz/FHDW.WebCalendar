@@ -21,6 +21,7 @@ import jdk.nashorn.internal.ir.RuntimeNode.Request;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import Exception.ExceptionController;
 import Exceptions.DatabaseException;
 import Exceptions.NotFound;
 import Model.Calendar.Event.Event;
@@ -55,28 +56,28 @@ public class EventController extends HttpServlet
 		}
 	}
 	
-	private void DeleteEvent(HttpServletResponse p_response, HttpServletRequest p_request)
+	private void DeleteEvent(HttpServletResponse p_response, HttpServletRequest p_request) throws IOException
 	{
 		String redirect = "";
 		try
 		{
-			if(eventService.removeEvent(Integer.parseInt(p_request.getParameter("eventId"))))
-			{
-				
+			if (eventService.removeEvent(Integer.parseInt(p_request.getParameter("eventId")), Integer.parseInt(p_request.getParameter("calendarId"))))
+			{	
+				p_response.getWriter().write("SUCCESS!");
 			}
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			ExceptionController.handleRuntimeException(e, p_response, "FEHLER!!");
 		}
 	}
 	
-	private void SaveEvent(HttpServletResponse p_response, HttpServletRequest p_request)
+	private void SaveEvent(HttpServletResponse p_response, HttpServletRequest p_request) throws IOException
 	{
 		try
 		{
 			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.GERMAN);
-
+			
 			Event event = new Event();
 			
 			event.SetCalendarId(Integer.parseInt(p_request.getParameter("CalendarId")));
@@ -98,7 +99,7 @@ public class EventController extends HttpServlet
 			event.SetOptionalUser(Arrays.asList(p_request.getParameter("EventOptionalGuests").split("\\s*,\\s*")));
 			event.SetMessage(p_request.getParameter("EventComment"));
 			
-			if (event.GetId() == -1)
+			if (event.GetId() == - 1)
 			{
 				eventService.createEvent(event);
 			}
@@ -109,12 +110,12 @@ public class EventController extends HttpServlet
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			ExceptionController.handleRuntimeException(e, p_response, "FEHLER!!");
 		}
 		
 	}
 	
-	private void GetEventData(HttpServletResponse p_response, HttpServletRequest p_request)
+	private void GetEventData(HttpServletResponse p_response, HttpServletRequest p_request) throws IOException
 	{
 		try
 		{
@@ -131,8 +132,8 @@ public class EventController extends HttpServlet
 			p_response.getWriter().print(new Gson().toJson(event, type));
 		}
 		catch (Exception e)
-		{	
-			e.printStackTrace();
+		{
+			ExceptionController.handleRuntimeException(e, p_response, "FEHLER!!");
 		}
 	}
 }

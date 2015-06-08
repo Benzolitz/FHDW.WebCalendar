@@ -4,11 +4,11 @@ $(document).ready(function() {
   {
     buildUserCalendar(-1, new Date().getFullYear());
     $(window).resize(resizingCorrection);
-    
-    $("input[name=Calendar]:radio").change(function(){
+
+    $("input[name=Calendar]:radio").change(function() {
       var currentWeek = parseInt($("#hidCurrentWeek").val());
       var currentYear = parseInt($("#hidCurrentYear").val());
-      buildUserCalendar(currentWeek, currentYear);      
+      buildUserCalendar(currentWeek, currentYear);
     });
   }
 });
@@ -310,7 +310,8 @@ var showUserEvents = function(p_week) {
               checkEventCollisions();
             },
             error: function(jqXHR, textStatus, errorThrown) {
-              alert(jqXHR.responseText);
+              alert(errorThrown
+                      + ": Der Kalendar konnte nicht angezeigt werden!");
             }
           });
 };
@@ -421,5 +422,44 @@ var Logout = function() {
  * @param p_eventId
  */
 var openEventWindow = function(p_eventId) {
-  window.open("Event.jsp?calendar=" + $('input[name=Calendar]:checked').attr("id") + "&user=" + $("#ckiUserId").val() + "&event=" + p_eventId, "", "width=775,height=525").focus();
+  window.open(
+          "Event.jsp?calendar=" + $('input[name=Calendar]:checked').attr("id")
+                  + "&user=" + $("#ckiUserId").val() + "&event=" + p_eventId,
+          "", "width=775,height=525").focus();
+};
+
+var showCalendarCreation = function() {
+  $("#txtNewCalendarName").val("");
+  $("#divNewCalendar").css("display", "block");
+}
+
+var abortCalendarCreation = function() {
+  $("#txtNewCalendarName").val("");
+  $("#divNewCalendar").css("display", "none");
+};
+
+var saveNewCalendar = function() {
+  $.ajax({
+    type: "POST",
+    url: "CalendarController",
+    dataType: "json",
+    data: {
+      action: "CreateNewCalendar",
+      userId: $("#ckiUserId").val(),
+      calendarName: $("#txtNewCalendarName").val()
+    },
+    success: function(response) {
+      $("#divCalendarSelection").append(
+              "<div class='claCalendarSelection'><input type='radio' id='"
+                      + response + "' name='Calendar' value='"
+                      + $("#txtNewCalendarName").val() + "'><label for='"
+                      + response + "'> " + $("#txtNewCalendarName").val()
+                      + "</label></div>");
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      //alert(errorThrown + ": Es konnte kein neuer Kalender erstellt werden!");
+    }
+  });
+  $("#divNewCalendar").css("display", "none");
+
 };

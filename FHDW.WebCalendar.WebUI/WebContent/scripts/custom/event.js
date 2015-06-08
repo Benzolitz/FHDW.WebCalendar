@@ -167,9 +167,11 @@ var deleteEvent = function() {
       dataType: "json",
       data: {
         Action: "deleteEvent",
-        eventId: parameters.event
+        eventId: parameters.event,
+        calendarId: parameters.calendar
       },
       success: function(response) {
+        alert(response);
         window.close();
       },
       error: function(jqXHR, textStatus, errorThrown) {

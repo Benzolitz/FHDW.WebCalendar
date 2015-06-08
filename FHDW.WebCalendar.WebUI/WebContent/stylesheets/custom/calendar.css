@@ -44,6 +44,7 @@
 #divArrows {
 	margin-top: 10px;
 	float: right;
+	width: 35px;
 }
 
 #btnLastWeek, #btnNextWeek {
@@ -100,6 +101,7 @@ td {
 	box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
+	background-color: #FFF;
 }
 
 #tdTime {
@@ -169,4 +171,32 @@ td {
 	text-decoration: none;
 	color: #000;
 	border-radius: 5px;
+}
+
+#divCalendarSelection {
+	float: left;
+	margin-top: 10px;
+	width: 163px;
+}
+
+.claCalendarSelection {
+	width: 100%;
+	margin-top: 5px;
+}
+
+#btnCreateNewCalendar {
+	width: 153px;
+	height: 25px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#divNewCalendar {
+	position: absolute;
+	top: 100px;
+	left: 250px;
+	z-index: 1;
+	padding: 10px;
+	background-color: #FFF;
+	display: none;
 }

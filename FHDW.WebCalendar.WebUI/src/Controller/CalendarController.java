@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +17,7 @@ import com.google.gson.reflect.*;
 
 import java.lang.reflect.Type;
 
+import Exception.ExceptionController;
 import Model.Calendar.Event.EventCalendarView;
 import Services.*;
 
@@ -23,11 +25,11 @@ import Services.*;
 public class CalendarController extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-	private CalenderService calendarService;
+	private CalendarService calendarService;
 	
 	public CalendarController()
 	{
-		calendarService = new CalenderService();
+		calendarService = new CalendarService();
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,43 +49,51 @@ public class CalendarController extends HttpServlet
 			case "logout" :
 				Logout(response, request.getCookies());
 				break;
+			case "createnewcalendar" :
+				CreateNewCalendar(response, request);
+				break;
 			default :
 				break;
 		}
 	}
 	
+	private void CreateNewCalendar(HttpServletResponse p_response, HttpServletRequest p_request) throws IOException
+	{
+		try
+		{
+			p_response.getWriter().write(calendarService.CreateCalendar(Integer.parseInt(p_request.getParameter("userId")), p_request.getParameter("calendarName")));
+		}
+		catch (Exception e)
+		{
+			ExceptionController.handleRuntimeException(e, p_response, "FEHLER!!");
+		}
+		
+	}
+	
 	private void GetEvents(HttpServletResponse p_response, HttpServletRequest p_request) throws IOException
 	{
-		String userId = p_request.getParameter("userid");
-		String startTime = p_request.getParameter("startTime");
-		String endTime = p_request.getParameter("endTime");
-		String calendarId = p_request.getParameter("endTime");
-
-		String output = "";
 		try
 		{
 			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
 			Calendar calStart = Calendar.getInstance();
-			calStart.setTime(sdf.parse(startTime));
+			calStart.setTime(sdf.parse(p_request.getParameter("startTime")));
 			
 			Calendar calEnd = Calendar.getInstance();
-			calEnd.setTime(sdf.parse(endTime));
+			calEnd.setTime(sdf.parse(p_request.getParameter("endTime")));
 			
-			Collection <EventCalendarView> view = calendarService.GetEventsFromTo(Integer.parseInt(userId), calStart, calEnd);
+			Collection <EventCalendarView> view = calendarService.GetEventsFromTo(Integer.parseInt(p_request.getParameter("userid")), Integer.parseInt(p_request.getParameter("calendarId")), calStart, calEnd);
 			
 			Type type = new TypeToken <Collection <EventCalendarView>>()
 			{}.getType();
-			
-			output = new Gson().toJson(view, type);
+			p_response.getWriter().print(new Gson().toJson(view, type));
 		}
 		catch (Exception e)
 		{
-			output = e.getMessage();
+			ExceptionController.handleRuntimeException(e, p_response, "FEHLER!!");
 		}
-		p_response.getWriter().print(output);
 		
 	}
-
+	
 	public static void Logout(HttpServletResponse p_response, Cookie[] p_cookies) throws IOException
 	{
 		Cookie calendarCookie = null;
@@ -98,10 +108,13 @@ public class CalendarController extends HttpServlet
 				}
 			}
 		}
+		
 		if (calendarCookie != null)
 		{
 			calendarCookie.setMaxAge(0);
 			p_response.addCookie(calendarCookie);
 		}
+		
+		p_response.sendRedirect("Login.jsp");
 	}
 }
