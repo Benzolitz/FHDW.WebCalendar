@@ -3,12 +3,15 @@ package Test;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.junit.Test;
 
 import IRepository.IWebCalendarRepo;
+import Model.Calendar.Event.EventCalendarView;
 import Model.SecurityQuestion.SecurityQuestion;
 import Repository.JDBC.WebCalendarRepo;
 
@@ -161,4 +164,33 @@ public class WebCalendarRepoTest
 	}
 
 
+	@SuppressWarnings("deprecation")
+	@Test
+	public void GetEventsForUserWithCorrectData()
+	{
+		Collection<EventCalendarView> result;
+		IWebCalendarRepo repo = new WebCalendarRepo();
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		java.util.Calendar from = java.util.Calendar.getInstance();
+		java.util.Calendar to = java.util.Calendar.getInstance();
+		try
+		{
+			from.setTime(sdf.parse("2015-05-21 17:00:00"));
+			to.setTime(sdf.parse("2015-05-21 18:00:00"));
+		} catch (ParseException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try
+		{
+			result = repo.GetEventsForUser(1, 1, from, to);
+			assertTrue(result.size() == 1);
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
