@@ -44,7 +44,7 @@ public class CalendarService extends BaseService
 			Integer result_calenderId = GetRepo().CreateNewCalendar(p_userId, p_calenderName);
 			
 			if (result_calenderId == null || result_calenderId <= 0) {
-				throw new DatabaseException("");
+				throw new DatabaseException();
 			}
 			
 			return result_calenderId;

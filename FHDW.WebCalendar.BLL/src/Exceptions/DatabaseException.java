@@ -14,6 +14,12 @@ public class DatabaseException extends BaseServiceException
 	
 	public static final String DATABASEEXCEPTIONSTRING = "Ein Fehler im System ist aufgetreten, bitte kontaktieren sie den Administrator";
 
+	public DatabaseException()
+	{
+		super(DatabaseException.DATABASEEXCEPTIONSTRING);
+		WebCalendarLog.GetLogger().log(Level.SEVERE,DatabaseException.DATABASEEXCEPTIONSTRING);
+	}
+	
 	public DatabaseException(Throwable p_cause)
 	{
 		super(DatabaseException.DATABASEEXCEPTIONSTRING, p_cause);
@@ -21,8 +27,5 @@ public class DatabaseException extends BaseServiceException
 		WebCalendarLog.GetLogger().log(Level.SEVERE,"",p_cause);
 	}
 
-	public DatabaseException(String p_string)
-	{
-		super("");
-	}		
+			
 }
