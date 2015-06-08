@@ -309,6 +309,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	{
 		Collection<String> optionalUser = new ArrayList<String>();
 		Collection<String> requiredUser = new ArrayList<String>();
+		Collection<String> categories = new ArrayList<String>();
 		java.util.Calendar calStart = java.util.Calendar.getInstance();
 		java.util.Calendar calEnd = java.util.Calendar.getInstance();
 		java.util.Calendar calCreationTime = java.util.Calendar.getInstance();
@@ -348,6 +349,14 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		}
 		event.SetOptionalUser(optionalUser);
 		event.SetRequiredUser(requiredUser);
+		
+		sql = String.format("SELECT Name FROM Category WHERE EventID = %d;", p_eventId);
+		rs = stmt.executeQuery(sql);
+		while (rs.next())
+		{
+			categories.add(rs.getString(1));
+		}
+		event.SetCategory(categories);
 		
 		return event;
 	}
