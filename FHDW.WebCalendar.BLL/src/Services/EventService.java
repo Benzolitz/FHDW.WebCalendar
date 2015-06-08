@@ -17,8 +17,9 @@ public class EventService extends BaseService
 		EventHelper.checkEventData(event); // throws IOException	
 		try
 		{		
-			// throws NotFound, DatabasException
-			GetRepo().SaveEvent(event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(),event.GetCreatorId(),event.GetCalendarId(), checkEventUserList(event.GetRequiredUser()), checkEventUserList(event.GetOptionalUser()));
+			Collection<Integer> p_requiredUser = checkEventUserList(event.GetRequiredUser());
+			p_requiredUser.add(event.GetCreatorId());
+			GetRepo().SaveEvent(event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(),event.GetCreatorId(),event.GetCalendarId(), p_requiredUser, checkEventUserList(event.GetOptionalUser()));
 			return true;
 		}
 		catch (SQLException e)
@@ -31,8 +32,9 @@ public class EventService extends BaseService
 		EventHelper.checkEventData(event);
 		try
 		{
-			// throws NotFound, DatabasException
-			GetRepo().UpdateEvent(event.GetId(), event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(), checkEventUserList(event.GetRequiredUser()), checkEventUserList(event.GetOptionalUser()));		
+			Collection<Integer> p_requiredUser = checkEventUserList(event.GetRequiredUser());
+			p_requiredUser.add(event.GetCreatorId());
+			GetRepo().UpdateEvent(event.GetId(), event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(), p_requiredUser, checkEventUserList(event.GetOptionalUser()));		
 			return true;
 		}
 		catch (SQLException e)
