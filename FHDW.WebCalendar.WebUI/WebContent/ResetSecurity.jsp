@@ -1,15 +1,18 @@
+<%@page import="Services.PasswordResetService"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%
-	Cookie calendarCookie = null;
-	Cookie[] cookies = request.getCookies();
-	if (cookies != null)
-	{
-		for (Cookie cookie : cookies)
-		{
-			if (cookie.getName().equals("FHDW.WebCalendar")) calendarCookie = cookie;
-		}
-	}
-	if (calendarCookie != null) response.sendRedirect("Calendar.jsp");
+    Cookie calendarCookie = null;
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null)
+    {
+        for (Cookie cookie : cookies)
+        {
+            if (cookie.getName().equals("FHDW.WebCalendar"))
+                calendarCookie = cookie;
+        }
+    }
+    if (calendarCookie != null)
+        response.sendRedirect("Calendar.jsp");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -21,22 +24,31 @@
 <link rel="stylesheet" type="text/css" href="stylesheets/custom/reset.css" />
 </head>
 <body>
-	<div id="divPasswordReset" class="claMainBox">
-		<div id="divHeadline" class="claHeadLine">Passwort zurücksetzen</div>
+	<div id="divPasswordResetSecurity" class="claMainBox">
+		<div id="divHeadline" class="claHeadLine">Sicherheitsabfrage</div>
 		<hr />
 		<div id="divContent">
-			<form name="frmLogin" method="post" action="ResetController">
+			<form name="frmResetSecurity" method="post" action="ResetSecurityController">
 				<div class="claCenterBoxDefault">
-					<input id="txtUsername" class="claTextDefault" name="username" type="text" placeholder="Benutzername" />
+					<%
+					    String userId = request.getParameter("user");
+					    PasswordResetService passwordResetService = new PasswordResetService();
+					    String question = passwordResetService
+					            .GetUserSecurityQuestion(Integer.parseInt(userId));
+
+					    out.write(question);
+					%>
 				</div>
-				<div id="divOr">- oder -</div>
 				<div class="claCenterBoxDefault">
-					<input id="txtUsermail" class="claTextDefault" name="usermail" type="text" placeholder="E-Mailadresse" />
+					<input id="txtSecAnswer" class="claTextDefault" name="securityAnswer" type="text" placeholder="Sicherheitsantwort" />
 				</div>
-				<hr />
 				<div class="claCenterBoxDefault">
-					<input id="btnSubmit" class="claButtonDefault" type="Submit" value="Neues Passwort" />
+					<input id="txtNewPassword" class="claTextDefault" name="newPassword" type="password" placeholder="Neues Passwort" />
 				</div>
+				<div class="claCenterBoxDefault">
+					<input id="btnSubmit" class="claButtonDefault" type="Submit" value="Absenden" />
+				</div>
+				<input type="hidden" name="userId" value="<%=userId%>" />
 			</form>
 		</div>
 	</div>

@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,23 +31,34 @@ public class ResetController extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		Integer userId = null;
+		
+		Enumeration<String> test = request.getParameterNames();
+		
 		try
 		{
-			userId = userService.GetUserId(request.getParameter("username"));
+			String name = request.getParameter("username");
+			userId = userService.GetUserId(name);
 		}
 		catch (Exception e)
 		{}
 		
 		try
 		{
-			userId = userService.GetUserId(request.getParameter("usermail"));
+			String mail = request.getParameter("usermail");
+			userId = userService.GetUserId(mail);
 		}
 		catch (Exception e)
 		{}
 		
+		String redirect = "";
 		if (userId != null)
 		{
-			response.sendRedirect("ResetSecurity.jsp?user=" + userId);
+			redirect = "ResetSecurity.jsp?user=" + userId;
 		}
+		else
+		{	
+			redirect = "Reset.jsp?message=Der Benutzername, oder die EMailadresse, wurden nicht gefunden!";
+		}
+		response.sendRedirect(redirect);
 	}
 }
