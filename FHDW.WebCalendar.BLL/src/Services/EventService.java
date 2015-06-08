@@ -7,7 +7,7 @@ import java.util.Collection;
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
-import HTMLHelper.EventHelper;
+import Helper.EventHelper;
 import Model.Calendar.Event.Event;
 
 public class EventService extends BaseService
@@ -50,7 +50,7 @@ public class EventService extends BaseService
 		{
 			GetEvent(p_eventId); // Throws NotFound
 			//TODO: Was is wenn das Update nicht funktioniert hat, ein boolean als Rückgabe wert wäre von vorteil
-			GetRepo().DeleteEvent(p_userId, p_eventId);
+			GetRepo().DeleteEvent(p_eventId, p_userId);
 			return true;
 		}
 		catch (SQLException e)
