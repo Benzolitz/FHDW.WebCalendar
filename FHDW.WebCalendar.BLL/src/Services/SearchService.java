@@ -33,7 +33,7 @@ public class SearchService extends BaseService
 		java.util.Calendar DateFrom = java.util.Calendar.getInstance();
 		DateFrom.set(1990, 1, 1, 0, 0);		
 		java.util.Calendar DateTo = java.util.Calendar.getInstance();
-		DateFrom.set(2050, 1, 1, 0, 0);;
+		DateTo.set(2050, 1, 1, 0, 0);
 		
 		Collection<Event> result_events = new ArrayList <Event>();	
 		Collection<Calendar> userCalendar = GetCalendarService().GetAllUserCalendar(p_userId); // throws DatabaseException
@@ -48,12 +48,12 @@ public class SearchService extends BaseService
 				if (calendarEvents != null && !calendarEvents.isEmpty()) {
 					for(Event event : calendarEvents) {
 						boolean found = false;
-						if (event.GetTitle().contains(p_searchString)) {
+						if (event.GetTitle() != null  && event.GetTitle().contains(p_searchString)) {
 							found = true;
 						} 
 						
 						for (String category : event.GetCategory()) {
-							if (category.contains(p_searchString)) {
+							if (category != null && category.contains(p_searchString)) {
 								found = true;
 							}
 						}
