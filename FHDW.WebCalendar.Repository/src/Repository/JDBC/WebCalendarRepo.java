@@ -338,7 +338,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		
 		return event;
 	}
-	
+	//TODO: Remove Null-Checks
 	@Override
 	public void SaveEvent(String p_title, String p_location, String p_starttime, String p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId, Collection<Integer> requiredUserId, Collection<Integer> optionalUserId) throws SQLException
 	{
@@ -359,16 +359,18 @@ public class WebCalendarRepo implements IWebCalendarRepo
 			sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, eventId);
 			stmt.executeUpdate(sql);
 		}
-		for (Integer id : optionalUserId)
-		{
-			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 0)", eventId, id);
-			stmt.executeUpdate(sql);
-		}
-		for (Integer id : requiredUserId)
-		{
-			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 1)", eventId, id);
-			stmt.executeUpdate(sql);
-		}
+		if(optionalUserId != null)
+			for (Integer id : optionalUserId)
+			{
+				sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 0)", eventId, id);
+				stmt.executeUpdate(sql);
+			}
+		if(requiredUserId != null)
+			for (Integer id : requiredUserId)
+			{
+				sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 1)", eventId, id);
+				stmt.executeUpdate(sql);
+			}
 		
 	}
 	
