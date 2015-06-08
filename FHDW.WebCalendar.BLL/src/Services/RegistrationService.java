@@ -68,7 +68,7 @@ public class RegistrationService extends BaseService
 		}
 		catch (SQLException e)
 		{
-			throw new DatabaseException(e.getMessage(), e);
+			throw new DatabaseException(e);
 		}
 	}
 	
@@ -130,7 +130,7 @@ public class RegistrationService extends BaseService
 		}
 		catch (SQLException e)
 		{
-			throw new DatabaseException(e.getMessage(), e);
+			throw new DatabaseException(e);
 		}
 	}
 

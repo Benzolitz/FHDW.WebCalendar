@@ -54,7 +54,7 @@ public class UserService extends BaseService
 			return reuslt_userID;	
 		}
 		catch (SQLException e) {
-			throw new DatabaseException("Ein unbekannter Fehler ist aufgetreten", e);
+			throw new DatabaseException(e);
 		}		
 	}
 
@@ -82,9 +82,9 @@ public class UserService extends BaseService
 			
 			return result_userPw;
 		}
-		catch (SQLException esql)
+		catch (SQLException e)
 		{
-			throw new DatabaseException("Ein unbekannter Fehler ist aufgetreten", esql);
+			throw new DatabaseException(e);
 		}
 	}
 	

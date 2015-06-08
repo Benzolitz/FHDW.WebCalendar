@@ -52,9 +52,7 @@ public class SearchService extends BaseService
 			}
 			catch (SQLException e)
 			{
-				// TODO: SQLException Loggen
-				// TODO: Fehlermeldung Benutzerfreundlich durchreichen
-				throw new DatabaseException("Ein unbekannter Fehler ist aufgetreten", e);
+				throw new DatabaseException(e);
 			}
 		}
 

@@ -23,9 +23,7 @@ public class EventService extends BaseService
 		}
 		catch (SQLException e)
 		{
-			// TODO: SQLException Loggen
-			// TODO: Fehlermeldung Benutzerfreundlich durchreichen
-			throw new DatabaseException(e.getMessage(), e);
+			throw new DatabaseException(e);
 		}
 	}
 	
@@ -39,9 +37,7 @@ public class EventService extends BaseService
 		}
 		catch (SQLException e)
 		{
-			// TODO: SQLException Loggen
-			// TODO: Fehlermeldung Benutzerfreundlich durchreichen
-			throw new DatabaseException(e.getMessage(), e);
+			throw new DatabaseException(e);
 		}	
 	}
 	
@@ -55,9 +51,7 @@ public class EventService extends BaseService
 		}
 		catch (SQLException e)
 		{
-			// TODO: SQLException Loggen
-			// TODO: Fehlermeldung Benutzerfreundlich durchreichen
-			throw new DatabaseException(e.getMessage(), e);
+			throw new DatabaseException(e);
 		}
 		catch (NotFound e)
 		{
@@ -78,9 +72,7 @@ public class EventService extends BaseService
 		}
 		catch (SQLException e)
 		{
-			// TODO: SQLException Loggen
-			// TODO: Fehlermeldung Benutzerfreundlich durchreichen
-			throw new DatabaseException(e.getMessage(), e);
+			throw new DatabaseException(e);
 		}
 	}
 	
