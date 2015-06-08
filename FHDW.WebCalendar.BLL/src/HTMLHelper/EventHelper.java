@@ -37,10 +37,5 @@ public class EventHelper
 	public static void checkDateTime(Date p_dateTime) throws IOException {
 		//throw new IOException("");	
 	}
-	
-	public static String formatDateTime(Calendar p_calendar) {
-
-		return GetDateFormatter().format(p_calendar.getTime());
-	}
 
 }

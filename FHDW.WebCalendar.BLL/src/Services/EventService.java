@@ -31,7 +31,7 @@ public class EventService extends BaseService
 				throw new NotFound("Das Event konnte nicht erstellt werden da der Kalender nicht existiert");
 			}
 	
-			GetRepo().SaveEvent(event.GetTitle(), event.GetLocation(), EventHelper.formatDateTime(event.GetStartTime()), EventHelper.formatDateTime(event.GetEndTime()), event.GetMessage(), event.GetCategory(),event.GetCreatorId(),event.GetCalendarId(), null, null);
+			GetRepo().SaveEvent(event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(),event.GetCreatorId(),event.GetCalendarId(), null, null);
 			return true;
 		}
 		catch (SQLException e)
@@ -49,7 +49,7 @@ public class EventService extends BaseService
 			GetEvent(event.GetId()); // throws NotFound
 			//TODO: Was is wenn das Update nicht funktioniert hat, ein boolean als Rückgabe wert wäre von vorteil
 
-			GetRepo().UpdateEvent(event.GetId(), event.GetTitle(), event.GetLocation(), EventHelper.formatDateTime(event.GetStartTime()), EventHelper.formatDateTime(event.GetEndTime()), event.GetMessage(), event.GetCategory(), null, null);
+			GetRepo().UpdateEvent(event.GetId(), event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(), null, null);
 
 			return true;
 		}
@@ -61,12 +61,12 @@ public class EventService extends BaseService
 		}	
 	}
 	
-	public boolean removeEvent(int p_eventId) throws DatabaseException {
+	public boolean removeEvent(int p_eventId, int p_userId) throws DatabaseException {
 		try
 		{
 			GetEvent(p_eventId); // Throws NotFound
 			//TODO: Was is wenn das Update nicht funktioniert hat, ein boolean als Rückgabe wert wäre von vorteil
-			GetRepo().DeleteEvent(p_eventId);
+			GetRepo().DeleteEvent(p_userId, p_eventId);
 			return true;
 		}
 		catch (SQLException e)

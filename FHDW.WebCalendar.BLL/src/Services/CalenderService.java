@@ -107,7 +107,7 @@ public class CalenderService extends BaseService
 			Collection <EventCalendarView> calendarEvents;
 			try
 			{
-				calendarEvents = GetRepo().GetEventsForUser(c.GetId(), p_userId, EventHelper.formatDateTime(p_DateFrom), EventHelper.formatDateTime(p_DateTo));
+				calendarEvents = GetRepo().GetEventsForUser(c.GetId(), p_userId, p_DateFrom, p_DateTo);
 				
 				if (calendarEvents != null && !calendarEvents.isEmpty()) {
 					result_events.addAll(calendarEvents);
