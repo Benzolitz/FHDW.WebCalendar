@@ -37,7 +37,7 @@ public class CalendarService extends BaseService
 	 * 
 	 * @see CalendarHelper#checkCalendarName(String)
 	 */
-	protected int CreateCalendar(int p_userId, String p_calenderName) throws DatabaseException, IOException {	
+	public int CreateCalendar(int p_userId, String p_calenderName) throws DatabaseException, IOException {	
 		CalendarHelper.checkCalendarName(p_calenderName); // throws IOException
 		try
 		{
@@ -66,7 +66,7 @@ public class CalendarService extends BaseService
 	 * 
 	 * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank entstanden ist
 	 */
-	protected boolean deleteCalendar(int p_calendarId) throws DatabaseException {
+	public boolean deleteCalendar(int p_calendarId) throws DatabaseException {
 		try
 		{
 			GetRepo().DeleteCalendar(p_calendarId);
