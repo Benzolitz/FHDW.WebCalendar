@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
-import HTMLHelper.UserHelper;
+import Helper.UserHelper;
 
 public class PasswordResetService extends BaseService
 {	

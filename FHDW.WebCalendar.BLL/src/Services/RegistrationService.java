@@ -7,7 +7,7 @@ import Exceptions.AlreadyExist;
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
-import HTMLHelper.UserHelper;
+import Helper.UserHelper;
 import Model.SecurityQuestion.SecurityQuestion;
 import Model.User.User;
 import Repository.JDBC.WebCalendarRepo;
@@ -61,7 +61,7 @@ public class RegistrationService extends BaseService
 			if (reuslt_userID == null || reuslt_userID <= 0) {
 				throw new DatabaseException("Benutzer konnte nicht erstellt werden");
 			} else {	
-				new CalenderService().CreateCalendar(reuslt_userID, RegistrationService.DEFAULT_CALENDARNAME); // throws IO Exception	
+				new CalenderService().CreateCalendar(reuslt_userID, RegistrationService.DEFAULT_CALENDARNAME); // throws IO Exception, DatabseException
 			}
 			
 			return reuslt_userID;

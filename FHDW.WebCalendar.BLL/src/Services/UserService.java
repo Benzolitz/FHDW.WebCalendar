@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
-import HTMLHelper.UserHelper;
+import Helper.UserHelper;
 import Repository.JDBC.WebCalendarRepo;
 
 /**
