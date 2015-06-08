@@ -10,6 +10,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import IRepository.IWebCalendarRepo;
 import Model.Calendar.Calendar;
@@ -274,7 +277,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		String sql;
 		ResultSet rs;
 		
-		sql = String.format("SELECT Event.ID, Event.StartTime, Event.EndTime, Event.Title FROM Event JOIN EventUser ON Event.ID = EventUser.EventID JOIN User ON EventUser.UserID = User.ID WHERE User.ID = '%d' AND Event.CalendarID = %d AND (Event.StartTime BETWEEN '%s' AND '%s');", p_userId, p_calendarId, sdf.format(p_from.getTime()), sdf.format(p_to.getTime()));
+		sql = String.format("SELECT Event.ID, Event.StartTime, Event.EndTime, Event.Title FROM Event JOIN EventUser ON Event.ID = EventUser.EventID JOIN User ON EventUser.UserID = User.ID WHERE User.ID = '%d' AND EventUser.CalendarID = %d AND (Event.StartTime BETWEEN '%s' AND '%s');", p_userId, p_calendarId, sdf.format(p_from.getTime()), sdf.format(p_to.getTime()));
 		rs = stmt.executeQuery(sql);
 		
 		events = new ArrayList<EventCalendarView>();
@@ -314,7 +317,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		String sql;
 		ResultSet rs;
 		
-		sql = String.format("SELECT Event.StartTime, Event.EndTime, Event.Title, Event.Location, Event.CreatorID, Event.CreationTime, Event.Message, Event.CalendarID FROM Event WHERE Event.ID = %d;", p_eventId);
+		sql = String.format("SELECT Event.StartTime, Event.EndTime, Event.Title, Event.Location, Event.CreatorID, Event.CreationTime, Event.Message FROM Event WHERE Event.ID = %d;", p_eventId);
 		rs = stmt.executeQuery(sql);
 		rs.next();
 		event = new Event();
@@ -334,7 +337,6 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		event.SetCreatorId(rs.getInt(5));
 		event.SetCreationTime(calCreationTime);
 		event.SetMessage(rs.getString(7));
-		event.SetCalendarId(rs.getInt(8));
 		
 		sql = String.format("SELECT User.EMail, EventUser.Required FROM EventUser JOIN Event ON EventUser.EventID = Event.ID JOIN User ON EventUser.UserID = User.ID WHERE Event.ID = %d;", p_eventId);
 		rs = stmt.executeQuery(sql);
@@ -351,15 +353,15 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		return event;
 	}
 	
-	//TODO: Remove Null-Checks
 	@Override
-	public void SaveEvent(String p_title, String p_location, java.util.Calendar p_starttime, java.util.Calendar p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId, Collection<Integer> requiredUserId, Collection<Integer> optionalUserId) throws SQLException
+	public void SaveEvent(String p_title, String p_location, java.util.Calendar p_starttime, java.util.Calendar p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId, HashMap<Integer, Integer> requiredUserId, HashMap<Integer, Integer> optionalUserId) throws SQLException
 	{
 		String sql;
 		ResultSet rs;
 		int eventId;
+		Iterator it;
 		
-		sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME(), %d);", p_title, p_location, sdf.format(p_starttime.getTime()), sdf.format(p_endtime.getTime()), p_message, p_creatorId, p_calendarId);
+		sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME());", p_title, p_location, sdf.format(p_starttime.getTime()), sdf.format(p_endtime.getTime()), p_message, p_creatorId);
 		stmt.executeUpdate(sql);
 		
 		sql = String.format("SELECT LAST_INSERT_ID();");
@@ -372,19 +374,20 @@ public class WebCalendarRepo implements IWebCalendarRepo
 			sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, eventId);
 			stmt.executeUpdate(sql);
 		}
-		if(optionalUserId != null)
-			for (Integer id : optionalUserId)
-			{
-				sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 0)", eventId, id);
-				stmt.executeUpdate(sql);
-			}
-		if(requiredUserId != null)
-			for (Integer id : requiredUserId)
-			{
-				sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 1)", eventId, id);
-				stmt.executeUpdate(sql);
-			}
-		
+		it = optionalUserId.entrySet().iterator();
+		while (it.hasNext())
+		{
+			Map.Entry pair = (Map.Entry)it.next();
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required, CalendarID) VALUES (%d, %d, 0)", (Integer)pair.getKey(), (Integer)pair.getValue());
+			stmt.executeUpdate(sql);
+		}
+		it = requiredUserId.entrySet().iterator();
+		while (it.hasNext())
+		{
+			Map.Entry pair = (Map.Entry)it.next();
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required, CalendarID) VALUES (%d, %d, 1)", (Integer)pair.getKey(), (Integer)pair.getValue());
+			stmt.executeUpdate(sql);
+		}		
 	}
 	
 	@Override
@@ -422,9 +425,10 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 
 	@Override
-	public void UpdateEvent(int p_eventId, String p_title, String p_location, java.util.Calendar p_starttime, java.util.Calendar p_endtime, String p_message, Collection<String> p_categories, Collection<Integer> requiredUserId, Collection<Integer> optionalUserId) throws SQLException
+	public void UpdateEvent(int p_eventId, String p_title, String p_location, java.util.Calendar p_starttime, java.util.Calendar p_endtime, String p_message, Collection<String> p_categories, HashMap<Integer, Integer> requiredUserId, HashMap<Integer, Integer> optionalUserId) throws SQLException
 	{
 		String sql;
+		Iterator it;
 		
 		sql = String.format("UPDATE Event SET Title='%s', Location='%s', StartTime='%s', EndTime='%s', Message='%s' WHERE ID=%d;", p_title, p_location, sdf.format(p_starttime.getTime()), sdf.format(p_endtime.getTime()), p_message, p_eventId);
 		stmt.executeUpdate(sql);
@@ -440,16 +444,20 @@ public class WebCalendarRepo implements IWebCalendarRepo
 			sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, p_eventId);
 			stmt.executeUpdate(sql);
 		}
-		for (Integer id : optionalUserId)
+		it = optionalUserId.entrySet().iterator();
+		while (it.hasNext())
 		{
-			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 0)", p_eventId, id);
+			Map.Entry pair = (Map.Entry)it.next();
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required, CalendarID) VALUES (%d, %d, 0)", (Integer)pair.getKey(), (Integer)pair.getValue());
 			stmt.executeUpdate(sql);
 		}
-		for (Integer id : requiredUserId)
+		it = requiredUserId.entrySet().iterator();
+		while (it.hasNext())
 		{
-			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 1)", p_eventId, id);
+			Map.Entry pair = (Map.Entry)it.next();
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required, CalendarID) VALUES (%d, %d, 1)", (Integer)pair.getKey(), (Integer)pair.getValue());
 			stmt.executeUpdate(sql);
-		}
+		}	
 	}
 
 }
