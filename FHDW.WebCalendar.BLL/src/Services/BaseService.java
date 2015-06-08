@@ -13,7 +13,21 @@ public abstract class BaseService {
 
 	public static WebCalendarRepo repo;
 	private UserService userService;
-		
+	private CalendarService calendarService;
+	
+	/**
+	 * Singelton für den privaten Kalender Service
+	 * 
+	 * @return the calendarService
+	 */
+	public CalendarService GetCalendarService()
+	{
+		if (this.calendarService == null) {
+			this.calendarService = new CalendarService();
+		}
+		return this.calendarService;
+	}
+	
 	/**
 	 * Singelton für den privaten Userservice
 	 * 

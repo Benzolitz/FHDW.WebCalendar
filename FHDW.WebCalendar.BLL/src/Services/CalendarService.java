@@ -9,7 +9,7 @@ import Exceptions.IOException;
 import Exceptions.NotFound;
 import Helper.CalendarHelper;
 import Model.Calendar.Calendar;
-import Model.Calendar.Event.EventCalendarView;
+import Model.Calendar.Event.Event;
 
 /**
  * @author Frederik Heinrichs
@@ -92,8 +92,8 @@ public class CalendarService extends BaseService
 	 * 
 	 * @see CalendarService#GetAllEvents(int)
 	 */
-	public Collection<EventCalendarView> GetEventsFromTo(int p_userId, int p_calendarId, java.util.Calendar p_DateFrom, java.util.Calendar p_DateTo) throws DatabaseException, NotFound {
-		Collection<EventCalendarView> result_events = new ArrayList <EventCalendarView>();	
+	public Collection<Event> GetEventsFromTo(int p_userId, int p_calendarId, java.util.Calendar p_DateFrom, java.util.Calendar p_DateTo) throws DatabaseException, NotFound {
+		Collection<Event> result_events = new ArrayList <Event>();	
 		try{
 			result_events = GetRepo().GetEventsForUser(p_calendarId, p_userId, p_DateFrom, p_DateTo);
 			
@@ -116,7 +116,7 @@ public class CalendarService extends BaseService
 	 * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank entstanden ist
 	 * @throws NotFound wirft einen Fehler wenn der Benutzer nicht exisitiert
 	 */
-	public Collection<Calendar> GetAllUserCalendar(int p_userId) throws DatabaseException, NotFound {		
+	public Collection<Calendar> GetAllUserCalendar(int p_userId) throws DatabaseException {		
 		Collection<Calendar> result_userCalendar = new ArrayList <Calendar>();
 		try
 		{
@@ -127,5 +127,18 @@ public class CalendarService extends BaseService
 		{
 			throw new DatabaseException(e);
 		}
+	}
+	
+	public int GetDefaultCalendarId(int p_userId) throws DatabaseException
+	{
+		Collection<Calendar> userCalendar = GetAllUserCalendar(p_userId);
+		int defaultCalendarID = -1;
+		for (Calendar calendar : userCalendar) {
+			if (calendar.GetName().equals(CalendarService.DEFAULT_CALENDARNAME)) {
+				defaultCalendarID = calendar.GetId();
+			}
+		}
+
+		return defaultCalendarID;
 	}
 }

@@ -2,14 +2,6 @@ package test.services;
 
 import static org.junit.Assert.*;
 
-import java.util.Collection;
-
-import org.junit.Test;
-
-import Exceptions.DatabaseException;
-import Exceptions.IOException;
-import Exceptions.NotFound;
-import Model.Calendar.Event.EventCalendarView;
 import Services.CalendarService;
 
 public class CalendarServiceTest

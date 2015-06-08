@@ -7,7 +7,7 @@ import java.util.Collection;
 import Exceptions.DatabaseException;
 import Exceptions.NotFound;
 import Model.Calendar.Calendar;
-import Model.Calendar.Event.EventCalendarView;
+import Model.Calendar.Event.Event;
 
 /**
  * @author Frederik Heinrichs
@@ -28,7 +28,7 @@ public class SearchService extends BaseService
 	 * @throws DatabaseException 
 	 * @throws NotFound 
 	 */
-	public Collection<EventCalendarView> searchEvents(int p_userId, String p_searchString) throws DatabaseException, NotFound {
+	public Collection<Event> searchEvents(int p_userId, String p_searchString) throws DatabaseException, NotFound {
 		CalendarService calendarService = new CalendarService();
 		
 		// Setze den SuchZeitram von 1.1.2000 - 31.12.2050
@@ -37,11 +37,11 @@ public class SearchService extends BaseService
 		java.util.Calendar DateTo = java.util.Calendar.getInstance();
 		DateFrom.set(2050, 1, 1, 0, 0);;
 		
-		Collection<EventCalendarView> result_events = new ArrayList <EventCalendarView>();	
+		Collection<Event> result_events = new ArrayList <Event>();	
 		Collection<Calendar> userCalendar = calendarService.GetAllUserCalendar(p_userId); // throws DatabaseException
 		
 		for (Calendar c : userCalendar) {
-			Collection <EventCalendarView> calendarEvents;
+			Collection <Event> calendarEvents;
 			try
 			{
 				calendarEvents = GetRepo().GetEventsForUser(c.GetId(), p_userId, DateFrom, DateTo);
