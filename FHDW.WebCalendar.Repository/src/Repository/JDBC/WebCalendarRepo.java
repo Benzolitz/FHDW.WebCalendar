@@ -292,13 +292,14 @@ public class WebCalendarRepo implements IWebCalendarRepo
 				calEnd.setTime(sdf.parse(rs.getString(3)));
 			} catch (ParseException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			event.SetStartTime(calStart);
 			event.SetEndTime(calEnd);
 			event.SetTitle(rs.getString(4));
 			events.add(event);
+			calStart = java.util.Calendar.getInstance();
+			calEnd = java.util.Calendar.getInstance();
 		}
 	
 		return events;

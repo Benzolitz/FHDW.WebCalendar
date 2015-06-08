@@ -186,6 +186,10 @@ public class WebCalendarRepoTest
 		try
 		{
 			result = repo.GetEventsForUser(1, 1, from, to);
+			for (EventCalendarView eventCalendarView : result)
+			{
+				System.out.println(eventCalendarView.GetStartTime().getTime());
+			}
 			assertTrue(result.size() == 1);
 		} catch (SQLException e)
 		{
