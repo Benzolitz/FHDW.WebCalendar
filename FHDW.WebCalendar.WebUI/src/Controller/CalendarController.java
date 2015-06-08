@@ -38,14 +38,11 @@ public class CalendarController extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException
 	{
 		String action = request.getParameter("action");
-		String userId = request.getParameter("userid");
-		String startTime = request.getParameter("startTime");
-		String endTime = request.getParameter("endTime");
 		
 		switch (action.toLowerCase())
 		{
 			case "getevents" :
-				GetEvents(response, userId, startTime, endTime);
+				GetEvents(response, request);
 				break;
 			case "logout" :
 				Logout(response, request.getCookies());
@@ -55,6 +52,38 @@ public class CalendarController extends HttpServlet
 		}
 	}
 	
+	private void GetEvents(HttpServletResponse p_response, HttpServletRequest p_request) throws IOException
+	{
+		String userId = p_request.getParameter("userid");
+		String startTime = p_request.getParameter("startTime");
+		String endTime = p_request.getParameter("endTime");
+		String calendarId = p_request.getParameter("endTime");
+
+		String output = "";
+		try
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+			Calendar calStart = Calendar.getInstance();
+			calStart.setTime(sdf.parse(startTime));
+			
+			Calendar calEnd = Calendar.getInstance();
+			calEnd.setTime(sdf.parse(endTime));
+			
+			Collection <EventCalendarView> view = calendarService.GetEventsFromTo(Integer.parseInt(userId), calStart, calEnd);
+			
+			Type type = new TypeToken <Collection <EventCalendarView>>()
+			{}.getType();
+			
+			output = new Gson().toJson(view, type);
+		}
+		catch (Exception e)
+		{
+			output = e.getMessage();
+		}
+		p_response.getWriter().print(output);
+		
+	}
+
 	public static void Logout(HttpServletResponse p_response, Cookie[] p_cookies) throws IOException
 	{
 		Cookie calendarCookie = null;
@@ -74,31 +103,5 @@ public class CalendarController extends HttpServlet
 			calendarCookie.setMaxAge(0);
 			p_response.addCookie(calendarCookie);
 		}
-	}
-	
-	private void GetEvents(HttpServletResponse p_response, String p_userId, String p_startTime, String p_endTime) throws IOException
-	{
-		String output = "";
-		try
-		{
-			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-			Calendar calStart = Calendar.getInstance();
-			calStart.setTime(sdf.parse(p_startTime));
-			
-			Calendar calEnd = Calendar.getInstance();
-			calEnd.setTime(sdf.parse(p_endTime));
-			
-			Collection <EventCalendarView> view = calendarService.GetEventsFromTo(Integer.parseInt(p_userId), calStart, calEnd);
-			
-			Type type = new TypeToken <Collection <EventCalendarView>>()
-			{}.getType();
-			
-			output = new Gson().toJson(view, type);
-		}
-		catch (Exception e)
-		{
-			output = e.getMessage();
-		}
-		p_response.getWriter().print(output);
 	}
 }

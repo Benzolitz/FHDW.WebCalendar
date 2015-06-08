@@ -96,3 +96,7 @@
 	cursor: pointer;
 	cursor: hand;
 }
+
+.claDisabledButton {
+	background-color: #CCC;
+}

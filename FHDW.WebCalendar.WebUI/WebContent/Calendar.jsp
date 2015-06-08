@@ -79,23 +79,27 @@
 				<br />
 				<input id="btnNextWeek" type="button" value="&darr;" onClick="getNextWeek()" />
 			</div>
-			<div id="divCalendarSelection"><%
-				    Services.CalenderService calendarService = new Services.CalenderService();
-
-				    Collection<Model.Calendar.Calendar> userCalendar = calendarService
-				            .GetAllUserCalendar(Integer.parseInt(userId));
-
-				    boolean firstCal = true;
-				    for (Model.Calendar.Calendar cal : userCalendar)
+			<div id="divCalendarSelection">
+				<%
+				    if (userId != null)
 				    {
-				        String checked = firstCal ? "checked='checked'" : "";
+				        Services.CalenderService calendarService = new Services.CalenderService();
 
-				        out.write("<br /><input " + checked + " type='radio' id='"
-				                + cal.GetId() + "' name='Calendar' value='"
-				                + cal.GetName() + "'><label for='" + cal.GetId() + "'> "
-				                + cal.GetName() + "</label>");
-				        firstCal = false;
+				        Collection<Model.Calendar.Calendar> userCalendar = calendarService
+				                .GetAllUserCalendar(Integer.parseInt(userId));
 
+				        boolean firstCal = true;
+				        for (Model.Calendar.Calendar cal : userCalendar)
+				        {
+				            String checked = firstCal ? "checked='checked'" : "";
+
+				            out.write("<br /><input " + checked + " type='radio' id='"
+				                    + cal.GetId() + "' name='Calendar' value='"
+				                    + cal.GetName() + "'><label for='" + cal.GetId()
+				                    + "'> " + cal.GetName() + "</label>");
+				            firstCal = false;
+
+				        }
 				    }
 				%>
 			</div>

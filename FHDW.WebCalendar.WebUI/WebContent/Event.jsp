@@ -12,6 +12,8 @@
     }
     if (calendarCookie == null)
         response.sendRedirect("Login.jsp");
+    
+    String eventId = request.getParameter("id");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -98,7 +100,7 @@
 				<input id="btnSubmit" class="claButtonDefault claEventButtons" type="Button" value="Speichern" onClick="saveEvent()" />
 			</div>
 			<div class="claCenterDiv">
-				<input id="btnDelete" class="claButtonDefault claEventButtons" type="Button" value="L&ouml;schen" onClick="deleteEvent()" />
+				<input id="btnDelete" class="claButtonDefault claEventButtons <%= eventId == "-1" ? ".claDisabledButton" : "" %>" type="Button" value="L&ouml;schen" <%= eventId == "-1" ? "" : "onClick='deleteEvent()'" %> />
 			</div>
 		</div>
 		<div id="divEventComment">

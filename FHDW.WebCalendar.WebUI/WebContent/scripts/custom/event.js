@@ -14,7 +14,7 @@ $(document).ready(function() {
 var getEventData = function() {
   var parameters = getURLParameters();
 
-  if (parameters.id != -1) {
+  if (parameters.event != "-1") {
 
     $
             .ajax({
@@ -22,8 +22,8 @@ var getEventData = function() {
               url: "EventController",
               dataType: "json",
               data: {
-                action: "getEventData",
-                eventId: parameters.id
+                Action: "getEventData",
+                eventId: parameters.event
               },
               success: function(response) {
                 var parameters = getURLParameters();
@@ -75,7 +75,7 @@ var getEventData = function() {
                                 : response.optionalUser.join(", "));
               },
               error: function(jqXHR, textStatus, errorThrown) {
-                alert(jqXHR.responseText);
+                alert(errorThrown.message);
               }
             });
   }
@@ -134,45 +134,46 @@ var saveEvent = function() {
     url: "EventController",
     dataType: "json",
     data: {
-      action: "saveEvent",
-      eventId: parameters.Id,
-      userId: parameters.userId,
-      calendarId: parameters.calendarId,
-      title: $("#txtEventTitle").val(),
-      categories: $("#txtEventCategory").val(),
-      eventStart: $("#txtEventStart").val(),
-      eventEnd: $("#txtEventEnd").val(),
-      location: $("#txtEventLocation").val(),
-      requiredGuests: $("#txtEventRequiredGuests").val(),
-      optionalGuests: $("#txtEventOptionalGuests").val(),
-      comment: $("#txaEventComment").text()
+      Action: "SaveEvent",
+      CalendarId: parameters.calendar,
+      UserId: parameters.user,
+      EventId: parameters.event,
+      EventTitle: $("#txtEventTitle").val(),
+      EventCategories: $("#txtEventCategory").val(),
+      EventStartTime: $("#txtEventStart").val(),
+      EventEndTime: $("#txtEventEnd").val(),
+      EventLocation: $("#txtEventLocation").val(),
+      EventRequiredGuests: $("#txtEventRequiredGuests").val(),
+      EventOptionalGuests: $("#txtEventOptionalGuests").val(),
+      EventComment: $("#txaEventComment").val()
     },
     success: function(response) {
+      window.close();
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      alert(jqXHR.responseText);
+      alert(errorThrown.message);
     }
   });
 };
 
 var deleteEvent = function() {
-  var parameters = getURLPa
-  rameters();
+  var parameters = getURLParameters();
 
-  if (parameters.id != -1) {
+  if (parameters.event != "-1") {
 
     $.ajax({
       type: "POST",
       url: "EventController",
       dataType: "json",
       data: {
-        action: "deleteEvent",
-        eventId: parameters.id
+        Action: "deleteEvent",
+        eventId: parameters.event
       },
       success: function(response) {
+        window.close();
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        alert(jqXHR.responseText);
+        alert(errorThrown.message);
       }
     });
   }

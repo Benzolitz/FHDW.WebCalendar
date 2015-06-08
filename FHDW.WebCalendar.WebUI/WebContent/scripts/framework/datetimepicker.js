@@ -14,8 +14,8 @@ var winCal;
 var dtToday = new Date();
 var Cal;
 var docCal;
-var MonthName = ["Januar", "Februar", "M&auml;rz", "April", "Mai", "Juni",
-    "Juli", "August", "September", "Oktober", "November", "Dezember"];
+var MonthName = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "Oktober", "November", "December"];
 var WeekDayName = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag",
     "Freitag", "Samstag"];
 var exDateTime;// Existing Date and Time
@@ -291,9 +291,9 @@ function GenCell(pValue, pHighLight, pColor)// Generate table cell with value
 function Calendar(pDate, pCtrl) {
   // Properties
 
-  this.Date = pDate.getDate() < 10 ? "0" + pDate.getDate() : pDate.getDate();// selected
+  this.Date = pDate.getDate();// selected
                                                                               // date
-  this.Month = pDate.getMonth() < 10 ? "0" + pDate.getMonth() : pDate
+  this.Month = pDate
           .getMonth();
   ;// selected month number
   this.Year = pDate.getFullYear();// selected year in 4 digits

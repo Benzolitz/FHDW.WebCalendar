@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -37,7 +39,7 @@ public class EventController extends HttpServlet
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		String action = request.getParameter("action");
+		String action = request.getParameter("Action");
 		
 		switch (action.toLowerCase())
 		{
@@ -55,7 +57,18 @@ public class EventController extends HttpServlet
 	
 	private void DeleteEvent(HttpServletResponse p_response, HttpServletRequest p_request)
 	{
-		
+		String redirect = "";
+		try
+		{
+			if(eventService.removeEvent(Integer.parseInt(p_request.getParameter("eventId"))))
+			{
+				
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	private void SaveEvent(HttpServletResponse p_response, HttpServletRequest p_request)
@@ -64,47 +77,33 @@ public class EventController extends HttpServlet
 		{
 			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.GERMAN);
 
-			String eventId = p_request.getParameter("eventId");
-			String calendarId = p_request.getParameter("calendarId");
-			String title = p_request.getParameter("title");
-			String categories = p_request.getParameter("categories");
-			String eventStart = p_request.getParameter("eventStart");
-			String eventEnd = p_request.getParameter("eventEnd");
-			String location = p_request.getParameter("location");
-			String requiredGuests = p_request.getParameter("requiredGuests");
-			String optionalGuests = p_request.getParameter("optionalGuests");
-			String comment = p_request.getParameter("comment");
-			
-			List <String> categoryList = Arrays.asList(categories.split(", "));
-			List <String> requiredGuestsList = Arrays.asList(requiredGuests.split(", "));
-			List <String> optionalGuestsList = Arrays.asList(optionalGuests.split(", "));
-			
 			Event event = new Event();
 			
-			event.SetCalendarId(Integer.parseInt(calendarId));
-			
-			event.SetTitle(title);
-			event.SetCategory(categoryList);
+			event.SetCalendarId(Integer.parseInt(p_request.getParameter("CalendarId")));
+			event.SetCreatorId(Integer.parseInt(p_request.getParameter("UserId")));
+			event.SetId(Integer.parseInt(p_request.getParameter("EventId")));
+			event.SetTitle(p_request.getParameter("EventTitle"));
+			event.SetCategory(Arrays.asList(p_request.getParameter("EventCategories").split("\\s*,\\s*")));
 			
 			Calendar calStart = Calendar.getInstance();
-			calStart.setTime(sdf.parse(eventStart));
+			calStart.setTime(sdf.parse(p_request.getParameter("EventStartTime")));
+			event.SetStartTime(calStart);
 			
 			Calendar calEnd = Calendar.getInstance();
-			calEnd.setTime(sdf.parse(eventEnd));
-			event.SetStartTime(calStart);
+			calEnd.setTime(sdf.parse(p_request.getParameter("EventEndTime")));
 			event.SetEndTime(calEnd);
-			event.SetLocation(location);
-			event.SetRequiredUser(requiredGuestsList);
-			event.SetOptionalUser(optionalGuestsList);
-			event.SetMessage(comment);
 			
-			if (eventId == "-1")
+			event.SetLocation(p_request.getParameter("EventLocation"));
+			event.SetRequiredUser(Arrays.asList(p_request.getParameter("EventRequiredGuests").split("\\s*,\\s*")));
+			event.SetOptionalUser(Arrays.asList(p_request.getParameter("EventOptionalGuests").split("\\s*,\\s*")));
+			event.SetMessage(p_request.getParameter("EventComment"));
+			
+			if (event.GetId() == -1)
 			{
 				eventService.createEvent(event);
 			}
 			else
 			{
-				event.SetId(Integer.parseInt(eventId));
 				eventService.changeEvent(event);
 			}
 		}
@@ -133,7 +132,7 @@ public class EventController extends HttpServlet
 		}
 		catch (Exception e)
 		{	
-			
+			e.printStackTrace();
 		}
 	}
 }

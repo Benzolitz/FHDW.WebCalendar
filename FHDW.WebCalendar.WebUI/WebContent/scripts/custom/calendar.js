@@ -4,6 +4,12 @@ $(document).ready(function() {
   {
     buildUserCalendar(-1, new Date().getFullYear());
     $(window).resize(resizingCorrection);
+    
+    $("input[name=Calendar]:radio").change(function(){
+      var currentWeek = parseInt($("#hidCurrentWeek").val());
+      var currentYear = parseInt($("#hidCurrentYear").val());
+      buildUserCalendar(currentWeek, currentYear);      
+    });
   }
 });
 
@@ -267,7 +273,8 @@ var showUserEvents = function(p_week) {
               action: "getEvents",
               startTime: $("#headMonday").text().substring(5, 15),
               endTime: $("#headSunday").text().substring(5, 15),
-              userid: $("#ckiUserId").val()
+              userid: $("#ckiUserId").val(),
+              calendarId: $("input[name=Calendar]:checked").attr("id")
             },
             success: function(response) {
               var eventList = response;
@@ -414,5 +421,5 @@ var Logout = function() {
  * @param p_eventId
  */
 var openEventWindow = function(p_eventId) {
-  window.open("Event.jsp?id=" + p_eventId + "&userId=" + $("#ckiUserId").val() + "&calendarId=" + $('input[name=Calendar]:checked').attr("id"), "", "width=775,height=525").focus();
+  window.open("Event.jsp?calendar=" + $('input[name=Calendar]:checked').attr("id") + "&user=" + $("#ckiUserId").val() + "&event=" + p_eventId, "", "width=775,height=525").focus();
 };
