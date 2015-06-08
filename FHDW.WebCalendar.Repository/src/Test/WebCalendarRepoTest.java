@@ -14,8 +14,57 @@ import Repository.JDBC.WebCalendarRepo;
 
 public class WebCalendarRepoTest
 {
+
 	@Test
-	public void testGetAllSecurityQuestions()
+	public void GetUserIdWithWrongUsernameOrEmail()
+	{
+		IWebCalendarRepo repo = new WebCalendarRepo();
+		Integer result;
+		try
+		{
+			result = repo.GetUserId("Some Wrong User");
+			assertTrue(result == null);
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void GetUserIdWithCorrectUsernameOrEmail()
+	{
+		IWebCalendarRepo repo = new WebCalendarRepo();
+		Integer result;
+		try
+		{
+			result = repo.GetUserId("User1");
+			assertTrue(result == 1);
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void GetUserPasswordWithCorrectUserId()
+	{
+		IWebCalendarRepo repo = new WebCalendarRepo();
+		String result;
+		try
+		{
+			result = repo.GetUserPassword(1);
+			assertTrue(result.equals("pass1"));
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void GetAllSecurityQuestions()
 	{
 		IWebCalendarRepo repo = new WebCalendarRepo();
 		Collection<SecurityQuestion> repoQuestions;
@@ -46,5 +95,70 @@ public class WebCalendarRepoTest
 		}
 	}
 	
+	@Test
+	public void RegistrateNewUserWithCorrectData()
+	{
+		IWebCalendarRepo repo = new WebCalendarRepo();
+		Integer result;
+		try
+		{
+			result = repo.RegistrateNewUser("UserTest", "EmailTest", "PassTest", "FirstTest", "LastTest", "0123456789", 1, "TestAnswer");
+			assertTrue(result != null);
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
+	@Test
+	public void GetSecurityQuestionWithCorrectId()
+	{
+		IWebCalendarRepo repo = new WebCalendarRepo();
+		String result;
+		try
+		{
+			result = repo.GetSecurityQuestion(1);
+			assertTrue(result.equals("Wie lautet der Name meines Hundes?"));
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void GetSecurityAnswerWithCorrectId()
+	{
+		IWebCalendarRepo repo = new WebCalendarRepo();
+		String result;
+		try
+		{
+			result = repo.GetSecurityAnswer(1);
+			assertTrue(result.equals("Hund"));
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void ResetPasswordWithCorrectId()
+	{
+		IWebCalendarRepo repo = new WebCalendarRepo();
+		String result;
+		try
+		{
+			repo.ResetPassword(2, "NeuesPW");
+			result = repo.GetUserPassword(2);
+			assertTrue(result.equals("NeuesPW"));
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
 }

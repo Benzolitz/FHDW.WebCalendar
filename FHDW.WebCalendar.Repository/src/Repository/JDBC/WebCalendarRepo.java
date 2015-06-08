@@ -107,9 +107,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 	
 	@Override
-	public int GetUserId(String p_usernameOrEmail) throws SQLException
+	public Integer GetUserId(String p_usernameOrEmail) throws SQLException
 	{
-		Integer userId;
+		Integer userId = null;
 		String sql;
 		ResultSet rs;
 	
@@ -118,8 +118,8 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		else
 			sql = String.format("SELECT ID FROM User WHERE Username = '%s';", p_usernameOrEmail);			
 		rs = stmt.executeQuery(sql);
-		rs.next();
-		userId = rs.getInt(1);
+		if(rs.next())
+			userId = rs.getInt(1);
 		
 		return userId;
 	}

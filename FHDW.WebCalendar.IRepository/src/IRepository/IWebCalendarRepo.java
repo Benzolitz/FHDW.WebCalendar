@@ -19,7 +19,7 @@ public interface IWebCalendarRepo
 	 * @param p_usernameOrEmail
 	 * @return Gibt die BenutzerID des Benutzers zurück.
 	 */
-	int GetUserId(String p_usernameOrEmail) throws SQLException; 
+	Integer GetUserId(String p_usernameOrEmail) throws SQLException; 
 		
 	/**
 	 * Liefert das Passwort zu einem Benutzer.
