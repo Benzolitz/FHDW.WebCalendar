@@ -53,7 +53,7 @@ public class SearchService extends BaseService
 						} 
 						
 						for (String category : event.GetCategory()) {
-							if (category.contains(p_searchString)) {
+							if (category != null && category.contains(p_searchString)) {
 								found = true;
 							}
 						}
