@@ -177,11 +177,8 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		sql = String.format("SELECT LAST_INSERT_ID();");
 		rs = stmt.executeQuery(sql);
 		rs.next();
-		
-		sql = String.format("INSERT INTO Calendar (Name, CreatorID) VALUES ('Mein Kalendar', %d);", rs.getInt(1));
 		userId = rs.getInt(1);
-		stmt.executeUpdate(sql);
-		
+
 		return userId;
 	}
 	
