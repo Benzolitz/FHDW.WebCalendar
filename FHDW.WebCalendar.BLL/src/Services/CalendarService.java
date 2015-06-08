@@ -115,7 +115,7 @@ public class CalendarService extends BaseService
 	 * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank entstanden ist
 	 * @throws NotFound wirft einen Fehler wenn der Benutzer nicht exisitiert
 	 */
-	public Collection<Calendar> GetAllUserCalendar(int p_userId) throws DatabaseException, NotFound {		
+	public Collection<Calendar> GetAllUserCalendar(int p_userId) throws DatabaseException {		
 		Collection<Calendar> result_userCalendar = new ArrayList <Calendar>();
 		try
 		{
@@ -126,5 +126,19 @@ public class CalendarService extends BaseService
 		{
 			throw new DatabaseException(e);
 		}
+	}
+
+
+	public int GetDefaultCalendarId(int p_userId) throws DatabaseException
+	{
+		Collection<Calendar> userCalendar = GetAllUserCalendar(p_userId);
+		int defaultCalendarID = -1;
+		for (Calendar calendar : userCalendar) {
+			if (calendar.GetName().equals(CalendarService.DEFAULT_CALENDARNAME)) {
+				defaultCalendarID = calendar.GetId();
+			}
+		}
+
+		return defaultCalendarID;
 	}
 }
