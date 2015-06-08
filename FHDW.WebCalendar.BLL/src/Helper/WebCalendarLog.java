@@ -1,6 +1,5 @@
 package Helper;
 
-import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -17,7 +16,10 @@ public class WebCalendarLog
 			// File Handler erzeugen
 			try
 			{
-				WebCalendarLog.theLogger.addHandler(WebCalendarLog.getLoggerFileHandler());
+				Handler file_handler = new FileHandler("ErrorLog.txt", true);
+				//file_handler.setFormatter(new SimpleFormatter());
+				file_handler.setFormatter(new SimpleFormatter());
+				WebCalendarLog.theLogger.addHandler(file_handler);
 			}
 			catch (Exception ex) {
 				WebCalendarLog.theLogger.log(Level.SEVERE, "Error creating log file!");
@@ -25,14 +27,6 @@ public class WebCalendarLog
 			}
 		}
 		return WebCalendarLog.theLogger;
-	}
-	
-	public static Handler getLoggerFileHandler() throws SecurityException, IOException {
-		Handler file_handler = new FileHandler("ErrorLog.txt", true);
-		//file_handler.setFormatter(new SimpleFormatter());
-		file_handler.setFormatter(new SimpleFormatter());
-		WebCalendarLog.theLogger.addHandler(file_handler);	
-		return null;
 	}
 	
 }
