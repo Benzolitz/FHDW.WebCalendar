@@ -44,7 +44,6 @@ public class SearchService extends BaseService
 			{
 				calendarEvents = GetRepo().GetEventsForUser(c.GetId(), p_userId, DateFrom, DateTo);
 
-				
 				if (calendarEvents != null && !calendarEvents.isEmpty()) {
 					for(Event event : calendarEvents) {
 						boolean found = false;
@@ -52,11 +51,14 @@ public class SearchService extends BaseService
 							found = true;
 						} 
 						
-						for (String category : event.GetCategory()) {
-							if (category != null && category.contains(p_searchString)) {
-								found = true;
+						if(event.GetCategory() != null) {
+							for (String category : event.GetCategory()) {
+								if (category != null && category.contains(p_searchString)) {
+									found = true;
+								}
 							}
 						}
+				
 						if (found) {
 							result_events.add(event);
 						}
