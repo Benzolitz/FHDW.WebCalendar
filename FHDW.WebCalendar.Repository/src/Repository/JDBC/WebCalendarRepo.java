@@ -321,26 +321,32 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		rs = stmt.executeQuery(sql);
 		rs.next();
 		event = new Event();
-		calStart.setTime(rs.getDate(1));
+		try
+		{
+			calStart.setTime(sdf.parse(rs.getString(1)));
+			calEnd.setTime(sdf.parse(rs.getString(2)));
+			calCreationTime.setTime(sdf.parse(rs.getString(6)));
+		} catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
 		event.SetStartTime(calStart);
-		calEnd.setTime(rs.getDate(2));
 		event.SetEndTime(calEnd);
 		event.SetTitle(rs.getString(3));
 		event.SetLocation(rs.getString(4));
 		event.SetCreatorId(rs.getInt(5));
-		calCreationTime.setTime(rs.getDate(6));
 		event.SetCreationTime(calCreationTime);
 		event.SetMessage(rs.getString(7));
 		event.SetCalendarId(rs.getInt(8));
 		
-		sql = String.format("SELECT User.EMail, User.FirstName, User.LastName ,EventUser.Required FROM EventUser JOIN Event ON EventUser.EventID = Event.ID JOIN User ON EventUser.UserID = User.ID WHERE Event.ID = %d;", p_eventId);
+		sql = String.format("SELECT User.EMail, EventUser.Required FROM EventUser JOIN Event ON EventUser.EventID = Event.ID JOIN User ON EventUser.UserID = User.ID WHERE Event.ID = %d;", p_eventId);
 		rs = stmt.executeQuery(sql);
 		while(rs.next())
 		{
-			if(rs.getBoolean(4))
-				requiredUser.add(String.format("%s, %s (%s)", rs.getString(3), rs.getString(2), rs.getString(1)));
+			if(rs.getBoolean(2))
+				requiredUser.add(String.format("%s", rs.getString(1)));
 			else
-				optionalUser.add(String.format("%s, %s (%s)", rs.getString(3), rs.getString(2), rs.getString(1)));
+				optionalUser.add(String.format("%s", rs.getString(1)));
 		}
 		event.SetOptionalUser(optionalUser);
 		event.SetRequiredUser(requiredUser);
