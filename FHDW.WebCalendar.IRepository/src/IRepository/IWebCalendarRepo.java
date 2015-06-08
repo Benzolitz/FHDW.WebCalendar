@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import Model.Calendar.Calendar;
 import Model.Calendar.Event.Event;
-import Model.Calendar.Event.EventCalendarView;
 import Model.SecurityQuestion.SecurityQuestion;
 
 /**
@@ -91,7 +90,7 @@ public interface IWebCalendarRepo
 	 * @param p_userId
 	 * @return
 	 */
-	Collection<EventCalendarView> GetEventsForUser(int p_calendarId, int p_userId, java.util.Calendar p_from, java.util.Calendar p_to) throws SQLException; 
+	Collection<Event> GetEventsForUser(int p_calendarId, int p_userId, java.util.Calendar p_from, java.util.Calendar p_to) throws SQLException; 
 	
 	/**
 	 * Gibt zu einem bestimmten Termin alle Informationen wieder.

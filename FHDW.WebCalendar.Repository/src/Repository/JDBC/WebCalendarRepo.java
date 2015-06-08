@@ -17,7 +17,6 @@ import java.util.Map;
 import IRepository.IWebCalendarRepo;
 import Model.Calendar.Calendar;
 import Model.Calendar.Event.Event;
-import Model.Calendar.Event.EventCalendarView;
 import Model.SecurityQuestion.SecurityQuestion;
 
 
@@ -268,10 +267,10 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	}
 		
 	@Override
-	public Collection<EventCalendarView> GetEventsForUser(int p_calendarId, int p_userId, java.util.Calendar p_from, java.util.Calendar p_to) throws SQLException
+	public Collection<Event> GetEventsForUser(int p_calendarId, int p_userId, java.util.Calendar p_from, java.util.Calendar p_to) throws SQLException
 	{
-		Collection<EventCalendarView> events;
-		EventCalendarView event;
+		Collection<Event> events;
+		Event event;
 		java.util.Calendar calStart = java.util.Calendar.getInstance();
 		java.util.Calendar calEnd = java.util.Calendar.getInstance();
 		String sql;
@@ -280,11 +279,11 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		sql = String.format("SELECT Event.ID, Event.StartTime, Event.EndTime, Event.Title FROM Event JOIN EventUser ON Event.ID = EventUser.EventID JOIN User ON EventUser.UserID = User.ID WHERE User.ID = '%d' AND EventUser.CalendarID = %d AND (Event.StartTime BETWEEN '%s' AND '%s');", p_userId, p_calendarId, sdf.format(p_from.getTime()), sdf.format(p_to.getTime()));
 		rs = stmt.executeQuery(sql);
 		
-		events = new ArrayList<EventCalendarView>();
+		events = new ArrayList<Event>();
 		
 		while (rs.next())
 		{
-			event = new EventCalendarView();
+			event = new Event();
 			event.SetId(rs.getInt(1));
 			try
 			{
