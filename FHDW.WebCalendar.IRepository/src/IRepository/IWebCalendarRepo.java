@@ -2,6 +2,7 @@ package IRepository;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashMap;
 
 import Model.Calendar.Calendar;
 import Model.Calendar.Event.Event;
@@ -110,7 +111,7 @@ public interface IWebCalendarRepo
 	 * @param p_creatorId
 	 * @param p_calendarId
 	 */
-	void SaveEvent(String p_title, String p_location, java.util.Calendar p_starttime, java.util.Calendar p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId, Collection<Integer> requiredUserId, Collection<Integer> optionalUserId) throws SQLException;
+	void SaveEvent(String p_title, String p_location, java.util.Calendar p_starttime, java.util.Calendar p_endtime, String p_message, Collection<String> p_categories, int p_creatorId, int p_calendarId, HashMap<Integer, Integer> requiredUserId, HashMap<Integer, Integer> optionalUserId) throws SQLException;
 
 	/**
 	 * Löscht einen vorhandenen Termin.
@@ -140,6 +141,6 @@ public interface IWebCalendarRepo
 	 * @param p_message
 	 * @param p_categories
 	 */
-	void UpdateEvent(int p_eventId, String p_title, String p_location, java.util.Calendar p_starttime, java.util.Calendar p_endtime, String p_message, Collection<String> p_categories, Collection<Integer> requiredUserId, Collection<Integer> optionalUserId) throws SQLException;
+	void UpdateEvent(int p_eventId, String p_title, String p_location, java.util.Calendar p_starttime, java.util.Calendar p_endtime, String p_message, Collection<String> p_categories, HashMap<Integer, Integer> requiredUserId, HashMap<Integer, Integer> optionalUserId) throws SQLException;
 	
 }
