@@ -1,7 +1,7 @@
 package Services;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
@@ -16,8 +16,8 @@ public class EventService extends BaseService
 		EventHelper.checkEventData(event); // throws IOException	
 		try
 		{		
-			Collection<Integer> p_requiredUser = checkEventUserList(event.GetRequiredUser());
-			p_requiredUser.add(event.GetCreatorId());
+			HashMap<Integer, Integer> p_requiredUser = checkEventUserList(event.GetRequiredUser());
+			p_requiredUser.put(event.GetCreatorId(), event.GetCalendarId());
 			GetRepo().SaveEvent(event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(),event.GetCreatorId(),event.GetCalendarId(), p_requiredUser, checkEventUserList(event.GetOptionalUser()));
 			return true;
 		}
@@ -31,8 +31,8 @@ public class EventService extends BaseService
 		EventHelper.checkEventData(event);
 		try
 		{
-			Collection<Integer> p_requiredUser = checkEventUserList(event.GetRequiredUser());
-			p_requiredUser.add(event.GetCreatorId());
+			HashMap<Integer, Integer> p_requiredUser = checkEventUserList(event.GetRequiredUser());
+			p_requiredUser.put(event.GetCreatorId(), event.GetCalendarId());
 			GetRepo().UpdateEvent(event.GetId(), event.GetTitle(), event.GetLocation(), event.GetStartTime(), event.GetEndTime(), event.GetMessage(), event.GetCategory(), p_requiredUser, checkEventUserList(event.GetOptionalUser()));		
 			return true;
 		}
@@ -76,12 +76,18 @@ public class EventService extends BaseService
 		}
 	}
 	
-	private Collection<Integer> checkEventUserList(Collection<String> p_userNameList) throws DatabaseException, NotFound {
-		Collection<Integer> result_userIds = new ArrayList <Integer>();
+	private HashMap<Integer, Integer> checkEventUserList(Collection<String> p_userNameList) throws DatabaseException, NotFound {
+		HashMap<Integer, Integer>  result_userIds = new HashMap<Integer, Integer>();
 		for(String userName : p_userNameList) {
 			try
 			{
-				result_userIds.add(GetUserService().GetUserId(userName));
+				int userId = GetUserService().GetUserId(userName);
+				int defaultCalendarID = GetCalendarService().GetDefaultCalendarId(userId);
+				if (defaultCalendarID <0) {
+					throw new NotFound("Termin konnte für den Teilnehmer: " + userName + " nicht erstellt werden.");
+				}
+				
+				result_userIds.put(userId, defaultCalendarID);
 			}
 			catch (IOException e)
 			{
