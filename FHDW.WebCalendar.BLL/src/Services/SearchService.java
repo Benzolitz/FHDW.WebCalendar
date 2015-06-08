@@ -48,7 +48,7 @@ public class SearchService extends BaseService
 				if (calendarEvents != null && !calendarEvents.isEmpty()) {
 					for(Event event : calendarEvents) {
 						boolean found = false;
-						if (event.GetTitle().contains(p_searchString)) {
+						if (event.GetTitle() != null  && event.GetTitle().contains(p_searchString)) {
 							found = true;
 						} 
 						
