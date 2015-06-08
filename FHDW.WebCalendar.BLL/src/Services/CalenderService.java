@@ -7,11 +7,9 @@ import java.util.Collection;
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
-import HTMLHelper.CalendarHelper;
-import HTMLHelper.EventHelper;
+import Helper.CalendarHelper;
 import Model.Calendar.Calendar;
 import Model.Calendar.Event.EventCalendarView;
-
 
 /**
  * @author Frederik Heinrichs
@@ -46,7 +44,6 @@ public class CalenderService extends BaseService
 			Integer result_calenderId = GetRepo().CreateNewCalendar(p_userId, p_calenderName);
 			
 			if (result_calenderId == null || result_calenderId <= 0) {
-				//TODO: Benutzer wieder löschen, da dieser hier ja bereits angelegt wurde?
 				return -1;
 			}
 			
@@ -99,28 +96,19 @@ public class CalenderService extends BaseService
 	 * 
 	 * @see CalenderService#GetAllEvents(int)
 	 */
-	public Collection<EventCalendarView> GetEventsFromTo(int p_userId, java.util.Calendar p_DateFrom, java.util.Calendar p_DateTo) throws DatabaseException, NotFound {
+	public Collection<EventCalendarView> GetEventsFromTo(int p_userId, int p_calendarId, java.util.Calendar p_DateFrom, java.util.Calendar p_DateTo) throws DatabaseException, NotFound {
 		Collection<EventCalendarView> result_events = new ArrayList <EventCalendarView>();	
-		Collection<Calendar> userCalendar = GetAllUserCalendar(p_userId); // throws DatabaseException
-
-		for (Calendar c : userCalendar) {
-			Collection <EventCalendarView> calendarEvents;
-			try
-			{
-				calendarEvents = GetRepo().GetEventsForUser(c.GetId(), p_userId, p_DateFrom, p_DateTo);
-				
-				if (calendarEvents != null && !calendarEvents.isEmpty()) {
-					result_events.addAll(calendarEvents);
-				}
-			}
-			catch (SQLException e)
-			{
-				// TODO: SQLException Loggen
-				// TODO: Fehlermeldung Benutzerfreundlich durchreichen
-				throw new DatabaseException("Ein unbekannter Fehler ist aufgetreten", e);
-			}
-		}	
-		return result_events;
+		try{
+			result_events = GetRepo().GetEventsForUser(p_calendarId, p_userId, p_DateFrom, p_DateTo);
+			
+			return result_events;
+		}
+		catch (SQLException e)
+		{
+			// TODO: SQLException Loggen
+			// TODO: Fehlermeldung Benutzerfreundlich durchreichen
+			throw new DatabaseException("Ein unbekannter Fehler ist aufgetreten", e);
+		}
 	}	
 	
 	/**
