@@ -344,6 +344,7 @@ public class WebCalendarRepo implements IWebCalendarRepo
 	{
 		String sql;
 		ResultSet rs;
+		int eventId;
 		
 		sql = String.format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime, CalendarId) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME(), %d);", p_title, p_location, p_starttime, p_endtime, p_message, p_creatorId, p_calendarId);
 		stmt.executeUpdate(sql);
@@ -351,20 +352,21 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		sql = String.format("SELECT LAST_INSERT_ID();");
 		rs = stmt.executeQuery(sql);
 		rs.next();
+		eventId =  rs.getInt(1);
 		
 		for (String category : p_categories)
 		{
-			sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, rs.getInt(1));
+			sql = String.format("INSERT INTO Category (Name, EventId) VALUES ('%s', %d);", category, eventId);
 			stmt.executeUpdate(sql);
 		}
 		for (Integer id : optionalUserId)
 		{
-			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 0)", rs.getInt(1), id);
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 0)", eventId, id);
 			stmt.executeUpdate(sql);
 		}
 		for (Integer id : requiredUserId)
 		{
-			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 1)", rs.getInt(1), id);
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 1)", eventId, id);
 			stmt.executeUpdate(sql);
 		}
 		
@@ -418,12 +420,12 @@ public class WebCalendarRepo implements IWebCalendarRepo
 		}
 		for (Integer id : optionalUserId)
 		{
-			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, )", p_eventId, id, 0);
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 0)", p_eventId, id);
 			stmt.executeUpdate(sql);
 		}
 		for (Integer id : requiredUserId)
 		{
-			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, )", p_eventId, id, 1);
+			sql = String.format("INSERT INTO EventUser (EventID, UserID, Required) VALUES (%d, %d, 1)", p_eventId, id);
 			stmt.executeUpdate(sql);
 		}
 	}
