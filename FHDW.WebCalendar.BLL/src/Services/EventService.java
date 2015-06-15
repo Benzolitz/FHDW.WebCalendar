@@ -15,22 +15,22 @@ import Model.Calendar.Event;
 public class EventService extends BaseService
 {
 
-    public boolean CreateEvent(Event event) throws DatabaseException,
+    public boolean CreateEvent(Event p_event) throws DatabaseException,
             IOException, NotFound
     {
-        EventHelper.checkEventData(event); // throws IOException
+        EventHelper.checkEventData(p_event); // throws IOException
         try
         {
-            HashMap<Integer, Integer> p_requiredUser = CheckEventUserList(event
+            HashMap<Integer, Integer> p_requiredUser = CheckEventUserList(p_event
                     .GetRequiredUser());
-            p_requiredUser.put(event.GetCreatorId(), event.GetCalendarId());
+            p_requiredUser.put(p_event.GetCreatorId(), p_event.GetCalendarId());
             GetRepo()
-                    .SaveEvent(event.GetTitle(), event.GetLocation(),
-                            event.GetStartTime(), event.GetEndTime(),
-                            event.GetMessage(), event.GetCategory(),
-                            event.GetCreatorId(), event.GetCalendarId(),
+                    .SaveEvent(p_event.GetTitle(), p_event.GetLocation(),
+                            p_event.GetStartTime(), p_event.GetEndTime(),
+                            p_event.GetMessage(), p_event.GetCategory(),
+                            p_event.GetCreatorId(), p_event.GetCalendarId(),
                             p_requiredUser,
-                            CheckEventUserList(event.GetOptionalUser()));
+                            CheckEventUserList(p_event.GetOptionalUser()));
             return true;
         }
         catch (SQLException e)
@@ -39,20 +39,20 @@ public class EventService extends BaseService
         }
     }
 
-    public boolean ChangeEvent(Event event) throws IOException,
+    public boolean ChangeEvent(Event p_event) throws IOException,
             DatabaseException, NotFound
     {
-        EventHelper.checkEventData(event);
+        EventHelper.checkEventData(p_event);
         try
         {
-            HashMap<Integer, Integer> p_requiredUser = CheckEventUserList(event
+            HashMap<Integer, Integer> p_requiredUser = CheckEventUserList(p_event
                     .GetRequiredUser());
-            p_requiredUser.put(event.GetCreatorId(), event.GetCalendarId());
-            GetRepo().UpdateEvent(event.GetId(), event.GetTitle(),
-                    event.GetLocation(), event.GetStartTime(),
-                    event.GetEndTime(), event.GetMessage(),
-                    event.GetCategory(), p_requiredUser,
-                    CheckEventUserList(event.GetOptionalUser()));
+            p_requiredUser.put(p_event.GetCreatorId(), p_event.GetCalendarId());
+            GetRepo().UpdateEvent(p_event.GetId(), p_event.GetTitle(),
+                    p_event.GetLocation(), p_event.GetStartTime(),
+                    p_event.GetEndTime(), p_event.GetMessage(),
+                    p_event.GetCategory(), p_requiredUser,
+                    CheckEventUserList(p_event.GetOptionalUser()));
             return true;
         }
         catch (SQLException e)
