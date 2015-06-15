@@ -47,7 +47,7 @@ public class LoginController extends javax.servlet.http.HttpServlet
 		}
 		catch (Exception exception)
 		{
-			redirect = "Login.jsp?username=" + p_username + "&message=" + exception.getMessage();
+			redirect = "Login.jsp?username=" + p_username + "&message=Der Benutzername, oder das Passwort sind falsch!";
 		}
 		
 		p_response.sendRedirect(redirect);

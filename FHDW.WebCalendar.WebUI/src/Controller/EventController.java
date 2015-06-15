@@ -66,7 +66,7 @@ public class EventController extends HttpServlet
 		{
 			if (eventService.removeEvent(Integer.parseInt(p_request.getParameter("eventId")), Integer.parseInt(p_request.getParameter("calendarId"))))
 			{
-				p_response.getWriter().write("SUCCESS!");
+				p_response.getWriter().print("SUCCESS!");
 			}
 		}
 		catch (Exception e)
@@ -111,7 +111,7 @@ public class EventController extends HttpServlet
 				eventService.changeEvent(event);
 			}
 			
-			p_response.getWriter().write("SUCCESS!");
+			p_response.getWriter().print("SUCCESS!");
 		}
 		catch (Exception e)
 		{
