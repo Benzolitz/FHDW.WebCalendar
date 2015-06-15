@@ -10,7 +10,7 @@ import Exceptions.IOException;
 import Exceptions.NotFound;
 import Helper.EventHelper;
 import Model.Calendar.Calendar;
-import Model.Calendar.Event.Event;
+import Model.Calendar.Event;
 
 public class EventService extends BaseService
 {

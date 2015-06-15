@@ -8,7 +8,7 @@ import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
 import Helper.UserHelper;
-import Model.SecurityQuestion.SecurityQuestion;
+import Model.User.SecurityQuestion;
 import Model.User.User;
 import Repository.JDBC.WebCalendarRepo;
 

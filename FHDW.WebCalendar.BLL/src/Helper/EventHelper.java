@@ -3,7 +3,7 @@ package Helper;
 import java.util.Date;
 
 import Exceptions.IOException;
-import Model.Calendar.Event.Event;
+import Model.Calendar.Event;
 
 /**
  * @author Frederik Heinrichs

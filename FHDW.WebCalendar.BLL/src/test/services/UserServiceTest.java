@@ -9,7 +9,7 @@ import Exceptions.AlreadyExist;
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
-import Model.SecurityQuestion.SecurityQuestion;
+import Model.User.SecurityQuestion;
 import Model.User.User;
 import Model.User.UserSecurity;
 import Services.UserService;

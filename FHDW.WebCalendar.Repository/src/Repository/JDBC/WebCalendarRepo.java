@@ -16,8 +16,8 @@ import java.util.Map;
 
 import IRepository.IWebCalendarRepo;
 import Model.Calendar.Calendar;
-import Model.Calendar.Event.Event;
-import Model.SecurityQuestion.SecurityQuestion;
+import Model.Calendar.Event;
+import Model.User.SecurityQuestion;
 
 
 public class WebCalendarRepo implements IWebCalendarRepo

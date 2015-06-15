@@ -20,7 +20,7 @@ import java.lang.reflect.Type;
 
 import jdk.nashorn.internal.ir.RuntimeNode.Request;
 import Exception.ExceptionController;
-import Model.Calendar.Event.Event;
+import Model.Calendar.Event;
 import Services.*;
 
 @WebServlet ("/CalendarController")

@@ -27,7 +27,7 @@ import com.google.gson.reflect.TypeToken;
 import Exception.ExceptionController;
 import Exceptions.DatabaseException;
 import Exceptions.NotFound;
-import Model.Calendar.Event.Event;
+import Model.Calendar.Event;
 import Services.EventService;
 
 @WebServlet ("/EventController")

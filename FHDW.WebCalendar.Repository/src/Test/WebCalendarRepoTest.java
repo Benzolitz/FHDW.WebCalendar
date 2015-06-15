@@ -11,8 +11,8 @@ import java.util.Date;
 import org.junit.Test;
 
 import IRepository.IWebCalendarRepo;
-import Model.Calendar.Event.Event;
-import Model.SecurityQuestion.SecurityQuestion;
+import Model.Calendar.Event;
+import Model.User.SecurityQuestion;
 import Repository.JDBC.WebCalendarRepo;
 
 public class WebCalendarRepoTest

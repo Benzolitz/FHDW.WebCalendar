@@ -10,7 +10,7 @@ import org.junit.Test;
 import Exceptions.DatabaseException;
 import Exceptions.IOException;
 import Exceptions.NotFound;
-import Model.Calendar.Event.Event;
+import Model.Calendar.Event;
 import Services.EventService;
 
 public class EventServiceTest
