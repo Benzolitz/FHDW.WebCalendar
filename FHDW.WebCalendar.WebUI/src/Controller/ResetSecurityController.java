@@ -7,18 +7,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import Services.PasswordResetService;
+import Services.UserService;
 
 @WebServlet ("/ResetSecurityController")
 public class ResetSecurityController extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-	PasswordResetService passwordResetService;
+	UserService userService;
 	
 	public ResetSecurityController()
 	{
-		passwordResetService = new PasswordResetService();
+		userService = new UserService();
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -29,9 +28,9 @@ public class ResetSecurityController extends HttpServlet
 			String password = request.getParameter("newPassword");
 			String securityAnswer = request.getParameter("securityAnswer");
 			
-			if (passwordResetService.checkSecurityAnswer(Integer.parseInt(userId), securityAnswer))
+			if (userService.CheckSecurityAnswer(Integer.parseInt(userId), securityAnswer))
 			{
-				passwordResetService.changeUserPasword(Integer.parseInt(userId), password);
+				userService.ChangeUserPasword(Integer.parseInt(userId), password);
 			}
 			
 			response.sendRedirect("Login.jsp?message=Das Passwort wurde erfolgreich geaendert!");

@@ -28,12 +28,12 @@ public class CalendarController extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 	private CalendarService calendarService;
-	private SearchService searchService;
+	private EventService eventService;
 	
 	public CalendarController()
 	{
 		calendarService = new CalendarService();
-		searchService = new SearchService();
+		eventService = new EventService();
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -71,7 +71,7 @@ public class CalendarController extends HttpServlet
 			String userId = p_request.getParameter("User");
 			String searchString = p_request.getParameter("SearchString");
 			
-			Collection<Event> searchResultSet = searchService.searchEvents(Integer.parseInt(userId), searchString);
+			Collection<Event> searchResultSet = eventService.SearchEvents(Integer.parseInt(userId), searchString);
 
 			Type type = new TypeToken <Collection <Event>>()
 			{}.getType();
@@ -111,7 +111,7 @@ public class CalendarController extends HttpServlet
 			String user = p_request.getParameter("userid");
 			String calendar = p_request.getParameter("calendarId");
 			
-			Collection <Event> view = calendarService.GetEventsFromTo(Integer.parseInt(user), Integer.parseInt(calendar), calStart, calEnd);
+			Collection <Event> view = eventService.GetEventsFromTo(Integer.parseInt(user), Integer.parseInt(calendar), calStart, calEnd);
 			
 			Type type = new TypeToken <Collection <Event>>()
 			{}.getType();

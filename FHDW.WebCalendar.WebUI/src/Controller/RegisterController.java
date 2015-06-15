@@ -16,11 +16,11 @@ import Services.*;
 public class RegisterController extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-	private RegistrationService registrationService;
+	private UserService userService;
 	
 	public RegisterController()
 	{
-		registrationService = new RegistrationService();
+		userService = new UserService();
 	}
 	
 	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) throws ServletException, IOException
@@ -41,7 +41,7 @@ public class RegisterController extends HttpServlet
 			userSecurity.SetSecurityQuestion("");
 			userSecurity.SetSecurityAnswer(p_request.getParameter("txtUserSecurityAnswer"));
 			user.SetUserSecurity(userSecurity);
-			registrationService.RegisterNewUser(user);
+			userService.RegisterNewUser(user);
 			
 			message = "Der Benutzer '" + user.GetUsername() + "' wurde erfolgreich erstellt!";
 		}

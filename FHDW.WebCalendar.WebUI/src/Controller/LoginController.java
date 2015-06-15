@@ -13,12 +13,10 @@ public class LoginController extends javax.servlet.http.HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 	private UserService userService;
-	private LoginService loginService;
 	
 	public LoginController()
 	{
 		userService = new UserService();
-		loginService = new LoginService();
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException
@@ -33,7 +31,7 @@ public class LoginController extends javax.servlet.http.HttpServlet
 		String redirect = "";
 		try
 		{
-			if (loginService.CheckLoginData(p_username, p_password) > 0)
+			if (userService.CheckLoginData(p_username, p_password) > 0)
 			{
 				Cookie cookie = new Cookie("FHDW.WebCalendar", String.format("login=true&userId=%d&username=%s", userService.GetUserId(p_username), p_username));
 				cookie.setMaxAge(3600);

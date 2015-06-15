@@ -64,7 +64,7 @@ public class EventController extends HttpServlet
 		String redirect = "";
 		try
 		{
-			if (eventService.removeEvent(Integer.parseInt(p_request.getParameter("eventId")), Integer.parseInt(p_request.getParameter("calendarId"))))
+			if (eventService.RemoveEvent(Integer.parseInt(p_request.getParameter("eventId")), Integer.parseInt(p_request.getParameter("calendarId"))))
 			{
 				p_response.getWriter().print("SUCCESS!");
 			}
@@ -104,11 +104,11 @@ public class EventController extends HttpServlet
 			
 			if (event.GetId() == - 1)
 			{
-				eventService.createEvent(event);
+				eventService.CreateEvent(event);
 			}
 			else
 			{
-				eventService.changeEvent(event);
+				eventService.ChangeEvent(event);
 			}
 			
 			p_response.getWriter().print("SUCCESS!");
