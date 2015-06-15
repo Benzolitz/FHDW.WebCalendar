@@ -13,12 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.*;
 
 import java.lang.reflect.Type;
 
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
 import Exception.ExceptionController;
 import Model.Calendar.Event;
 import Services.*;
@@ -71,17 +69,15 @@ public class CalendarController extends HttpServlet
 			String userId = p_request.getParameter("User");
 			String searchString = p_request.getParameter("SearchString");
 			
-			Collection<Event> searchResultSet = eventService.SearchEvents(Integer.parseInt(userId), searchString);
-
+			Collection <Event> searchResultSet = eventService.SearchEvents(Integer.parseInt(userId), searchString);
+			
 			Type type = new TypeToken <Collection <Event>>()
 			{}.getType();
 			
 			p_response.getWriter().print(new Gson().toJson(searchResultSet, type));
 		}
 		catch (Exception e)
-		{
-			String test = e.getMessage();
-		}
+		{}
 	}
 	
 	private void CreateNewCalendar(HttpServletResponse p_response, HttpServletRequest p_request) throws IOException

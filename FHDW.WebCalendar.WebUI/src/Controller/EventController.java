@@ -2,14 +2,10 @@ package Controller;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.text.Normalizer;
-import java.text.Normalizer.Form;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.ServletException;
@@ -18,15 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
-
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import Exception.ExceptionController;
-import Exceptions.DatabaseException;
-import Exceptions.NotFound;
 import Model.Calendar.Event;
 import Services.EventService;
 
@@ -61,7 +52,6 @@ public class EventController extends HttpServlet
 	
 	private void DeleteEvent(HttpServletResponse p_response, HttpServletRequest p_request) throws IOException
 	{
-		String redirect = "";
 		try
 		{
 			if (eventService.RemoveEvent(Integer.parseInt(p_request.getParameter("eventId")), Integer.parseInt(p_request.getParameter("calendarId"))))
