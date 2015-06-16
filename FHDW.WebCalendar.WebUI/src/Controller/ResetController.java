@@ -24,13 +24,18 @@ public class ResetController extends HttpServlet
 		userService = new UserService();
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) throws ServletException, IOException
+	{
+		CheckEnterdData(p_request, p_response);
+	}
+	
+	private void CheckEnterdData(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		Integer userId = null;
 		
 		try
 		{
-			String name = request.getParameter("username");
+			String name = p_request.getParameter("username");
 			userId = userService.GetUserId(name);
 		}
 		catch (Exception e)
@@ -38,7 +43,7 @@ public class ResetController extends HttpServlet
 		
 		try
 		{
-			String mail = request.getParameter("usermail");
+			String mail = p_request.getParameter("usermail");
 			userId = userService.GetUserId(mail);
 		}
 		catch (Exception e)
@@ -50,9 +55,10 @@ public class ResetController extends HttpServlet
 			redirect = "ResetSecurity.jsp?user=" + userId;
 		}
 		else
-		{	
+		{
 			redirect = "Reset.jsp?message=Der Benutzername, oder die EMailadresse, wurden nicht gefunden!";
 		}
-		response.sendRedirect(redirect);
+		p_response.sendRedirect(redirect);
+		
 	}
 }

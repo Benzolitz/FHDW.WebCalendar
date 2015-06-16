@@ -19,33 +19,33 @@ public class LoginController extends javax.servlet.http.HttpServlet
 		userService = new UserService();
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException
+	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) throws javax.servlet.ServletException, IOException
 	{
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		Login(response, username, password);
+		Login(p_request, p_response);
 	}
 	
-	private void Login(HttpServletResponse p_response, String p_username, String p_password) throws IOException
+	private void Login(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
+		String username = p_request.getParameter("username");
+		String password = p_request.getParameter("password");
 		String redirect = "";
 		try
 		{
-			if (userService.CheckLoginData(p_username, p_password) > 0)
+			if (userService.CheckLoginData(username, password) > 0)
 			{
-				Cookie cookie = new Cookie("FHDW.WebCalendar", String.format("login=true&userId=%d&username=%s", userService.GetUserId(p_username), p_username));
+				Cookie cookie = new Cookie("FHDW.WebCalendar", String.format("login=true&userId=%d&username=%s", userService.GetUserId(username), username));
 				cookie.setMaxAge(3600);
 				p_response.addCookie(cookie);
 				redirect = "Calendar.jsp";
 			}
 			else
 			{
-				redirect = "Login.jsp?username=" + p_username + "&message=Der Benutzername, oder das Passwort sind falsch!";
+				redirect = "Login.jsp?username=" + username + "&message=Der Benutzername, oder das Passwort sind falsch!";
 			}
 		}
 		catch (Exception exception)
 		{
-			redirect = "Login.jsp?username=" + p_username + "&message=Der Benutzername, oder das Passwort sind falsch!";
+			redirect = "Login.jsp?username=" + username + "&message=Der Benutzername, oder das Passwort sind falsch!";
 		}
 		
 		p_response.sendRedirect(redirect);

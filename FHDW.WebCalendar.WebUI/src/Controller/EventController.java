@@ -32,25 +32,25 @@ public class EventController extends HttpServlet
 		eventService = new EventService();
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) throws ServletException, IOException
 	{
-		String action = request.getParameter("Action");
+		String action = p_request.getParameter("Action");
 		
 		switch (action.toLowerCase())
 		{
 			case "geteventdata" :
-				GetEventData(response, request);
+				GetEventData(p_request, p_response);
 				break;
 			case "saveevent" :
-				SaveEvent(response, request);
+				SaveEvent(p_request, p_response);
 				break;
 			case "deleteevent" :
-				DeleteEvent(response, request);
+				DeleteEvent(p_request, p_response);
 				break;
 		}
 	}
 	
-	private void DeleteEvent(HttpServletResponse p_response, HttpServletRequest p_request) throws IOException
+	private void DeleteEvent(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		try
 		{
@@ -65,7 +65,7 @@ public class EventController extends HttpServlet
 		}
 	}
 	
-	private void SaveEvent(HttpServletResponse p_response, HttpServletRequest p_request) throws IOException
+	private void SaveEvent(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		try
 		{
@@ -110,7 +110,7 @@ public class EventController extends HttpServlet
 		
 	}
 	
-	private void GetEventData(HttpServletResponse p_response, HttpServletRequest p_request) throws IOException
+	private void GetEventData(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		try
 		{

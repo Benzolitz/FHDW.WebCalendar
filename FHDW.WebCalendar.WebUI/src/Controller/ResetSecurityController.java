@@ -20,24 +20,33 @@ public class ResetSecurityController extends HttpServlet
 		userService = new UserService();
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) throws ServletException, IOException
 	{
+		ChangeUserPassword(p_request, p_response);
+	}
+	
+	private void ChangeUserPassword(HttpServletRequest p_request, HttpServletResponse p_response)
+	{
+		
 		try
 		{
-			String userId = request.getParameter("userId");
-			String password = request.getParameter("newPassword");
-			String securityAnswer = request.getParameter("securityAnswer");
+			String userId = p_request.getParameter("userId");
+			String password = p_request.getParameter("newPassword");
+			String securityAnswer = p_request.getParameter("securityAnswer");
 			
 			if (userService.CheckSecurityAnswer(Integer.parseInt(userId), securityAnswer))
 			{
 				userService.ChangeUserPasword(Integer.parseInt(userId), password);
+				
+				p_response.sendRedirect("Login.jsp?message=Das Passwort wurde erfolgreich geaendert!");
 			}
-			
-			response.sendRedirect("Login.jsp?message=Das Passwort wurde erfolgreich geaendert!");
+			else
+			{
+				p_response.sendRedirect("Reset.jsp?message=Fehler!");				
+			}
 		}
 		catch (Exception e)
-		{
-		}
+		{}
 	}
 	
 }

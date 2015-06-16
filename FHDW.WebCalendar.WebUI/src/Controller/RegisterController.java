@@ -25,6 +25,11 @@ public class RegisterController extends HttpServlet
 	
 	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) throws ServletException, IOException
 	{
+		RegisterNewUser(p_request, p_response);
+	}
+
+	private void RegisterNewUser(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
+	{
 		String message = "";
 		try
 		{
@@ -50,6 +55,6 @@ public class RegisterController extends HttpServlet
 			message = e.getMessage();
 		}
 		
-		p_response.sendRedirect("Login.jsp?message=" + message);
+		p_response.sendRedirect("Login.jsp?message=" + message);		
 	}
 }

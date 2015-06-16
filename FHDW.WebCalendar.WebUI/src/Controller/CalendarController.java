@@ -34,35 +34,35 @@ public class CalendarController extends HttpServlet
 		eventService = new EventService();
 	}
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
 	{
 		
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException
+	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) throws javax.servlet.ServletException, IOException
 	{
-		String action = request.getParameter("action");
+		String action = p_request.getParameter("action");
 		
 		switch (action.toLowerCase())
 		{
 			case "getevents" :
-				GetEvents(response, request);
+				GetEvents(p_request, p_response);
 				break;
 			case "logout" :
-				Logout(response, request.getCookies());
+				Logout(p_request, p_response);
 				break;
 			case "createnewcalendar" :
-				CreateNewCalendar(response, request);
+				CreateNewCalendar(p_request, p_response);
 				break;
 			case "searchevent" :
-				SearchEvent(response, request);
+				SearchEvent(p_request, p_response);
 				break;
 			default :
 				break;
 		}
 	}
 	
-	private void SearchEvent(HttpServletResponse p_response, HttpServletRequest p_request)
+	private void SearchEvent(HttpServletRequest p_request, HttpServletResponse p_response)
 	{
 		try
 		{
@@ -80,7 +80,7 @@ public class CalendarController extends HttpServlet
 		{}
 	}
 	
-	private void CreateNewCalendar(HttpServletResponse p_response, HttpServletRequest p_request) throws IOException
+	private void CreateNewCalendar(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		try
 		{
@@ -93,7 +93,7 @@ public class CalendarController extends HttpServlet
 		
 	}
 	
-	private void GetEvents(HttpServletResponse p_response, HttpServletRequest p_request) throws IOException
+	private void GetEvents(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		try
 		{
@@ -118,15 +118,15 @@ public class CalendarController extends HttpServlet
 		{
 			ExceptionController.handleRuntimeException(e, p_response, "FEHLER!!");
 		}
-		
 	}
 	
-	public static void Logout(HttpServletResponse p_response, Cookie[] p_cookies) throws IOException
+	private void Logout(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
+		Cookie[] cookies = p_request.getCookies();
 		Cookie calendarCookie = null;
-		if (p_cookies != null)
+		if (cookies != null)
 		{
-			for (Cookie cookie : p_cookies)
+			for (Cookie cookie : cookies)
 			{
 				if (cookie.getName().equals("FHDW.WebCalendar"))
 				{
