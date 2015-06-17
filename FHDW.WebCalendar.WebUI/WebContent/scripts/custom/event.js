@@ -1,3 +1,11 @@
+/**
+ * @author Lucas Engel
+ * 
+ *         JavaScript-Logik für die Events. 
+ * 
+ * @see Event.jsp
+ */
+
 $(document).ready(function() {
   getEventData();
   setCharatersLeft(parseInt($("#txaEventComment").attr("maxlength")));

@@ -21,6 +21,16 @@ import Exception.ExceptionController;
 import Model.Calendar.Event;
 import Services.*;
 
+/**
+ * @author Lucas Engel
+ * 
+ * 			CalendarController
+ * 			In diesem Controller befinden sich alle, für den Kalender (Calendar.jsp) wichtige Informationen.
+ * 
+ * 
+ */
+
+
 @WebServlet ("/CalendarController")
 public class CalendarController extends HttpServlet
 {
@@ -28,17 +38,27 @@ public class CalendarController extends HttpServlet
 	private CalendarService calendarService;
 	private EventService eventService;
 	
+	/**
+	 * Initialisierung des Controllers.
+	 * 
+	 */
 	public CalendarController()
 	{
 		calendarService = new CalendarService();
 		eventService = new EventService();
 	}
-	
 	protected void doGet(HttpServletRequest p_request, HttpServletResponse p_response)
 	{
 		
 	}
 	
+	/**
+	 * DoPost wird bei jeder Anfrage an den Controller aufgerufen.
+	 * Über einen Parameter wird entschieden welche Aktion als nächstes ausgeführt wird.
+	 * 
+	 * @param p_request
+	 * @param p_response
+	 */
 	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) throws javax.servlet.ServletException, IOException
 	{
 		String action = p_request.getParameter("action");
@@ -61,7 +81,15 @@ public class CalendarController extends HttpServlet
 				break;
 		}
 	}
-	
+
+	/**
+	 * Falls der Benutzer eine Suche ausführen möchte wird diese Methode aufgerufen.
+	 * Die Methode SeachEvent fragt bei der BLL an, ob es bereits Termine mit den eingegebenen Suchkriterien gibt.
+	 * Die JavaScript-Methode, welche diese Methode aufruft, bekommt eine Auflistung aller Termine als JSON-String zurück.
+	 * 
+	 * @param p_request
+	 * @param p_response
+	 */
 	private void SearchEvent(HttpServletRequest p_request, HttpServletResponse p_response)
 	{
 		try
@@ -79,7 +107,13 @@ public class CalendarController extends HttpServlet
 		catch (Exception e)
 		{}
 	}
-	
+
+	/**
+	 * Die Methode CreateNewCalendar dient für die Erstellung eines neuen Kalenders.
+	 * 
+	 * @param p_request
+	 * @param p_response
+	 */
 	private void CreateNewCalendar(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		try
@@ -92,7 +126,13 @@ public class CalendarController extends HttpServlet
 		}
 		
 	}
-	
+
+	/**
+	 * Die Methode Get-Events fragt bei der BLL nach allen Terminen in einem bestimmten Zeitraum.
+	 * 
+	 * @param p_request
+	 * @param p_response
+	 */
 	private void GetEvents(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		try
@@ -119,7 +159,13 @@ public class CalendarController extends HttpServlet
 			ExceptionController.handleRuntimeException(e, p_response, "FEHLER!!");
 		}
 	}
-	
+
+	/**
+	 * Der Cookie "FHDW.WebCalendar" wird gelöscht und der Benutzer wird auf die Login.jsp weitergeleitet.
+	 * 
+	 * @param p_request
+	 * @param p_response
+	 */
 	private void Logout(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		Cookie[] cookies = p_request.getCookies();

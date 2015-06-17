@@ -11,6 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import Model.User.User;
 import Model.User.UserSecurity;
 import Services.*;
+/**
+ * @author Lucas Engel
+ * 
+ * 			RegisterController
+ * 			In diesem Controller befinden sich alle, für die Registrierung (Register.jsp) wichtige Informationen.
+ * 
+ * 
+ */
 
 @WebServlet ("/RegisterController")
 public class RegisterController extends HttpServlet
@@ -28,6 +36,12 @@ public class RegisterController extends HttpServlet
 		RegisterNewUser(p_request, p_response);
 	}
 
+	/**
+	 * In der Methode RegisterNewUser werden alle Informationen von dem Benutzer gesammelt und weitergeleitet.
+	 * 
+	 * @param p_request
+	 * @param p_response
+	 */
 	private void RegisterNewUser(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		String message = "";

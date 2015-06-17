@@ -1,3 +1,13 @@
+<!--
+ *
+ * @author Lucas Engel
+ * 
+ * 			Registrierung
+ * 			Auf der Webseite kann der Benutzer alle wichtigen Informationen über sich angeben, um einen neuen Account zu erstellen.
+ *
+ *
+-->
+
 <%@page import="Model.User.User"%>
 <%@page import="Model.User.SecurityQuestion, Services.UserService, java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>

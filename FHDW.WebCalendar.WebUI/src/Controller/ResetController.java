@@ -11,8 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import Services.UserService;
 
 /**
- * Servlet implementation class PasswordReset
+ * @author Lucas Engel
+ * 
+ * 			ResetController
+ * 			In diesem Controller befinden sich alle, für die Passwort zurücksetzung (Reset.jsp) wichtige Informationen.
+ * 
+ * 
  */
+
 @WebServlet ("/ResetController")
 public class ResetController extends HttpServlet
 {
@@ -28,7 +34,14 @@ public class ResetController extends HttpServlet
 	{
 		CheckEnterdData(p_request, p_response);
 	}
+
 	
+	/**
+	 * Es wird überprüft ob der angegebene Benutzer existiert. Falls ja, wird der Benutzer zur nächsten Seite weitergeleitet.
+	 * 
+	 * @param p_request
+	 * @param p_response
+	 */
 	private void CheckEnterdData(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		Integer userId = null;

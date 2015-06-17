@@ -1,3 +1,11 @@
+/**
+ * @author Lucas Engel
+ * 
+ *         JavaScript-Logik für den Login. 
+ * 
+ * @see Login.jsp
+ */
+
 $(document).ready(function() {
 	$("#btnRegister").click(function() {
 		var parameter = "";

@@ -1,3 +1,11 @@
+/**
+ * @author Lucas Engel
+ * 
+ *         JavaScript-Logik für den Kalender. 
+ * 
+ * @see Calendar.jsp
+ */
+
 var dayColumnWidthArray = [];
 
 $(document).ready(function() {

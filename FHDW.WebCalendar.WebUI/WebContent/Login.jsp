@@ -1,3 +1,13 @@
+<!--
+ *
+ * @author Lucas Engel
+ * 
+ * 			Loginbereich
+ * 			Diese Webseite dient für den Login. Der Benutzer kann außerdem zu der Webseite Passwort zurücksetzen (Reset.jsp) oder zur Registrierung (Register.jsp) gehen.
+ *
+ *
+-->
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%
 	Cookie calendarCookie = null;
