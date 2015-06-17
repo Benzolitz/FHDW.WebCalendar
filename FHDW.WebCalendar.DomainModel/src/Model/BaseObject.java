@@ -1,5 +1,8 @@
 package Model;
 
+/**
+ * @author Eduard Kress, Lucas Engel, Frederik Heinrichs
+ */
 public class BaseObject
 {
     private int id;

@@ -2,6 +2,9 @@ package Model.Calendar;
 
 import Model.BaseObject;
 
+/**
+ * @author Eduard Kress, Lucas Engel, Frederik Heinrichs
+ */
 public class Calendar extends BaseObject
 {
     private int ownerId;

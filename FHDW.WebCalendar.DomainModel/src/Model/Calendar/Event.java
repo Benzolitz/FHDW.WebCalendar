@@ -7,6 +7,9 @@ import java.util.Date;
 import Model.BaseObject;
 import Model.User.User;
 
+/**
+ * @author Eduard Kress, Lucas Engel, Frederik Heinrichs
+ */
 public class Event extends BaseObject
 {
     private String title;

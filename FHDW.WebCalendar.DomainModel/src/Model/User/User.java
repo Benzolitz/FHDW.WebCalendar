@@ -2,6 +2,9 @@ package Model.User;
 
 import Model.BaseObject;
 
+/**
+ * @author Eduard Kress, Lucas Engel, Frederik Heinrichs
+ */
 public class User extends BaseObject
 {
     private String username;
