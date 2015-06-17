@@ -1,3 +1,16 @@
+<!--
+ *
+ * @author Lucas Engel
+ * 
+ * 			Kalendaransicht.
+ * 			Auf dieser Webseite bekommt der Benutzer mehrere Informationen angezeigt.
+ * 			Im #header-Bereich befindet sich aktuell nur die Möglichkeit zum Ausloggen. Hier könnten weitere Informationen über den Benutzer stehen, oder weitere allgemeine Funktionalitäten eingebaut werden.
+ * 			Im #userControls-Bereich stehen dem Benutzer alle wichtigen Funktionalitäten zu Verfügung. Hier kann der Benutzer Termine suchen, einen neuen Termin anlegen, die derzeitige Woche ändern und seine Kalender verwalten.
+ * 			Im #calendar-Bereich ist der eigentliche Kalendar mit den Terminen des Benutzers zu sehen.
+ *
+ *
+-->
+ 
 <%@page import="Controller.CalendarController, java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%

@@ -1,3 +1,13 @@
+<!--
+ *
+ * @author Lucas Engel
+ * 
+ * 			Passwort zurücksetzen
+ * 			Dies ist der zweite Teil des Passwort zurücksetzen Verfahrens, bei welchem der Benutzer seine Sicherheitsfrage beantworten muss und ein neues Passwort angeben muss.
+ *
+ *
+-->
+
 <%@page import="Services.UserService"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%

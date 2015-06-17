@@ -8,6 +8,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import Services.*;
 
+/**
+ * @author Lucas Engel
+ * 
+ * 			LoginController
+ * 			In diesem Controller befinden sich alle, für den Login (Login.jsp) wichtige Informationen.
+ * 
+ * 
+ */
+
 @WebServlet ("/LoginController")
 public class LoginController extends javax.servlet.http.HttpServlet
 {
@@ -23,7 +32,13 @@ public class LoginController extends javax.servlet.http.HttpServlet
 	{
 		Login(p_request, p_response);
 	}
-	
+
+	/**
+	 * In der Login-Methode wird ein Cookie für den Benutzer erstellt und der Benutzer wird bei erfolgreichem Login an seinen Kalender weitergeleitet.
+	 * 
+	 * @param p_request
+	 * @param p_response
+	 */
 	private void Login(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		String username = p_request.getParameter("username");

@@ -21,6 +21,15 @@ import Exception.ExceptionController;
 import Model.Calendar.Event;
 import Services.EventService;
 
+/**
+ * @author Lucas Engel
+ * 
+ * 			EventController
+ * 			In diesem Controller befinden sich alle, für die Termine (Event.jsp) wichtige Informationen.
+ * 
+ * 
+ */
+
 @WebServlet ("/EventController")
 public class EventController extends HttpServlet
 {
@@ -31,7 +40,14 @@ public class EventController extends HttpServlet
 	{
 		eventService = new EventService();
 	}
-	
+
+	/**
+	 * DoPost wird bei jeder Anfrage an den Controller aufgerufen.
+	 * Über einen Parameter wird entschieden welche Aktion als nächstes ausgeführt wird.
+	 * 
+	 * @param p_request
+	 * @param p_response
+	 */
 	protected void doPost(HttpServletRequest p_request, HttpServletResponse p_response) throws ServletException, IOException
 	{
 		String action = p_request.getParameter("Action");
@@ -50,6 +66,12 @@ public class EventController extends HttpServlet
 		}
 	}
 	
+	/**
+	 * DeleteEvent dient dazu einen Termin aus der Datenbank.
+	 * 
+	 * @param p_request
+	 * @param p_response
+	 */
 	private void DeleteEvent(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		try
@@ -64,7 +86,13 @@ public class EventController extends HttpServlet
 			ExceptionController.handleRuntimeException(e, p_response, "FEHLER!!");
 		}
 	}
-	
+
+	/**
+	 * SaveEvent speichert entweder einen neuen Termin, oder sendet die aktualisierten Daten eines Termins.
+	 * 
+	 * @param p_request
+	 * @param p_response
+	 */
 	private void SaveEvent(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		try
@@ -109,7 +137,13 @@ public class EventController extends HttpServlet
 		}
 		
 	}
-	
+
+	/**
+	 * Mit GetEventData werden alle Informationen zu einem Termin ausgelesen.
+	 * 
+	 * @param p_request
+	 * @param p_response
+	 */
 	private void GetEventData(HttpServletRequest p_request, HttpServletResponse p_response) throws IOException
 	{
 		try
@@ -133,4 +167,4 @@ public class EventController extends HttpServlet
 			ExceptionController.handleRuntimeException(e, p_response, "FEHLER!!");
 		}
 	}
-}
+} 

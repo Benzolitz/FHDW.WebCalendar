@@ -9,6 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Services.UserService;
 
+/**
+ * @author Lucas Engel
+ * 
+ * 			ResetSecurity
+ * 			In diesem Controller befinden sich alle, für die Passwort zurücksetzung (ResetSecurity.jsp) wichtige Informationen.
+ * 
+ * 
+ */
+
 @WebServlet ("/ResetSecurityController")
 public class ResetSecurityController extends HttpServlet
 {
@@ -24,7 +33,14 @@ public class ResetSecurityController extends HttpServlet
 	{
 		ChangeUserPassword(p_request, p_response);
 	}
+
 	
+	/**
+	 * Falls die eingegebene Sicherheitsantwort korrekt eingegeben wurde, wird das neue Passwort in die Datenbank geschrieben.
+	 * 
+	 * @param p_request
+	 * @param p_response
+	 */
 	private void ChangeUserPassword(HttpServletRequest p_request, HttpServletResponse p_response)
 	{
 		

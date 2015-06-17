@@ -1,3 +1,11 @@
+/**
+ * @author Lucas Engel
+ * 
+ *         JavaScript-Logik für die Benutzerregistrierung. 
+ * 
+ * @see Register.jsp
+ */
+
 var samePasswords = false;
 $(document).ready(function() {
 	DisableSubmitButton();

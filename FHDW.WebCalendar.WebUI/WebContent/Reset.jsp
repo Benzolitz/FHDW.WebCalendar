@@ -1,3 +1,13 @@
+<!--
+ *
+ * @author Lucas Engel
+ * 
+ * 			Passwort zurücksetzen
+ * 			Mit Hilfe dieser Webseite kann der Benutzer sein Passwort zurücksetzen. Auf dieser Seite muss der Benutzer zuerst seine E-Mailadresse, oder sein Benutzernamen eingeben, bevor er weitergeleitet wird.
+ *
+ *
+-->
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%
 	Cookie calendarCookie = null;
