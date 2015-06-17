@@ -20,6 +20,11 @@ import Model.Calendar.Calendar;
 import Model.Calendar.Event;
 import Model.User.SecurityQuestion;
 
+
+/**
+ * Die Klasse WebCalendarRepo, welche das Interface {@link IWebCalendarRepo} implementiert.
+ * @author Eduard Kress
+ */
 public class WebCalendarRepo implements IWebCalendarRepo
 {
     Connection conn = null;
@@ -32,6 +37,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
         InitDatabase();
     }
 
+    /**
+     * Initialisiert die Datenbank
+     */
     private void InitDatabase()
     {
         try
@@ -78,6 +86,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
         }
     }
 
+    /**
+     * Erzeugt einen neuen Katalog, falls noch nicht vorhanden, und importiert das Datenbankschema und Testdaten.
+     */
     private void InitDatabaseTablesWithTestData(Statement p_stmt)
             throws Exception
     {
@@ -123,6 +134,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
 
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#GetUserId(java.lang.String)
+     */
     @Override
     public Integer GetUserId(String p_usernameOrEmail) throws SQLException
     {
@@ -143,21 +157,27 @@ public class WebCalendarRepo implements IWebCalendarRepo
         return userId;
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#GetUserPassword(int)
+     */
     @Override
     public String GetUserPassword(int p_userId) throws SQLException
     {
-        String userPassword;
+        String userPassword = null;
         String sql;
         ResultSet rs;
 
         sql = String.format("SELECT Pass FROM User WHERE ID = '%d';", p_userId);
         rs = stmt.executeQuery(sql);
-        rs.next();
-        userPassword = rs.getString(1);
+        if(rs.next())
+        	userPassword = rs.getString(1);
 
         return userPassword;
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#GetAllSecurityQuestions()
+     */
     @Override
     public Collection<SecurityQuestion> GetAllSecurityQuestions()
             throws SQLException
@@ -183,6 +203,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
         return questions;
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#RegistrateNewUser(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, int, java.lang.String)
+     */
     @Override
     public int RegistrateNewUser(String p_username, String p_email,
             String p_password, String p_firstName, String p_lastName,
@@ -207,6 +230,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
         return userId;
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#GetSecurityQuestion(int)
+     */
     @Override
     public String GetSecurityQuestion(int p_userId) throws SQLException
     {
@@ -218,12 +244,15 @@ public class WebCalendarRepo implements IWebCalendarRepo
                 .format("SELECT SecurityQuestion.Question FROM User JOIN SecurityQuestion ON User.SecurityQuestionID = SecurityQuestion.ID where User.ID = '%d';",
                         p_userId);
         rs = stmt.executeQuery(sql);
-        rs.next();
-        securityQuestion = rs.getString(1);
+        if(rs.next())
+        	securityQuestion = rs.getString(1);
 
         return securityQuestion;
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#GetSecurityAnswer(int)
+     */
     @Override
     public String GetSecurityAnswer(int p_userId) throws SQLException
     {
@@ -240,6 +269,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
         return securityAnswer;
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#ResetPassword(int, java.lang.String)
+     */
     @Override
     public void ResetPassword(int p_userId, String p_password)
             throws SQLException
@@ -251,6 +283,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
         stmt.executeUpdate(sql);
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#CreateNewCalendar(int, java.lang.String)
+     */
     @Override
     public int CreateNewCalendar(int p_userId, String p_calendarName)
             throws SQLException
@@ -272,6 +307,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
         return calendarId;
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#GetAllUserCalendar(int)
+     */
     @Override
     public Collection<Calendar> GetAllUserCalendar(int p_userId)
             throws SQLException
@@ -300,6 +338,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
         return calendars;
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#GetEventsForUser(int, int, java.util.Calendar, java.util.Calendar)
+     */
     @Override
     public Collection<Event> GetEventsForUser(int p_calendarId, int p_userId,
             java.util.Calendar p_from, java.util.Calendar p_to)
@@ -344,6 +385,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
         return events;
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#GetEventDetailed(int)
+     */
     @Override
     public Event GetEventDetailed(int p_eventId) throws SQLException
     {
@@ -407,6 +451,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
         return event;
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#SaveEvent(java.lang.String, java.lang.String, java.util.Calendar, java.util.Calendar, java.lang.String, java.util.Collection, int, int, java.util.HashMap, java.util.HashMap)
+     */
     @Override
     public void SaveEvent(String p_title, String p_location,
             java.util.Calendar p_starttime, java.util.Calendar p_endtime,
@@ -459,6 +506,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
         }
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#DeleteEvent(int, int)
+     */
     @Override
     public void DeleteEvent(int p_eventId, int p_userId) throws SQLException
     {
@@ -479,6 +529,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
         stmt.executeUpdate(sql);
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#DeleteCalendar(int)
+     */
     @Override
     public void DeleteCalendar(int p_calendarId) throws SQLException
     {
@@ -489,6 +542,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
         stmt.executeUpdate(sql);
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#DeleteUser(int)
+     */
     @Override
     public void DeleteUser(int p_userId) throws SQLException
     {
@@ -498,6 +554,9 @@ public class WebCalendarRepo implements IWebCalendarRepo
         stmt.executeUpdate(sql);
     }
 
+    /* (non-Javadoc)
+     * @see IRepository.IWebCalendarRepo#UpdateEvent(int, java.lang.String, java.lang.String, java.util.Calendar, java.util.Calendar, java.lang.String, java.util.Collection, java.util.HashMap, java.util.HashMap)
+     */
     @Override
     public void UpdateEvent(int p_eventId, String p_title, String p_location,
             java.util.Calendar p_starttime, java.util.Calendar p_endtime,
