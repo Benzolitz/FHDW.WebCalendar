@@ -37,7 +37,6 @@
         if (userId == null)
         {
             redirect = "Login.jsp?message=UserId konnte nicht gefunden werden!";
-            CalendarController.Logout(response, cookies);
         }
     }
 

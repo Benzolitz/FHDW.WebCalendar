@@ -1,4 +1,4 @@
-<%@page import="Services.PasswordResetService"%>
+<%@page import="Services.UserService"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%
     Cookie calendarCookie = null;
@@ -32,8 +32,8 @@
 				<div class="claCenterBoxDefault">
 					<%
 					    String userId = request.getParameter("user");
-					    PasswordResetService passwordResetService = new PasswordResetService();
-					    String question = passwordResetService
+					    UserService userService = new UserService();
+					    String question = userService
 					            .GetUserSecurityQuestion(Integer.parseInt(userId));
 
 					    out.write(question);
