@@ -1,5 +1,5 @@
-<%@page import="Model.SecurityQuestion.SecurityQuestion"%>
-<%@page import="Services.RegistrationService, java.util.*"%>
+<%@page import="Model.User.User"%>
+<%@page import="Model.User.SecurityQuestion, Services.UserService, java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%
     Cookie calendarCookie = null;
@@ -63,9 +63,9 @@
 					<select id="selSecurityQuestion" name="selSecurityQuestion">
 						<%
 						    out.print("<option value=\"0\" disabled selected>Sicherheitsfrage*</option>");
-						    RegistrationService registrationService = new RegistrationService();
-						    Collection<SecurityQuestion> questions = registrationService
-						            .GetAlLSecurityQuestions();
+						    UserService userService = new UserService();
+						    Collection<SecurityQuestion> questions = userService
+						            .GetAllSecurityQuestions();
 
 						    for (SecurityQuestion question : questions)
 						    {
