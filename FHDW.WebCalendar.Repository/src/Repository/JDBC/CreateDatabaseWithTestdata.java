@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import Model.Calendar.Calendar;
 
-public class TestConnection
+public class CreateDatabaseWithTestdata
 {
     public static void main(String[] args)
     {

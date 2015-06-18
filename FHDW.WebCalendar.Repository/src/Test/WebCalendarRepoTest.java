@@ -11,10 +11,15 @@ import java.util.Date;
 import org.junit.Test;
 
 import IRepository.IWebCalendarRepo;
+import Model.Calendar.Calendar;
 import Model.Calendar.Event;
 import Model.User.SecurityQuestion;
 import Repository.JDBC.WebCalendarRepo;
 
+/**
+ * JUnit Tests für die Datenbank. Vorraussetzung für die Tests ist die Importierung der Testdaten.
+ * @author Eduard Kress
+ */
 public class WebCalendarRepoTest
 {
 
@@ -47,7 +52,6 @@ public class WebCalendarRepoTest
         }
         catch (SQLException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -64,7 +68,6 @@ public class WebCalendarRepoTest
         }
         catch (SQLException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -118,7 +121,6 @@ public class WebCalendarRepoTest
         }
         catch (SQLException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -135,7 +137,6 @@ public class WebCalendarRepoTest
         }
         catch (SQLException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -152,7 +153,6 @@ public class WebCalendarRepoTest
         }
         catch (SQLException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -170,7 +170,6 @@ public class WebCalendarRepoTest
         }
         catch (SQLException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -207,7 +206,55 @@ public class WebCalendarRepoTest
         }
         catch (SQLException e)
         {
-            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void CreateNewCalendarForExistingUser()
+    {
+    	Integer result;
+    	IWebCalendarRepo repo = new WebCalendarRepo();
+    	
+    	try
+        {
+            result = repo.CreateNewCalendar(1, "NewCalendar");
+            assertTrue(result != null);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void GetAllUserCalendarFromExistingUser()
+    {
+    	Collection<Calendar> result;
+    	IWebCalendarRepo repo = new WebCalendarRepo();
+    	try
+        {
+            result = repo.GetAllUserCalendar(1);
+            assertTrue(result.size() > 0);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void GetEventDetailsOfAnExistingEvent()
+    {
+    	Event result;
+    	IWebCalendarRepo repo = new WebCalendarRepo();
+    	try
+        {
+            result = repo.GetEventDetailed(2);
+            assertTrue(!result.GetTitle().isEmpty());
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
     }
