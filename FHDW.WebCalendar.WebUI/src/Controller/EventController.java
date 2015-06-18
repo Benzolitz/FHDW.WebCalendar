@@ -17,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import Exception.ExceptionController;
-import Model.Calendar.Event;
-import Services.EventService;
+import BLL.Services.EventService;
+import Controller.Exception.ExceptionController;
+import DomainModel.Calendar.Event;
 
 /**
  * @author Lucas Engel

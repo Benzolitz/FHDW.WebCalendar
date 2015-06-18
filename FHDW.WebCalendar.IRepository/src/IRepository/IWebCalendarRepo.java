@@ -6,9 +6,9 @@ import java.util.HashMap;
 
 import com.sun.media.sound.ModelAbstractChannelMixer;
 
-import Model.Calendar.Calendar;
-import Model.Calendar.Event;
-import Model.User.SecurityQuestion;
+import DomainModel.Calendar.Calendar;
+import DomainModel.Calendar.Event;
+import DomainModel.User.SecurityQuestion;
 
 /**
  * Das Interface IWebCalendarRepo.
@@ -39,7 +39,7 @@ public interface IWebCalendarRepo
     /**
      * Liefert alle möglichen Sicherheitsfragen.
      *
-     * @return Gibt eine Liste mit Domain-Objekten des Types {@link Model.User.SecurityQuestion} zurück. Je Objekt ist die Frage als Zeichenkette und deren ID vorhanden.
+     * @return Gibt eine Liste mit Domain-Objekten des Types {@link DomainModel.User.SecurityQuestion} zurück. Je Objekt ist die Frage als Zeichenkette und deren ID vorhanden.
      * @throws SQLException Wenn ein Problem mit der Datenbank aufgetreten ist.
      */
     Collection<SecurityQuestion> GetAllSecurityQuestions() throws SQLException;
@@ -105,7 +105,7 @@ public interface IWebCalendarRepo
      * Gibt alle Kalender von einem Benutzer zurück.
      *
      * @param p_userId Eine BenutzerID.
-     * @return Eine Liste mit Domain-Objekten des Typs {@link Model.Calendar.Calendar} zurück.
+     * @return Eine Liste mit Domain-Objekten des Typs {@link DomainModel.Calendar.Calendar} zurück.
      * @throws SQLException Wenn ein Problem mit der Datenbank aufgetreten ist.
      */
     Collection<Calendar> GetAllUserCalendar(int p_userId) throws SQLException;
@@ -118,7 +118,7 @@ public interface IWebCalendarRepo
      * @param p_userId Eine BenutzerID.
      * @param p_from Von wann die Termine geholt werden sollen.
      * @param p_to Bis wann die Termine geholt werden sollen.
-     * @return Gibt eine Liste mit Domain.Objekten des Typs {@link Model.Calendar.Event} zurück.
+     * @return Gibt eine Liste mit Domain.Objekten des Typs {@link DomainModel.Calendar.Event} zurück.
      * @throws SQLException Wenn ein Problem mit der Datenbank aufgetreten ist.
      */
     Collection<Event> GetEventsForUser(int p_calendarId, int p_userId,
@@ -129,7 +129,7 @@ public interface IWebCalendarRepo
      * Gibt zu einem bestimmten Termin alle Informationen wieder.
      *
      * @param p_eventId Eine TerminID.
-     * @return Gibt ein Objekt des Typs {@link Model.Calendar.Event} zurück.
+     * @return Gibt ein Objekt des Typs {@link DomainModel.Calendar.Event} zurück.
      * @throws SQLException Wenn ein Problem mit der Datenbank aufgetreten ist.
      */
     Event GetEventDetailed(int p_eventId) throws SQLException;

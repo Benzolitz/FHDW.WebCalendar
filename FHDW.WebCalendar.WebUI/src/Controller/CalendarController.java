@@ -17,9 +17,9 @@ import com.google.gson.reflect.*;
 
 import java.lang.reflect.Type;
 
-import Exception.ExceptionController;
-import Model.Calendar.Event;
-import Services.*;
+import BLL.Services.*;
+import Controller.Exception.ExceptionController;
+import DomainModel.Calendar.Event;
 
 /**
  * @author Lucas Engel

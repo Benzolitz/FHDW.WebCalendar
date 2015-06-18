@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Model.User.User;
-import Model.User.UserSecurity;
-import Services.*;
+import BLL.Services.*;
+import DomainModel.User.User;
+import DomainModel.User.UserSecurity;
 /**
  * @author Lucas Engel
  * 
