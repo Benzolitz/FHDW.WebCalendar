@@ -8,6 +8,6 @@ public class CreateDatabaseWithTestdata
 {
     public static void main(String[] args)
     {
-        WebCalendarRepo testRepo = new WebCalendarRepo();
+        WebCalendarRepo testRepo = new WebCalendarRepo(); 
     }
 }
