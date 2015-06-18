@@ -12,9 +12,27 @@ import BLL.Helper.EventHelper;
 import DomainModel.Calendar.Calendar;
 import DomainModel.Calendar.Event;
 
+/**
+ * @author Frederik Heinrichs
+ * Buiniss Logik für das Verwalten von Terminen
+ */
 public class EventService extends BaseService
 {
 
+    /**
+     * Erstellt ein Event in einem Kalender eines Benutzers
+     * 
+     * @param p_event
+     * 
+     * @return true wenn das Event erstellt werden konnte
+     *  
+     * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank
+     *             entstanden ist
+     * @throws IOException, Wenn die pflichtfelder im Event leer waren
+     * @throws NotFound, wenn der Benutzer nicht in der Datenbank gefunden wurde
+     * 
+     * @see Event
+     */
     public boolean CreateEvent(Event p_event) throws DatabaseException,
             IOException, NotFound
     {
@@ -39,6 +57,18 @@ public class EventService extends BaseService
         }
     }
 
+    /**
+     * Ändert die Werte eines Events für einen Benutzer
+     * 
+     * @param p_event
+     * 
+     * @return
+     * 
+     * @throws IOException
+     * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank
+     *             entstanden ist
+     * @throws NotFound, wenn der Benutzer nicht in der Datenbank gefunden wurde
+     */
     public boolean ChangeEvent(Event p_event) throws IOException,
             DatabaseException, NotFound
     {
@@ -61,6 +91,17 @@ public class EventService extends BaseService
         }
     }
 
+    /**
+     * Löscht ein Event für einen Benutzer
+     * 
+     * @param p_eventId
+     * @param p_userId
+     * 
+     * @return true, wenn das löschen erfolgreich war oder der Termin nicht mehr existiert
+     * 
+     * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank
+     *             entstanden ist
+     */
     public boolean RemoveEvent(int p_eventId, int p_userId)
             throws DatabaseException
     {
@@ -84,6 +125,17 @@ public class EventService extends BaseService
         }
     }
 
+    /**
+     * Gibt ein passendes Event aus der Datenbank zurück
+     * 
+     * @param p_eventId
+     * 
+     * @return
+     * 
+     * @throws NotFound, wenn das Event in der Datenbank nicht gefunden werden konnte
+     * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank
+     *             entstanden ist
+     */
     public Event GetEvent(int p_eventId) throws NotFound, DatabaseException
     {
         try
@@ -102,6 +154,18 @@ public class EventService extends BaseService
         }
     }
 
+    /**
+     * Ermittelt alle Eingetragenen Benutzer aus einer Liste und<br>
+     * erstellt eine Hashmap mit userId und der ID des DefaultKalenders für den entsprechenden Benutzer aus der Liste.
+     * 
+     * @param p_userNameList
+     * 
+     * @return HashMap <userId, defaultCalendarId>
+     * 
+     * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank
+     *             entstanden ist
+     * @throws NotFound, wenn Ein Benutzer der Liste nicht in der Datenbank existiert
+     */
     private HashMap<Integer, Integer> CheckEventUserList(
             Collection<String> p_userNameList) throws DatabaseException,
             NotFound
@@ -132,12 +196,17 @@ public class EventService extends BaseService
     }
 
     /**
+     * Suche nach Events<br>
+     * Es werden alle Event.Title und Event.Category durchsucht
+     * 
      * @param p_calendar
      * @param searchString
      * 
-     * @return
-     * @throws DatabaseException
-     * @throws NotFound
+     * @return volle oder leere Collection mit events (Nie NUll)
+     * 
+     * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank
+     *             entstanden ist
+     * @throws NotFound, wenn der Benutzer nicht gefunden werden konnte
      */
     public Collection<Event> SearchEvents(int p_userId, String p_searchString)
             throws DatabaseException, NotFound

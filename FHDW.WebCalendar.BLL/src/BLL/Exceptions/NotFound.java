@@ -2,7 +2,7 @@ package BLL.Exceptions;
 
 /**
  * @author Frederik Heinrichs
- * TODO: Kommentar schreiben
+ * Fehlerklasse um Anzuzeigen, dass ein Object nicht mehr Existiert oder nicht gefunden werden konnte
  */
 public class NotFound extends BaseServiceException
 {

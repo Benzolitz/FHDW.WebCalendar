@@ -15,7 +15,7 @@ import Repository.MySQL.WebCalendarRepo;
 /**
  * @author Frederik Heinrichs
  * 
- *         Buisness Logik für die Verwaltung von Benutzerdaten
+ * Buisness Logik für die Verwaltung von Benutzerdaten
  * 
  * @see WebCalendarRepo
  * @see UserHelper

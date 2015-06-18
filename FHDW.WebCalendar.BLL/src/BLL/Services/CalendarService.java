@@ -1,6 +1,5 @@
 package BLL.Services;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -11,7 +10,8 @@ import BLL.Helper.CalendarHelper;
 import DomainModel.Calendar.Calendar;
 
 /**
- * @author Frederik Heinrichs Buiniss Logik für die Anzeige eines Kalenders
+ * @author Frederik Heinrichs 
+ * Buiniss Logik für die Anzeige eines Kalenders
  */
 public class CalendarService extends BaseService
 {
@@ -47,7 +47,7 @@ public class CalendarService extends BaseService
 
             return result_calenderId;
         }
-        catch (SQLException e)
+        catch (Exception e)
         {
             throw new DatabaseException(e);
         }
@@ -70,7 +70,7 @@ public class CalendarService extends BaseService
             GetRepo().DeleteCalendar(p_calendarId);
             return true;
         }
-        catch (SQLException e)
+        catch (Exception e)
         {
             throw new DatabaseException(e);
         }
@@ -97,12 +97,22 @@ public class CalendarService extends BaseService
             result_userCalendar = GetRepo().GetAllUserCalendar(p_userId);
             return result_userCalendar;
         }
-        catch (SQLException e)
+        catch (Exception e)
         {
             throw new DatabaseException(e);
         }
     }
 
+    /**
+     * Gibt die Defaultkalender ID für einen Benutzer zurück
+     * 
+     * @param p_userId
+     * 
+     * @return ID
+     * 
+     * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank
+     *             entstanden ist
+     */
     public int GetDefaultCalendarId(int p_userId) throws DatabaseException
     {
         Collection<Calendar> userCalendar = GetAllUserCalendar(p_userId);

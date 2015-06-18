@@ -6,7 +6,8 @@ import BLL.Helper.WebCalendarLog;
 
 /**
  * @author Frederik Heinrichs
- * TODO: Kommentar schreiben
+ * Exception Klasse für unbekannte Datenbankfehler<br>
+ * !Fehler werden in eine Logdatei geschieben "Log.txt"!
  */
 public class DatabaseException extends BaseServiceException
 {

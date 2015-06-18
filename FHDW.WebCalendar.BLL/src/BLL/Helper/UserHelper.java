@@ -45,12 +45,12 @@ public class UserHelper
 	}
 	
 	/**
-	 * Überprüft die Syntax eines Benutzernamen<br>
-	 * 1. Der Benutzername darf nicht leer oder null sein<br>
+	 * Überprüft ob Vorname und Nachname nicht leer sind
 	 * 
-	 * @param p_username
+	 * @param p_firstOrLastname Vorname oder Nachname
 	 * 
-	 * @throws IOException wenn der eingebene user_name leer war
+	 * @return true, wenn Name nicht leer ist
+	 * 		   false, wenn Name leer ist
 	 */
 	public static void checkUserName(String p_username) throws IOException {
 		if (p_username == null || p_username.isEmpty()) {
@@ -91,42 +91,6 @@ public class UserHelper
 		if (! (dot+2 < len)) {
 			throw new IOException("Die Eingegebene E-Mailadresse war nicht korrekt");
 		} 
-	}
-	
-	/**
-	 * TODO: Regeln aufstellen
-	 * @param p_mailadress
-	 * @return
-	 */
-	public static boolean checkPhonenNumber(String p_mailadress) {
-		if (p_mailadress.isEmpty()) {
-			
-			return false;
-		} else {
-			// TODO: Gibt es Regeln die beim Password eingehalten werden müssen?
-			
-			return true;
-		}	
-	}
-	
-	/**
-	 * Überprüft die Syntax der Vor- und Nachnamen<br>
-	 * Benutzernamen dürfen nur aus Zeichen und Zahlen bestehen <br>
-	 * und maximal aus 12 Zeichen
-	 * 
-	 * @param p_firstOrLastname Vorname oder Nachname
-	 * 
-	 * @return true, wenn p_username eine korrekte Syntax bestizt<br>
-	 * 		   false, wenn p_username eine falsche Syntax bestizt
-	 */
-	public static boolean checkName(String p_firstOrLastname) {
-		if (p_firstOrLastname.isEmpty()) {
-			return false;
-		} else {
-			// TODO: Gibt es Regeln die beim Password eingehalten werden müssen?
-			
-			return true;
-		}	
 	}
 	
 }

@@ -4,9 +4,7 @@ import Repository.MySQL.WebCalendarRepo;
 
 /**
  * @author Frederik Heinrichs
- * 
- *         Abstrakter Basis Service für die Verwaltung gemeinsamer Attribute
- * 
+ * Abstrakter Basis Service für die Verwaltung gemeinsamer Attribute 
  */
 public abstract class BaseService
 {
@@ -37,6 +35,8 @@ public abstract class BaseService
 
     /**
      * Singelton wür das Repository
+     * <br>
+     * !Hinweis! Hier könnten unterschiedliche Implementierungen hinterlegt werden
      * 
      * @return WebCalendarRepo
      * 
