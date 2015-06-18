@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -17,15 +18,10 @@ public class EventServiceTest
 {
 
     private EventService eventService;
-    private final int EVENTIDTRUE = 1;
-    private final int EVENTIDFALSE = 1337;
-
     private final int USERIDTRUE = 1;
-    private final int USERIDFALSE = 1337;
-
-    private final int CALENDERIDFALSE = 1337;
     private final int CALENDERIDTRUE = 1;
-
+    private final int EVENTIDTRUE = 1;
+    
     /**
      * @return the calenderServic
      */
@@ -59,12 +55,16 @@ public class EventServiceTest
         event.SetLocation("DE");
         event.SetMessage("Test");
         event.SetTitle("TEST Event");
-
+        
+        List<String> requiredOptinonalUser = new ArrayList <String>();
+        requiredOptinonalUser.add("User2");
+        event.SetRequiredUser(requiredOptinonalUser);
+        
         return event;
     }
 
     @Test
-    public void TestCreateEventTrue()
+    public void TestCreateEvent()
     {
         try
         {
@@ -83,16 +83,14 @@ public class EventServiceTest
             fail(e.getMessage() + "\n" + e.getStackTrace());
         }
     }
-
+    
     @Test
-    public void TestCreateEventUserFalse()
+    public void TestChangeEvent()
     {
-        try
-        {
-            Event event = GetTrueEvent();
-            event.SetCreatorId(this.USERIDFALSE);
-            assertFalse(GetEventService().CreateEvent(event));
-        }
+    	try
+		{
+    		assertTrue(GetEventService().ChangeEvent(GetTrueEvent()));
+		}
         catch (IOException e)
         {
             fail(e.getMessage() + "\n" + e.getStackTrace());
@@ -103,56 +101,76 @@ public class EventServiceTest
         }
         catch (NotFound e)
         {
-            // Erwartet
+            fail(e.getMessage() + "\n" + e.getStackTrace());
         }
     }
-
+    
     @Test
-    public void TestCreateEventCalendarFalse()
+    public void TestRemoveEvent()
     {
-        fail("Not yet implemented");
+    	try
+		{
+			assertTrue(GetEventService().RemoveEvent(EVENTIDTRUE, USERIDTRUE));
+		}
+        catch (DatabaseException e)
+        {
+            fail(e.getMessage() + "\n" + e.getStackTrace());
+        }
     }
-
-    @Test
-    public void TestChangeEventTrue()
-    {
-        fail("Not yet implemented");
-    }
-
-    @Test
-    public void TestChangeEventIOException()
-    {
-        fail("Not yet implemented");
-    }
-
-    @Test
-    public void TestChangeEventNotExist()
-    {
-        fail("Not yet implemented");
-    }
-
-    @Test
-    public void TestRemoveEventTrue()
-    {
-        fail("Not yet implemented");
-    }
-
-    @Test
-    public void TestRemoveEventNotExist()
-    {
-        fail("Not yet implemented");
-    }
-
+    
     @Test
     public void TestGetEvent()
     {
-        fail("Not yet implemented");
+    	try
+		{
+    		assertNotNull(GetEventService().GetEvent(EVENTIDTRUE));
+		}
+        catch (DatabaseException e)
+        {
+            fail(e.getMessage() + "\n" + e.getStackTrace());
+        }
+        catch (NotFound e)
+        {
+            fail(e.getMessage() + "\n" + e.getStackTrace());
+        }
     }
-
     @Test
-    public void TestGetEventNotExist()
+    public void TestSearchEvents()
     {
-        fail("Not yet implemented");
+    	try
+		{
+            // Setze den SuchZeitram von 1.1.2000 - 31.12.2050
+			assertNotNull(GetEventService().SearchEvents(USERIDTRUE, ""));
+		}
+        catch (DatabaseException e)
+        {
+            fail(e.getMessage() + "\n" + e.getStackTrace());
+        }
+        catch (NotFound e)
+        {
+            fail(e.getMessage() + "\n" + e.getStackTrace());
+        }
     }
-
+    
+    @Test
+    public void TestGetEventsFromTo()
+    {
+    	try
+		{
+            // Setze den SuchZeitram von 1.1.2000 - 31.12.2050
+            java.util.Calendar DateFrom = java.util.Calendar.getInstance();
+            DateFrom.set(1990, 1, 1, 0, 0);
+            java.util.Calendar DateTo = java.util.Calendar.getInstance();
+            DateTo.set(2050, 1, 1, 0, 0);
+			assertNotNull(GetEventService().GetEventsFromTo(USERIDTRUE, CALENDERIDTRUE, DateFrom, DateTo));
+		}
+        catch (DatabaseException e)
+        {
+            fail(e.getMessage() + "\n" + e.getStackTrace());
+        }
+        catch (NotFound e)
+        {
+            fail(e.getMessage() + "\n" + e.getStackTrace());
+        }
+    }
 }
