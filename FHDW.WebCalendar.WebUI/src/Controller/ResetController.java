@@ -11,12 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import BLL.Services.UserService;
 
 /**
+ * In diesem Controller befinden sich alle, für die Passwort zurücksetzung (Reset.jsp) wichtige Informationen.
+ * 
  * @author Lucas Engel
- * 
- * 			ResetController
- * 			In diesem Controller befinden sich alle, für die Passwort zurücksetzung (Reset.jsp) wichtige Informationen.
- * 
- * 
  */
 
 @WebServlet ("/ResetController")

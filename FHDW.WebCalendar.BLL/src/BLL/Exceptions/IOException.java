@@ -1,8 +1,9 @@
 package BLL.Exceptions;
 
 /**
+ * Fehlermeldung für Eingabefehler vom Benutzer.
+ * 
  * @author Frederik Heinrichs
- * Fehlermeldung für Eingabefehler vom Benutzer
  */
 public class IOException extends BaseServiceException
 {

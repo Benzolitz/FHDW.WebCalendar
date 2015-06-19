@@ -13,9 +13,10 @@ import DomainModel.User.User;
 import Repository.MySQL.CalendarRepo;
 
 /**
+ * Business Logik für die Verwaltung von Benutzerdaten.
+ * 
  * @author Frederik Heinrichs
  * 
- * Buisness Logik für die Verwaltung von Benutzerdaten
  * 
  * @see CalendarRepo
  * @see UserHelper

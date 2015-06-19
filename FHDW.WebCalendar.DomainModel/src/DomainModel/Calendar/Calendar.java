@@ -3,6 +3,8 @@ package DomainModel.Calendar;
 import DomainModel.Base.BaseObject;
 
 /**
+ * Kalendar-Objekt um alle Daten von Kalendern speichern zu können.
+ * 
  * @author Eduard Kress, Lucas Engel, Frederik Heinrichs
  */
 public class Calendar extends BaseObject

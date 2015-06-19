@@ -3,8 +3,9 @@ package BLL.Services;
 import Repository.MySQL.CalendarRepo;
 
 /**
+ * Abstrakter Basis Service für die Verwaltung gemeinsamer Attribute. 
+ * 
  * @author Frederik Heinrichs
- * Abstrakter Basis Service für die Verwaltung gemeinsamer Attribute 
  */
 public abstract class BaseService
 {

@@ -1,8 +1,9 @@
 package BLL.Exceptions;
 
 /**
+ * Exception die Anzeigt, dass ein Objekt bereits im System existiert.
+ * 
  * @author Frederik Heinrichs
- * Exception die Anzeigt, dass ein Objekt bereits im System existiert
  */
 public class AlreadyExist extends BaseServiceException
 {

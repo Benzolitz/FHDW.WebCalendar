@@ -23,6 +23,7 @@ import IRepository.ICalendarRepo;
 
 /**
  * Die Klasse WebCalendarRepo, welche das Interface {@link ICalendarRepo} implementiert.
+ * 
  * @author Eduard Kress
  */
 public class CalendarRepo implements ICalendarRepo

@@ -11,7 +11,9 @@ import DomainModel.Calendar.Event;
 import DomainModel.User.SecurityQuestion;
 
 /**
- * Das Interface IWebCalendarRepo.
+ * Das Interface IWebCalendarRepo.<br>
+ * Dieses Interface wird von allen Repositories verwendet um einen einheitlichen Aufbau zu haben.
+ * 
  * @author Eduard Kress
  */
 public interface ICalendarRepo

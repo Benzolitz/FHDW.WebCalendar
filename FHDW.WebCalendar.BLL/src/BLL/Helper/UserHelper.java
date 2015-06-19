@@ -5,10 +5,10 @@ import DomainModel.User.User;
 import DomainModel.User.UserSecurity;
 
 /**
+ * Helper für die Überprüfung eingebener Daten eines User-Models.
+ * 
  * @author Frederik Heinrichs
  *
- * Helper für die überprüfung eingebener Daten eines User Models
- * 
  * @see User
  * @see UserSecurity
  */

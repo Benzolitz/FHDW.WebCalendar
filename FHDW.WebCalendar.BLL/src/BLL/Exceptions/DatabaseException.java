@@ -5,9 +5,10 @@ import java.util.logging.Level;
 import BLL.Helper.WebCalendarLog;
 
 /**
- * @author Frederik Heinrichs
  * Exception Klasse für unbekannte Datenbankfehler<br>
- * !Fehler werden in eine Logdatei geschieben "Log.txt"!
+ * Fehler werden in eine Logdatei geschrieben "Log.txt"!
+ * 
+ * @author Frederik Heinrichs
  */
 public class DatabaseException extends BaseServiceException
 {

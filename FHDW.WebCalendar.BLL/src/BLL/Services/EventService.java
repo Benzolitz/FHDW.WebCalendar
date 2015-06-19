@@ -13,8 +13,9 @@ import DomainModel.Calendar.Calendar;
 import DomainModel.Calendar.Event;
 
 /**
+ * Business Logik für das Verwalten von Terminen.
+ * 
  * @author Frederik Heinrichs
- * Buiniss Logik für das Verwalten von Terminen
  */
 public class EventService extends BaseService
 {

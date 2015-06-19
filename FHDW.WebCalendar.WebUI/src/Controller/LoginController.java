@@ -10,12 +10,9 @@ import java.io.IOException;
 import BLL.Services.*;
 
 /**
+ * In diesem Controller befinden sich alle, für den Login (Login.jsp) wichtige Informationen.
+ * 
  * @author Lucas Engel
- * 
- * 			LoginController
- * 			In diesem Controller befinden sich alle, für den Login (Login.jsp) wichtige Informationen.
- * 
- * 
  */
 
 @WebServlet ("/LoginController")

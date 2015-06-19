@@ -1,6 +1,8 @@
 package DomainModel.Base;
 
 /**
+ * Basis-Objekt für alle DomainModel-Objekte.
+ * 
  * @author Eduard Kress, Lucas Engel, Frederik Heinrichs
  */
 public class BaseObject

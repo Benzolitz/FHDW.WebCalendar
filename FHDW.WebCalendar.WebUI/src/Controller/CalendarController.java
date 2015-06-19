@@ -22,11 +22,9 @@ import Controller.Exception.ExceptionController;
 import DomainModel.Calendar.Event;
 
 /**
+ * In diesem Controller befinden sich alle, für den Kalender (Calendar.jsp) wichtige Informationen.
+ * 
  * @author Lucas Engel
- * 
- * 			CalendarController
- * 			In diesem Controller befinden sich alle, für den Kalender (Calendar.jsp) wichtige Informationen.
- * 
  * 
  */
 

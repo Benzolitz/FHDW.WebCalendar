@@ -8,6 +8,8 @@ import DomainModel.Base.BaseObject;
 import DomainModel.User.User;
 
 /**
+ * Event-Objekt für das speichern von Termindaten.
+ * 
  * @author Eduard Kress, Lucas Engel, Frederik Heinrichs
  */
 public class Event extends BaseObject

@@ -10,8 +10,9 @@ import BLL.Helper.CalendarHelper;
 import DomainModel.Calendar.Calendar;
 
 /**
+ * Business Logik für die Anzeige eines Kalenders.
+ * 
  * @author Frederik Heinrichs 
- * Buiniss Logik für die Anzeige eines Kalenders
  */
 public class CalendarService extends BaseService
 {

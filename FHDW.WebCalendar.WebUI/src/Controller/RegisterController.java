@@ -12,11 +12,9 @@ import BLL.Services.*;
 import DomainModel.User.User;
 import DomainModel.User.UserSecurity;
 /**
+ * In diesem Controller befinden sich alle, für die Registrierung (Register.jsp) wichtige Informationen.
+ * 
  * @author Lucas Engel
- * 
- * 			RegisterController
- * 			In diesem Controller befinden sich alle, für die Registrierung (Register.jsp) wichtige Informationen.
- * 
  * 
  */
 

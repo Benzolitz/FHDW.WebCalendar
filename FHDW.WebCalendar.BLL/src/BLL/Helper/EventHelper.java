@@ -4,9 +4,9 @@ import BLL.Exceptions.IOException;
 import DomainModel.Calendar.Event;
 
 /**
- * @author Frederik Heinrichs
+ * Helper für die Überprüfung eingebener Daten für Event-Objekte.
  * 
- * Helper für die überprüfung eingebener Daten für Event objekte
+ * @author Frederik Heinrichs
  * 
  * @see Event
  */

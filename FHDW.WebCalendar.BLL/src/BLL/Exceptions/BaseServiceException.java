@@ -1,8 +1,9 @@
 package BLL.Exceptions;
 
 /**
+ * Basisklasse für alle Exception aus der BLL.
+ * 
  * @author Frederik Heinrichs
- * BasisKlasse für alle Exception aus der BLL
  */
 public abstract class BaseServiceException extends Exception
 {	
