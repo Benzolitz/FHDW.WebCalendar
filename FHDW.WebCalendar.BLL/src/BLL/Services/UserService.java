@@ -15,7 +15,7 @@ import Repository.MySQL.CalendarRepo;
 /**
  * @author Frederik Heinrichs
  * 
- *         Buisness Logik für die Verwaltung von Benutzerdaten
+ * Buisness Logik für die Verwaltung von Benutzerdaten
  * 
  * @see CalendarRepo
  * @see UserHelper

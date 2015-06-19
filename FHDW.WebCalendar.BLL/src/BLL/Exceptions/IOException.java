@@ -2,7 +2,7 @@ package BLL.Exceptions;
 
 /**
  * @author Frederik Heinrichs
- * TODO: Kommentar schreiben
+ * Fehlermeldung für Eingabefehler vom Benutzer
  */
 public class IOException extends BaseServiceException
 {
