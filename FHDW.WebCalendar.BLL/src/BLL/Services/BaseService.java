@@ -1,6 +1,6 @@
 package BLL.Services;
 
-import Repository.MySQL.WebCalendarRepo;
+import Repository.MySQL.CalendarRepo;
 
 /**
  * @author Frederik Heinrichs
@@ -10,7 +10,7 @@ import Repository.MySQL.WebCalendarRepo;
  */
 public abstract class BaseService
 {
-    public static WebCalendarRepo repo;
+    public static CalendarRepo repo;
     private UserService userService;
     private CalendarService calendarService;
 
@@ -40,10 +40,10 @@ public abstract class BaseService
      * 
      * @return WebCalendarRepo
      * 
-     * @see WebCalendarRepo
+     * @see CalendarRepo
      */
-    public static WebCalendarRepo GetRepo()
+    public static CalendarRepo GetRepo()
     {
-        return repo == null ? new WebCalendarRepo() : repo;
+        return repo == null ? new CalendarRepo() : repo;
     }
 }

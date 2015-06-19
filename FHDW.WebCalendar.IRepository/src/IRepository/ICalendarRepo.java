@@ -14,7 +14,7 @@ import DomainModel.User.SecurityQuestion;
  * Das Interface IWebCalendarRepo.
  * @author Eduard Kress
  */
-public interface IWebCalendarRepo
+public interface ICalendarRepo
 {
     
     /**

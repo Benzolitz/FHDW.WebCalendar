@@ -18,21 +18,21 @@ import java.util.Map;
 import DomainModel.Calendar.Calendar;
 import DomainModel.Calendar.Event;
 import DomainModel.User.SecurityQuestion;
-import IRepository.IWebCalendarRepo;
+import IRepository.ICalendarRepo;
 
 
 /**
- * Die Klasse WebCalendarRepo, welche das Interface {@link IWebCalendarRepo} implementiert.
+ * Die Klasse WebCalendarRepo, welche das Interface {@link ICalendarRepo} implementiert.
  * @author Eduard Kress
  */
-public class WebCalendarRepo implements IWebCalendarRepo
+public class CalendarRepo implements ICalendarRepo
 {
     Connection conn = null;
     Statement stmt = null;
     java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
             "yyyy-MM-dd HH:mm:ss");
 
-    public WebCalendarRepo()
+    public CalendarRepo()
     {
         InitDatabase();
     }

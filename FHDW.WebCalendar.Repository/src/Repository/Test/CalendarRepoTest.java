@@ -13,20 +13,20 @@ import org.junit.Test;
 import DomainModel.Calendar.Calendar;
 import DomainModel.Calendar.Event;
 import DomainModel.User.SecurityQuestion;
-import IRepository.IWebCalendarRepo;
-import Repository.MySQL.WebCalendarRepo;
+import IRepository.ICalendarRepo;
+import Repository.MySQL.CalendarRepo;
 
 /**
  * JUnit Tests für die Datenbank. Vorraussetzung für die Tests ist die Importierung der Testdaten.
  * @author Eduard Kress
  */
-public class WebCalendarRepoTest
+public class CalendarRepoTest
 {
 
     @Test
     public void GetUserIdWithWrongUsernameOrEmail()
     {
-        IWebCalendarRepo repo = new WebCalendarRepo();
+        ICalendarRepo repo = new CalendarRepo();
         Integer result;
         try
         {
@@ -43,7 +43,7 @@ public class WebCalendarRepoTest
     @Test
     public void GetUserIdWithCorrectUsernameOrEmail()
     {
-        IWebCalendarRepo repo = new WebCalendarRepo();
+        ICalendarRepo repo = new CalendarRepo();
         Integer result;
         try
         {
@@ -59,7 +59,7 @@ public class WebCalendarRepoTest
     @Test
     public void GetUserPasswordWithCorrectUserId()
     {
-        IWebCalendarRepo repo = new WebCalendarRepo();
+        ICalendarRepo repo = new CalendarRepo();
         String result;
         try
         {
@@ -75,7 +75,7 @@ public class WebCalendarRepoTest
     @Test
     public void GetAllSecurityQuestions()
     {
-        IWebCalendarRepo repo = new WebCalendarRepo();
+        ICalendarRepo repo = new CalendarRepo();
         Collection<SecurityQuestion> repoQuestions;
         Collection<String> expectedQuestions;
         expectedQuestions = new ArrayList<String>();
@@ -110,7 +110,7 @@ public class WebCalendarRepoTest
     @Test
     public void RegistrateNewUserWithCorrectData()
     {
-        IWebCalendarRepo repo = new WebCalendarRepo();
+        ICalendarRepo repo = new CalendarRepo();
         Integer result;
         try
         {
@@ -128,7 +128,7 @@ public class WebCalendarRepoTest
     @Test
     public void GetSecurityQuestionWithCorrectId()
     {
-        IWebCalendarRepo repo = new WebCalendarRepo();
+        ICalendarRepo repo = new CalendarRepo();
         String result;
         try
         {
@@ -144,7 +144,7 @@ public class WebCalendarRepoTest
     @Test
     public void GetSecurityAnswerWithCorrectId()
     {
-        IWebCalendarRepo repo = new WebCalendarRepo();
+        ICalendarRepo repo = new CalendarRepo();
         String result;
         try
         {
@@ -160,7 +160,7 @@ public class WebCalendarRepoTest
     @Test
     public void ResetPasswordWithCorrectId()
     {
-        IWebCalendarRepo repo = new WebCalendarRepo();
+        ICalendarRepo repo = new CalendarRepo();
         String result;
         try
         {
@@ -179,7 +179,7 @@ public class WebCalendarRepoTest
     public void GetEventsForUserWithCorrectData()
     {
         Collection<Event> result;
-        IWebCalendarRepo repo = new WebCalendarRepo();
+        ICalendarRepo repo = new CalendarRepo();
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
                 "yyyy-MM-dd HH:mm:ss");
         java.util.Calendar from = java.util.Calendar.getInstance();
@@ -214,7 +214,7 @@ public class WebCalendarRepoTest
     public void CreateNewCalendarForExistingUser()
     {
     	Integer result;
-    	IWebCalendarRepo repo = new WebCalendarRepo();
+    	ICalendarRepo repo = new CalendarRepo();
     	
     	try
         {
@@ -231,7 +231,7 @@ public class WebCalendarRepoTest
     public void GetAllUserCalendarFromExistingUser()
     {
     	Collection<Calendar> result;
-    	IWebCalendarRepo repo = new WebCalendarRepo();
+    	ICalendarRepo repo = new CalendarRepo();
     	try
         {
             result = repo.GetAllUserCalendar(1);
@@ -247,7 +247,7 @@ public class WebCalendarRepoTest
     public void GetEventDetailsOfAnExistingEvent()
     {
     	Event result;
-    	IWebCalendarRepo repo = new WebCalendarRepo();
+    	ICalendarRepo repo = new CalendarRepo();
     	try
         {
             result = repo.GetEventDetailed(2);

@@ -10,14 +10,14 @@ import BLL.Exceptions.NotFound;
 import BLL.Helper.UserHelper;
 import DomainModel.User.SecurityQuestion;
 import DomainModel.User.User;
-import Repository.MySQL.WebCalendarRepo;
+import Repository.MySQL.CalendarRepo;
 
 /**
  * @author Frederik Heinrichs
  * 
  *         Buisness Logik für die Verwaltung von Benutzerdaten
  * 
- * @see WebCalendarRepo
+ * @see CalendarRepo
  * @see UserHelper
  */
 public class UserService extends BaseService
