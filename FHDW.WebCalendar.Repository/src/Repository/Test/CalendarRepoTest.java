@@ -13,6 +13,8 @@ import org.junit.Test;
 import DomainModel.Calendar.Calendar;
 import DomainModel.Calendar.Event;
 import DomainModel.User.SecurityQuestion;
+import DomainModel.User.User;
+import DomainModel.User.UserSecurity;
 import IRepository.ICalendarRepo;
 import Repository.MySQL.CalendarRepo;
 
@@ -114,9 +116,20 @@ public class CalendarRepoTest
         Integer result;
         try
         {
-            result = repo.RegistrateNewUser("UserTest", "EmailTest",
-                    "PassTest", "FirstTest", "LastTest", "0123456789", 1,
-                    "TestAnswer");
+            User user = new User();
+            user.SetUsername("UserTest");
+            user.SetEMail("Email@Test.de");
+            user.SetFirstname("FirstTest");
+            user.SetLastname("LastTest");
+            user.SetPhonenumber("0123456789");
+            
+            UserSecurity userSecurity = new UserSecurity();
+            userSecurity.SetPassword("PassTest");
+            userSecurity.SetSecurityQuestionId(1);
+            userSecurity.SetSecurityAnswer("TestAnswer");
+            user.SetUserSecurity(userSecurity);
+            
+            result = repo.RegistrateNewUser(user);
             assertTrue(result != null);
         }
         catch (SQLException e)

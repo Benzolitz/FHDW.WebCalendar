@@ -9,6 +9,7 @@ import com.sun.media.sound.ModelAbstractChannelMixer;
 import DomainModel.Calendar.Calendar;
 import DomainModel.Calendar.Event;
 import DomainModel.User.SecurityQuestion;
+import DomainModel.User.User;
 
 /**
  * Das Interface IWebCalendarRepo.<br>
@@ -60,10 +61,7 @@ public interface ICalendarRepo
      * @return Gibt die BenutzerID des registrierten Benutzers zurück.
      * @throws SQLException Wenn ein Problem mit der Datenbank aufgetreten ist.
      */
-    int RegistrateNewUser(String p_username, String p_email, String p_password,
-            String p_firstName, String p_lastName, String p_phoneNumber,
-            int p_securityQuestion, String p_securityAnswer)
-            throws SQLException;
+    int RegistrateNewUser(User p_user) throws SQLException;
 
     /**
      * Liefert die Sicherheitsfrage zu einem Benutzerkonto.
@@ -150,10 +148,7 @@ public interface ICalendarRepo
      * @param optionalUserId Die optionalen Teilnehmer.
      * @throws SQLException Wenn ein Problem mit der Datenbank aufgetreten ist.
      */
-    void SaveEvent(String p_title, String p_location,
-            java.util.Calendar p_starttime, java.util.Calendar p_endtime,
-            String p_message, Collection<String> p_categories, int p_creatorId,
-            int p_calendarId, HashMap<Integer, Integer> requiredUserId,
+    void SaveEvent(Event p_event, HashMap<Integer, Integer> requiredUserId,
             HashMap<Integer, Integer> optionalUserId) throws SQLException;
 
     /**
@@ -195,9 +190,7 @@ public interface ICalendarRepo
      * @param optionalUserId DIe neuen optionalen Benutzer
      * @throws SQLException Wenn ein Problem mit der Datenbank aufgetreten ist.
      */
-    void UpdateEvent(int p_eventId, String p_title, String p_location,
-            java.util.Calendar p_starttime, java.util.Calendar p_endtime,
-            String p_message, Collection<String> p_categories,
+    void UpdateEvent(Event p_event,
             HashMap<Integer, Integer> requiredUserId,
             HashMap<Integer, Integer> optionalUserId) throws SQLException;
 

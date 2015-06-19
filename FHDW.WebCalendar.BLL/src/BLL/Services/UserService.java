@@ -137,13 +137,7 @@ public class UserService extends BaseService
         {
             DoesUserAlreadyExist(p_user); // throws AlreadyExist
 
-            Integer reuslt_userID = GetRepo().RegistrateNewUser(
-                    p_user.GetUsername(), p_user.GetEMail(),
-                    p_user.GetUserSecurity().GetPassword(),
-                    p_user.GetFirstname(), p_user.GetLastname(),
-                    p_user.GetPhonenumber(),
-                    p_user.GetUserSecurity().GetSecurityQuestionId(),
-                    p_user.GetUserSecurity().GetSecurityAnswer());
+            Integer reuslt_userID = GetRepo().RegistrateNewUser(p_user);
 
             if (reuslt_userID == null || reuslt_userID <= 0)
             {

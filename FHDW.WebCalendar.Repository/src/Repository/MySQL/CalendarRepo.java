@@ -17,12 +17,12 @@ import java.util.Map;
 
 import DomainModel.Calendar.Calendar;
 import DomainModel.Calendar.Event;
-import DomainModel.User.SecurityQuestion;
+import DomainModel.User.*;
 import IRepository.ICalendarRepo;
 
-
 /**
- * Die Klasse WebCalendarRepo, welche das Interface {@link ICalendarRepo} implementiert.
+ * Die Klasse WebCalendarRepo, welche das Interface {@link ICalendarRepo}
+ * implementiert.
  * 
  * @author Eduard Kress
  */
@@ -88,7 +88,8 @@ public class CalendarRepo implements ICalendarRepo
     }
 
     /**
-     * Erzeugt einen neuen Katalog, falls noch nicht vorhanden, und importiert das Datenbankschema und Testdaten.
+     * Erzeugt einen neuen Katalog, falls noch nicht vorhanden, und importiert
+     * das Datenbankschema und Testdaten.
      */
     private void InitDatabaseTablesWithTestData(Statement p_stmt)
             throws Exception
@@ -135,7 +136,9 @@ public class CalendarRepo implements ICalendarRepo
 
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see IRepository.IWebCalendarRepo#GetUserId(java.lang.String)
      */
     @Override
@@ -158,7 +161,9 @@ public class CalendarRepo implements ICalendarRepo
         return userId;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see IRepository.IWebCalendarRepo#GetUserPassword(int)
      */
     @Override
@@ -170,13 +175,15 @@ public class CalendarRepo implements ICalendarRepo
 
         sql = String.format("SELECT Pass FROM User WHERE ID = '%d';", p_userId);
         rs = stmt.executeQuery(sql);
-        if(rs.next())
-        	userPassword = rs.getString(1);
+        if (rs.next())
+            userPassword = rs.getString(1);
 
         return userPassword;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see IRepository.IWebCalendarRepo#GetAllSecurityQuestions()
      */
     @Override
@@ -204,14 +211,15 @@ public class CalendarRepo implements ICalendarRepo
         return questions;
     }
 
-    /* (non-Javadoc)
-     * @see IRepository.IWebCalendarRepo#RegistrateNewUser(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, int, java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see IRepository.IWebCalendarRepo#RegistrateNewUser(java.lang.String,
+     * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
+     * java.lang.String, int, java.lang.String)
      */
     @Override
-    public int RegistrateNewUser(String p_username, String p_email,
-            String p_password, String p_firstName, String p_lastName,
-            String p_phoneNumber, int p_securityQuestion,
-            String p_securityAnswer) throws SQLException
+    public int RegistrateNewUser(User p_user) throws SQLException
     {
         Integer userId;
         String sql;
@@ -219,8 +227,11 @@ public class CalendarRepo implements ICalendarRepo
 
         sql = String
                 .format("INSERT INTO User (Username, EMail, pass, FirstName, LastName, SecurityQuestionID, SecurityAnswer) VALUES('%s', '%s', '%s', '%s', '%s', '%d', '%s');",
-                        p_username, p_email, p_password, p_firstName,
-                        p_lastName, p_securityQuestion, p_securityAnswer);
+                        p_user.GetUsername(), p_user.GetEMail(), p_user
+                                .GetUserSecurity().GetPassword(), p_user
+                                .GetFirstname(), p_user.GetLastname(), p_user
+                                .GetUserSecurity().GetSecurityQuestionId(),
+                        p_user.GetUserSecurity().GetSecurityAnswer());
 
         stmt.executeUpdate(sql);
         sql = String.format("SELECT LAST_INSERT_ID();");
@@ -231,7 +242,9 @@ public class CalendarRepo implements ICalendarRepo
         return userId;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see IRepository.IWebCalendarRepo#GetSecurityQuestion(int)
      */
     @Override
@@ -245,13 +258,15 @@ public class CalendarRepo implements ICalendarRepo
                 .format("SELECT SecurityQuestion.Question FROM User JOIN SecurityQuestion ON User.SecurityQuestionID = SecurityQuestion.ID where User.ID = '%d';",
                         p_userId);
         rs = stmt.executeQuery(sql);
-        if(rs.next())
-        	securityQuestion = rs.getString(1);
+        if (rs.next())
+            securityQuestion = rs.getString(1);
 
         return securityQuestion;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see IRepository.IWebCalendarRepo#GetSecurityAnswer(int)
      */
     @Override
@@ -270,7 +285,9 @@ public class CalendarRepo implements ICalendarRepo
         return securityAnswer;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see IRepository.IWebCalendarRepo#ResetPassword(int, java.lang.String)
      */
     @Override
@@ -284,8 +301,11 @@ public class CalendarRepo implements ICalendarRepo
         stmt.executeUpdate(sql);
     }
 
-    /* (non-Javadoc)
-     * @see IRepository.IWebCalendarRepo#CreateNewCalendar(int, java.lang.String)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see IRepository.IWebCalendarRepo#CreateNewCalendar(int,
+     * java.lang.String)
      */
     @Override
     public int CreateNewCalendar(int p_userId, String p_calendarName)
@@ -308,7 +328,9 @@ public class CalendarRepo implements ICalendarRepo
         return calendarId;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see IRepository.IWebCalendarRepo#GetAllUserCalendar(int)
      */
     @Override
@@ -339,8 +361,11 @@ public class CalendarRepo implements ICalendarRepo
         return calendars;
     }
 
-    /* (non-Javadoc)
-     * @see IRepository.IWebCalendarRepo#GetEventsForUser(int, int, java.util.Calendar, java.util.Calendar)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see IRepository.IWebCalendarRepo#GetEventsForUser(int, int,
+     * java.util.Calendar, java.util.Calendar)
      */
     @Override
     public Collection<Event> GetEventsForUser(int p_calendarId, int p_userId,
@@ -386,7 +411,9 @@ public class CalendarRepo implements ICalendarRepo
         return events;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see IRepository.IWebCalendarRepo#GetEventDetailed(int)
      */
     @Override
@@ -452,15 +479,18 @@ public class CalendarRepo implements ICalendarRepo
         return event;
     }
 
-    /* (non-Javadoc)
-     * @see IRepository.IWebCalendarRepo#SaveEvent(java.lang.String, java.lang.String, java.util.Calendar, java.util.Calendar, java.lang.String, java.util.Collection, int, int, java.util.HashMap, java.util.HashMap)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see IRepository.IWebCalendarRepo#SaveEvent(java.lang.String,
+     * java.lang.String, java.util.Calendar, java.util.Calendar,
+     * java.lang.String, java.util.Collection, int, int, java.util.HashMap,
+     * java.util.HashMap)
      */
     @Override
-    public void SaveEvent(String p_title, String p_location,
-            java.util.Calendar p_starttime, java.util.Calendar p_endtime,
-            String p_message, Collection<String> p_categories, int p_creatorId,
-            int p_calendarId, HashMap<Integer, Integer> requiredUserId,
-            HashMap<Integer, Integer> optionalUserId) throws SQLException
+    public void SaveEvent(Event p_event,
+            HashMap<Integer, Integer> p_requiredUserId,
+            HashMap<Integer, Integer> p_optionalUserId) throws SQLException
     {
         String sql;
         ResultSet rs;
@@ -469,8 +499,10 @@ public class CalendarRepo implements ICalendarRepo
 
         sql = String
                 .format("INSERT INTO EVENT (Title, Location, StartTime, EndTime, Message, CreatorId, CreationTime) VALUES ('%s', '%s', '%s', '%s', '%s', %d, CURTIME());",
-                        p_title, p_location, sdf.format(p_starttime.getTime()),
-                        sdf.format(p_endtime.getTime()), p_message, p_creatorId);
+                        p_event.GetTitle(), p_event.GetLocation(),
+                        sdf.format(p_event.GetStartTime().getTime()),
+                        sdf.format(p_event.GetEndTime().getTime()),
+                        p_event.GetMessage(), p_event.GetCreatorId());
         stmt.executeUpdate(sql);
 
         sql = String.format("SELECT LAST_INSERT_ID();");
@@ -478,14 +510,14 @@ public class CalendarRepo implements ICalendarRepo
         rs.next();
         eventId = rs.getInt(1);
 
-        for (String category : p_categories)
+        for (String category : p_event.GetCategory())
         {
             sql = String.format(
                     "INSERT INTO Category (Name, EventId) VALUES ('%s', %d);",
                     category, eventId);
             stmt.executeUpdate(sql);
         }
-        it = optionalUserId.entrySet().iterator();
+        it = p_optionalUserId.entrySet().iterator();
         while (it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
@@ -495,7 +527,7 @@ public class CalendarRepo implements ICalendarRepo
                             (Integer) pair.getValue());
             stmt.executeUpdate(sql);
         }
-        it = requiredUserId.entrySet().iterator();
+        it = p_requiredUserId.entrySet().iterator();
         while (it.hasNext())
         {
             Map.Entry pair = (Map.Entry) it.next();
@@ -507,7 +539,9 @@ public class CalendarRepo implements ICalendarRepo
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see IRepository.IWebCalendarRepo#DeleteEvent(int, int)
      */
     @Override
@@ -530,7 +564,9 @@ public class CalendarRepo implements ICalendarRepo
         stmt.executeUpdate(sql);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see IRepository.IWebCalendarRepo#DeleteCalendar(int)
      */
     @Override
@@ -543,7 +579,9 @@ public class CalendarRepo implements ICalendarRepo
         stmt.executeUpdate(sql);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see IRepository.IWebCalendarRepo#DeleteUser(int)
      */
     @Override
@@ -555,13 +593,16 @@ public class CalendarRepo implements ICalendarRepo
         stmt.executeUpdate(sql);
     }
 
-    /* (non-Javadoc)
-     * @see IRepository.IWebCalendarRepo#UpdateEvent(int, java.lang.String, java.lang.String, java.util.Calendar, java.util.Calendar, java.lang.String, java.util.Collection, java.util.HashMap, java.util.HashMap)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see IRepository.IWebCalendarRepo#UpdateEvent(int, java.lang.String,
+     * java.lang.String, java.util.Calendar, java.util.Calendar,
+     * java.lang.String, java.util.Collection, java.util.HashMap,
+     * java.util.HashMap)
      */
     @Override
-    public void UpdateEvent(int p_eventId, String p_title, String p_location,
-            java.util.Calendar p_starttime, java.util.Calendar p_endtime,
-            String p_message, Collection<String> p_categories,
+    public void UpdateEvent(Event p_event, 
             HashMap<Integer, Integer> requiredUserId,
             HashMap<Integer, Integer> optionalUserId) throws SQLException
     {
@@ -570,23 +611,23 @@ public class CalendarRepo implements ICalendarRepo
 
         sql = String
                 .format("UPDATE Event SET Title='%s', Location='%s', StartTime='%s', EndTime='%s', Message='%s' WHERE ID=%d;",
-                        p_title, p_location, sdf.format(p_starttime.getTime()),
-                        sdf.format(p_endtime.getTime()), p_message, p_eventId);
+                        p_event.GetTitle(), p_event.GetLocation(), sdf.format(p_event.GetStartTime().getTime()),
+                        sdf.format(p_event.GetEndTime().getTime()), p_event.GetMessage(), p_event.GetId());
         stmt.executeUpdate(sql);
 
         sql = String.format("DELETE FROM Category WHERE EventID = %d;",
-                p_eventId);
+                p_event.GetId());
         stmt.executeUpdate(sql);
 
         sql = String.format("DELETE FROM EventUser WHERE EventID = %d;",
-                p_eventId);
+                p_event.GetId());
         stmt.executeUpdate(sql);
 
-        for (String category : p_categories)
+        for (String category : p_event.GetCategory())
         {
             sql = String.format(
                     "INSERT INTO Category (Name, EventId) VALUES ('%s', %d);",
-                    category, p_eventId);
+                    category, p_event.GetId());
             stmt.executeUpdate(sql);
         }
         it = optionalUserId.entrySet().iterator();
@@ -595,7 +636,7 @@ public class CalendarRepo implements ICalendarRepo
             Map.Entry pair = (Map.Entry) it.next();
             sql = String
                     .format("INSERT INTO EventUser (EventID, UserID, Required, CalendarID) VALUES (%d, %d, 0, %d)",
-                            p_eventId, (Integer) pair.getKey(),
+                            p_event.GetId(), (Integer) pair.getKey(),
                             (Integer) pair.getValue());
             stmt.executeUpdate(sql);
         }
@@ -605,7 +646,7 @@ public class CalendarRepo implements ICalendarRepo
             Map.Entry pair = (Map.Entry) it.next();
             sql = String
                     .format("INSERT INTO EventUser (EventID, UserID, Required, CalendarID) VALUES (%d, %d, 1, %d)",
-                            p_eventId, (Integer) pair.getKey(),
+                            p_event.GetId(), (Integer) pair.getKey(),
                             (Integer) pair.getValue());
             stmt.executeUpdate(sql);
         }

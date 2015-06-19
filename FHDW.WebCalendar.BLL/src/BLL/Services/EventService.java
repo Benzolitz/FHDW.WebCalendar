@@ -26,7 +26,7 @@ public class EventService extends BaseService
      * @param p_event
      * 
      * @return true wenn das Event erstellt werden konnte
-     *  
+     * 
      * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank
      *             entstanden ist
      * @throws IOException, Wenn die pflichtfelder im Event leer waren
@@ -40,16 +40,12 @@ public class EventService extends BaseService
         EventHelper.checkEventData(p_event); // throws IOException
         try
         {
-            HashMap<Integer, Integer> p_requiredUser = CheckEventUserList(p_event
+            HashMap<Integer, Integer> requiredUser = CheckEventUserList(p_event
                     .GetRequiredUser());
-            p_requiredUser.put(p_event.GetCreatorId(), p_event.GetCalendarId());
-            GetRepo()
-                    .SaveEvent(p_event.GetTitle(), p_event.GetLocation(),
-                            p_event.GetStartTime(), p_event.GetEndTime(),
-                            p_event.GetMessage(), p_event.GetCategory(),
-                            p_event.GetCreatorId(), p_event.GetCalendarId(),
-                            p_requiredUser,
-                            CheckEventUserList(p_event.GetOptionalUser()));
+            requiredUser.put(p_event.GetCreatorId(), p_event.GetCalendarId());
+
+            GetRepo().SaveEvent(p_event, requiredUser,
+                    CheckEventUserList(p_event.GetOptionalUser()));
             return true;
         }
         catch (SQLException e)
@@ -79,10 +75,7 @@ public class EventService extends BaseService
             HashMap<Integer, Integer> p_requiredUser = CheckEventUserList(p_event
                     .GetRequiredUser());
             p_requiredUser.put(p_event.GetCreatorId(), p_event.GetCalendarId());
-            GetRepo().UpdateEvent(p_event.GetId(), p_event.GetTitle(),
-                    p_event.GetLocation(), p_event.GetStartTime(),
-                    p_event.GetEndTime(), p_event.GetMessage(),
-                    p_event.GetCategory(), p_requiredUser,
+            GetRepo().UpdateEvent(p_event, p_requiredUser,
                     CheckEventUserList(p_event.GetOptionalUser()));
             return true;
         }
@@ -98,7 +91,8 @@ public class EventService extends BaseService
      * @param p_eventId
      * @param p_userId
      * 
-     * @return true, wenn das löschen erfolgreich war oder der Termin nicht mehr existiert
+     * @return true, wenn das löschen erfolgreich war oder der Termin nicht mehr
+     *         existiert
      * 
      * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank
      *             entstanden ist
@@ -133,7 +127,8 @@ public class EventService extends BaseService
      * 
      * @return
      * 
-     * @throws NotFound, wenn das Event in der Datenbank nicht gefunden werden konnte
+     * @throws NotFound, wenn das Event in der Datenbank nicht gefunden werden
+     *             konnte
      * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank
      *             entstanden ist
      */
@@ -157,7 +152,8 @@ public class EventService extends BaseService
 
     /**
      * Ermittelt alle Eingetragenen Benutzer aus einer Liste und<br>
-     * erstellt eine Hashmap mit userId und der ID des DefaultKalenders für den entsprechenden Benutzer aus der Liste.
+     * erstellt eine Hashmap mit userId und der ID des DefaultKalenders für den
+     * entsprechenden Benutzer aus der Liste.
      * 
      * @param p_userNameList
      * 
@@ -165,7 +161,8 @@ public class EventService extends BaseService
      * 
      * @throws DatabaseException, wenn ein unbekannter Fehler in der Datenbank
      *             entstanden ist
-     * @throws NotFound, wenn Ein Benutzer der Liste nicht in der Datenbank existiert
+     * @throws NotFound, wenn Ein Benutzer der Liste nicht in der Datenbank
+     *             existiert
      */
     private HashMap<Integer, Integer> CheckEventUserList(
             Collection<String> p_userNameList) throws DatabaseException,
